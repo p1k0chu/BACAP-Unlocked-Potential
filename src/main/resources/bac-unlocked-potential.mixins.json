@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "package": "com.github.p1k0chu.bacup.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "bac-unlocked-potential",
+  "version": "${version}",
+  "name": "BAC Unlocked Potential",
+  "description": "BACAP addon that adds more advancements that are now possible with modding",
+  "authors": [
+    "p1k0chu"
+  ],
+  "contact": {
+  },
+  "license": "MIT",
+  "icon": "assets/bac-unlocked-potential/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "com.github.p1k0chu.bacup.Main"
+      }
+    ]
+  },
+  "mixins": [
+    "bac-unlocked-potential.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=21",
+    "fabric-language-kotlin": ">=${kotlin_adapter_version}"
+  }
+}
