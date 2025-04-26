@@ -22,7 +22,7 @@
     "fabric-datagen": [
       {
         "adapter": "kotlin",
-        "value": "com.github.p1k0chu.bacup.DatagenMain"
+        "value": "com.github.p1k0chu.bacup.data.DatagenMain"
       }
     ]
   },
