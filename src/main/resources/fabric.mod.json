@@ -18,6 +18,12 @@
         "adapter": "kotlin",
         "value": "com.github.p1k0chu.bacup.Main"
       }
+    ],
+    "fabric-datagen": [
+      {
+        "adapter": "kotlin",
+        "value": "com.github.p1k0chu.bacup.DatagenMain"
+      }
     ]
   },
   "mixins": [

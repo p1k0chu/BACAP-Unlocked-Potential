@@ -10,6 +10,7 @@ val maven_group: String by project
 val yarn_mappings: String by project
 val kotlin_adapter_version: String by project
 val archives_base_name: String by project
+val fabric_api_version: String by project
 
 base {
     archivesName = archives_base_name
@@ -29,8 +30,13 @@ loom {
     mods {
         register("bac-unlocked-potential") {
             sourceSet("main")
+            sourceSet("client")
         }
     }
+}
+
+fabricApi {
+    configureDataGeneration()
 }
 
 dependencies {
@@ -39,22 +45,21 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:$loader_version")
     modImplementation("net.fabricmc:fabric-language-kotlin:$kotlin_adapter_version")
 
-    // modImplementation ("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
-
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
 }
 
 tasks.processResources {
-	filesMatching("fabric.mod.json") {
-		expand (
+    filesMatching("fabric.mod.json") {
+        expand(
             "version" to mod_version,
             "minecraft_version" to minecraft_version,
             "loader_version" to loader_version,
             "kotlin_adapter_version" to kotlin_adapter_version
         )
-	}
+    }
 }
 
-tasks.withType(JavaCompile::class).configureEach {
+tasks.withType<JavaCompile>().configureEach {
     options.release = 21
 }
 

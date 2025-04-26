@@ -6,8 +6,11 @@ import org.slf4j.LoggerFactory
 
 object Main : ModInitializer {
     const val MOD_ID: String = "bac-unlocked-potential"
+    const val OG_PACK = "blazeandcave"
     val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
 
     override fun onInitialize() {
     }
+
+    fun id(id: String) = "$MOD_ID:$id"
 }
