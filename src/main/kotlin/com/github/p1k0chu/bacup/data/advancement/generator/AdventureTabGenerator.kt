@@ -7,6 +7,7 @@ import com.github.p1k0chu.bacup.utils.*
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.data.advancement.AdvancementTabGenerator
+import net.minecraft.data.advancement.AdvancementTabGenerator.reference
 import net.minecraft.item.Items
 import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.RegistryKeys
@@ -21,7 +22,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(id(TAB_NAME, CAT_GIFT)) {
-            parent("blazeandcave:adventure/crazy_cat_lady")
+            parent(reference("blazeandcave:adventure/crazy_cat_lady"))
             display {
                 title = title(TAB_NAME, CAT_GIFT)
                 description = description(TAB_NAME, CAT_GIFT)

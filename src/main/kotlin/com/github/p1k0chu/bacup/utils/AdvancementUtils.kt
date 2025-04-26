@@ -21,9 +21,6 @@ fun advancement(id: String, block: Advancement.Builder.() -> Unit): AdvancementE
 
 fun Advancement.Builder.functionReward(function: String) = this.rewards(AdvancementRewards.Builder.function(Identifier.of(function)))
 
-@Deprecated(message = "Uses deprecated minecraft method")
-fun Advancement.Builder.parent(parentId: String): Advancement.Builder = this.parent(Identifier.of(parentId))
-
 fun id(tab: String, name: String): String {
     return "${Main.MOD_ID}:$tab/$name"
 }
