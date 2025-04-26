@@ -11,16 +11,17 @@ import java.util.*
 class AdvancementDisplayBuilder {
     // boolean showToast, boolean announceToChat, boolean hidden
     lateinit var icon: ItemStack
-    var title: String = ""
-    var description: String = ""
+    var title = Text.of("")
+    var description = Text.of("")
     var background: AssetInfo? = null
     var frame: AdvancementFrame = AdvancementFrame.TASK
     var showToast: Boolean = true
+    var announceToChat: Boolean = true
     var hidden: Boolean = false
 
     fun build(): AdvancementDisplay {
         return AdvancementDisplay(
-            icon, Text.of(title), Text.of(description), Optional.ofNullable(background), frame, showToast, false, hidden
+            icon, title, description, Optional.ofNullable(background), frame, showToast, announceToChat, hidden
         )
     }
 }

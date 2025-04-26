@@ -3,6 +3,7 @@
   "package": "com.github.p1k0chu.bacup.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "CatEntitySleepWithOwnerGoalMixin"
   ],
   "injectors": {
     "defaultRequire": 1
