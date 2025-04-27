@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.data.advancement.generator
+package com.github.p1k0chu.bacup.data.advancement
 
 import com.github.p1k0chu.bacup.advancement.criteria.CatGiftReceivedCriterion
 import com.github.p1k0chu.bacup.data.language.description
