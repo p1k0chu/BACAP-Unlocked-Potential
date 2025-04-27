@@ -1,11 +1,13 @@
 package com.github.p1k0chu.bacup.advancement.reward
 
 import com.github.p1k0chu.bacup.Main
+import com.github.p1k0chu.bacup.advancement.reward.BacConstants.TAB_COLOR
+import com.github.p1k0chu.bacup.advancement.reward.BacConstants.bac_teams
 import com.github.p1k0chu.bacup.data.function.MCFunction
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import java.util.function.Consumer
-import kotlin.properties.Delegates
 
 class RewardsBuilder(
     val consumer: Consumer<MCFunction>
@@ -21,7 +23,7 @@ class RewardsBuilder(
 
         inner class RewardAdvancementBuilder(val name: String) {
             private val itemRewards: MutableList<ItemStack> = mutableListOf()
-            var trophy: ItemStack? = null
+            private var _trophy: TrophyBuilder? = null
             var type: AdvancementType = AdvancementType.TASK
             var exp: Int? = null
 
@@ -29,43 +31,99 @@ class RewardsBuilder(
                 itemRewards.add(item)
             }
 
+            fun trophy(block: TrophyBuilder.() -> Unit) {
+                _trophy = TrophyBuilder().apply(block)
+            }
+
+            fun noTrophy() {
+                _trophy = null
+            }
+
             fun build() {
                 // the message function
-                consumer.accept(MCFunction(
-                    Identifier.of(Main.MOD_ID, "msg/$tab/$name"),
-                    messageGen(
-                        tab,
-                        "${Main.MOD_ID}.advancement.$tab.$name.title",
-                        "${Main.MOD_ID}.advancement.$tab.$name.desc",
-                        type
+                consumer.accept(
+                    MCFunction(
+                        Identifier.of(Main.MOD_ID, "msg/$tab/$name"), messageGen(
+                            tab,
+                            "${Main.MOD_ID}.advancement.$tab.$name.title",
+                            "${Main.MOD_ID}.advancement.$tab.$name.desc",
+                            type
+                        )
                     )
-                ))
+                )
 
                 // item reward function
-                consumer.accept(MCFunction(
+                consumer.accept(
+                    MCFunction(
                     Identifier.of(Main.MOD_ID, "reward/$tab/$name"),
-                    itemRewards.joinToString(separator = "\n") { giveGen(it) }
-                ))
+                    itemRewards.joinToString(separator = "\n") { giveGen(it) }))
 
                 // main reward function
-                consumer.accept(MCFunction(
-                    Identifier.of(Main.MOD_ID, "$tab/$name"),
-                    mainRewardFunctionGen(Identifier.of(Main.MOD_ID, "$tab/$name"))
-                ))
+                consumer.accept(
+                    MCFunction(
+                        Identifier.of(Main.MOD_ID, "$tab/$name"),
+                        mainRewardFunctionGen(Identifier.of(Main.MOD_ID, "$tab/$name"))
+                    )
+                )
 
-                consumer.accept(MCFunction(
-                    Identifier.of(Main.MOD_ID, "exp/$tab/$name"),
-                    expGen(exp)
-                ))
+                consumer.accept(
+                    MCFunction(
+                        Identifier.of(Main.MOD_ID, "exp/$tab/$name"), expGen(exp)
+                    )
+                )
 
-                // TODO: trophy
+                consumer.accept(
+                    MCFunction(
+                        Identifier.of(Main.MOD_ID, "trophy/$tab/$name"), _trophy?.build() ?: ""
+                    )
+                )
+            }
+
+
+            inner class TrophyBuilder {
+                lateinit var item: Item
+                var name: String? = null
+                var lore: String? = null
+                var enchantmentGlint: Boolean? = null
+
+                var color: String = "white"
+                var loreColor: String = "white"
+
+                var italic: Boolean = false
+                var bold: Boolean = true
+
+                /**
+                 * Returns a minecraft function for a trophy
+                 */
+                fun build(): String {
+                    val functionBody = StringBuilder()
+                    functionBody.appendLine("give @s ${item.registryEntry.idAsString}[")
+
+                    if (enchantmentGlint != null) {
+                        functionBody.appendLine("enchantment_glint_override=$enchantmentGlint, ")
+                    }
+                    functionBody.appendLine("custom_name={italic:$italic,bold:$bold,color:\"$color\",translate:\"${name ?: item.translationKey}\"}, ")
+
+                    if (lore != null) {
+                        functionBody.appendLine("lore=[{color:\"$loreColor\",translate:\"$lore\"},{text:\" \"},{translate:\"Awarded for achieving\",color:\"gray\"},{translate:\"${Main.MOD_ID}.advancement.$tab.$name.title\",color:\"${type.titleColor}\",italic:false}], ")
+                    }
+
+                    functionBody.append(
+                        """
+                        custom_model_data={floats:[I;131]}, tooltip_display={}, custom_data={Trophy:1}] 1
+                        tellraw @s {"color": "gold", "text": " +1 ", "extra": [{"translate": "${name ?: item.translationKey}"}]}
+                        """.trimIndent()
+                    )
+
+                    return functionBody.toString()
+                }
             }
         }
     }
 }
 
-fun Consumer<MCFunction>.builder(block: RewardsBuilder.() -> Unit) {
-    return RewardsBuilder(this).block()
+fun rewardsBuilder(consumer: Consumer<MCFunction>, block: RewardsBuilder.() -> Unit) {
+    return RewardsBuilder(consumer).block()
 }
 
 fun giveGen(item: ItemStack): String {
@@ -75,26 +133,6 @@ fun giveGen(item: ItemStack): String {
     """.trimIndent()
 }
 
-const val TAB_COLOR = "gray"
-
-val bac_teams = listOf(
-    "white",
-    "yellow",
-    "purple",
-    "red",
-    "aqua",
-    "green",
-    "blue",
-    "dark_gray",
-    "gray",
-    "gold",
-    "dark_purple",
-    "dark_red",
-    "dark_aqua",
-    "dark_green",
-    "dark_blue",
-    "black"
-)
 
 fun messageGen(tab: String, title: String, description: String, type: AdvancementType): String {
     return """
@@ -103,7 +141,7 @@ fun messageGen(tab: String, title: String, description: String, type: Advancemen
 }
 
 fun expGen(amount: Int?): String {
-    if(amount == null) return ""
+    if (amount == null) return ""
 
     return """
         xp add @s $amount
@@ -111,12 +149,14 @@ fun expGen(amount: Int?): String {
     """.trimIndent()
 }
 
+// hell.
 fun mainRewardFunctionGen(advancementId: Identifier): String {
     val namespace: String = advancementId.namespace
     val path: String = advancementId.path
 
     val functionBody = StringBuilder()
-    functionBody.append("""
+    functionBody.appendLine(
+        """
         execute if score goal bac_settings matches 1 run function $namespace:msg/$path
         execute if score goal bac_settings matches -1 unless score $advancementId bac_obtained matches 1.. run function $namespace:msg/$path
         
@@ -125,29 +165,36 @@ fun mainRewardFunctionGen(advancementId: Identifier): String {
         
         execute if score exp bac_settings matches 1 run function $namespace:exp/$path
         execute if score exp bac_settings matches -1 unless score $advancementId bac_obtained matches 1.. run function $namespace:exp/$path
-    """.trimIndent())
+    """.trimIndent()
+    )
 
     bac_teams.forEach { team ->
-        functionBody.append("""
+        functionBody.appendLine(
+            """
             execute if score goal bac_settings matches -2 if entity @s[team=bac_team_$team] unless score $advancementId bac_obtained_$team matches 1.. run function $namespace:msg/$path
             execute if score reward bac_settings matches -2 if entity @s[team=bac_team_$team] unless score $advancementId bac_obtained_$team matches 1.. run function $namespace:reward/$path
             execute if score exp bac_settings matches -2 if entity @s[team=bac_team_$team] unless score $advancementId bac_obtained_$team matches 1.. run function $namespace:exp/$path
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 
-    functionBody.append("""
+    functionBody.appendLine(
+        """
         function bacap_rewards:score_add
         execute unless score $advancementId bac_obtained matches 1.. run function bacap_rewards:first_score_add
         scoreboard players add $advancementId bac_obtained 1
         execute if score coop bac_settings matches 1 run advancement grant @a only $advancementId
-    """.trimIndent())
+    """.trimIndent()
+    )
 
     bac_teams.forEach { team ->
-        functionBody.append("""
+        functionBody.appendLine(
+            """
             execute if entity @s[team=bac_team_$team] unless score $advancementId bac_obtained_$team matches 1.. run function bacap_rewards:first_team_score_add
             execute if entity @s[team=bac_team_$team] run scoreboard players add $advancementId bac_obtained_$team 1
             execute if score coop bac_settings matches 2 if entity @s[team=bac_team_$team] run advancement grant @a[team=bac_team_$team] only $advancementId
-        """.trimIndent())
+        """.trimIndent()
+        )
     }
 
     functionBody.append("function #bacap_fanpacks:adventure/a_chiptune_relic")

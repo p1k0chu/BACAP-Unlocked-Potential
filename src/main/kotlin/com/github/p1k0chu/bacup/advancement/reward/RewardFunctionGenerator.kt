@@ -8,7 +8,7 @@ import java.util.function.Consumer
 
 object RewardFunctionGenerator : FunctionGenerator {
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<MCFunction>) {
-        consumer.builder {
+        rewardsBuilder(consumer) {
             tab(AdventureTabGenerator.TAB_NAME) {
                 advancement(AdventureTabGenerator.CAT_GIFT)
                 advancement(AdventureTabGenerator.ALL_CAT_GIFTS)
