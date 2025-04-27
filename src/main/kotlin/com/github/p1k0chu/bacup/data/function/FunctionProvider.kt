@@ -14,26 +14,29 @@ import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
 import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
-import java.util.function.Consumer
 
-abstract class FunctionProvider(
-    output: DataOutput, private val registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
+class FunctionProvider(
+    output: DataOutput,
+    private val registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>,
+    private val generators: Collection<FunctionGenerator> = listOf()
 ) : DataProvider {
     private val pathResolver = output.getResolver(DataOutput.OutputType.DATA_PACK, "function")
-
-    abstract fun generateFunctions(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<MCFunction>)
 
     override fun run(writer: DataWriter): CompletableFuture<*> {
         return registriesFuture.thenCompose { wrapperLookup: RegistryWrapper.WrapperLookup ->
             val ids = mutableSetOf<Identifier>()
             val futures = mutableListOf<CompletableFuture<*>>()
 
-            generateFunctions(wrapperLookup) { func ->
+            val consumer: (MCFunction) -> Unit = { func: MCFunction ->
                 if (!ids.add(func.id)) {
                     throw IllegalStateException("Duplicate function ${func.id}")
                 }
                 val path = pathResolver.resolve(func.id, "mcfunction")
                 futures.add(writeToFile(writer, func.body, path))
+            }
+
+            generators.forEach { it: FunctionGenerator ->
+                it.accept(wrapperLookup, consumer)
             }
 
             CompletableFuture.allOf(*futures.toTypedArray())
