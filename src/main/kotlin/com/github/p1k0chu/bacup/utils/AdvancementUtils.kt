@@ -16,10 +16,9 @@ import java.util.*
 fun advancement(id: String, block: Advancement.Builder.() -> Unit): AdvancementEntry {
     val builder = Advancement.Builder.createUntelemetered()
     builder.apply(block)
+    builder.rewards(AdvancementRewards.Builder.function(Identifier.of(id)))
     return builder.build(Identifier.of(id))
 }
-
-fun Advancement.Builder.functionReward(function: String) = this.rewards(AdvancementRewards.Builder.function(Identifier.of(function)))
 
 fun id(tab: String, name: String): String {
     return "${Main.MOD_ID}:$tab/$name"
