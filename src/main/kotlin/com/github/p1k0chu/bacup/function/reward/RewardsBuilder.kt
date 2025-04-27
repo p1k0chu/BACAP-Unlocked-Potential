@@ -1,9 +1,9 @@
-package com.github.p1k0chu.bacup.advancement.reward
+package com.github.p1k0chu.bacup.function.reward
 
 import com.github.p1k0chu.bacup.Main
-import com.github.p1k0chu.bacup.advancement.reward.BacConstants.TAB_COLOR
-import com.github.p1k0chu.bacup.advancement.reward.BacConstants.bac_teams
-import com.github.p1k0chu.bacup.data.function.MCFunction
+import com.github.p1k0chu.bacup.function.reward.BacConstants.TAB_COLOR
+import com.github.p1k0chu.bacup.function.reward.BacConstants.bac_teams
+import com.github.p1k0chu.bacup.function.MCFunction
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
@@ -56,7 +56,8 @@ class RewardsBuilder(
                 consumer.accept(
                     MCFunction(
                     Identifier.of(Main.MOD_ID, "reward/$tab/$name"),
-                    itemRewards.joinToString(separator = "\n") { giveGen(it) }))
+                    itemRewards.joinToString(separator = "\n") { giveGen(it) })
+                )
 
                 // main reward function
                 consumer.accept(

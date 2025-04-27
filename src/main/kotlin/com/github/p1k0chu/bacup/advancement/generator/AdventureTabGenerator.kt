@@ -1,9 +1,12 @@
-package com.github.p1k0chu.bacup.data.advancement
+package com.github.p1k0chu.bacup.advancement.generator
 
+import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.CatGiftReceivedCriterion
-import com.github.p1k0chu.bacup.data.language.description
-import com.github.p1k0chu.bacup.data.language.title
-import com.github.p1k0chu.bacup.utils.*
+import com.github.p1k0chu.bacup.advancement.display
+import com.github.p1k0chu.bacup.advancement.getPlayerHead
+import com.github.p1k0chu.bacup.advancement.id
+import com.github.p1k0chu.bacup.language.description
+import com.github.p1k0chu.bacup.language.title
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.data.advancement.AdvancementTabGenerator

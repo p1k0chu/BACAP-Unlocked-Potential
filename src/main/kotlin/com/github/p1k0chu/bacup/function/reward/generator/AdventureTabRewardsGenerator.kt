@@ -1,12 +1,13 @@
-package com.github.p1k0chu.bacup.advancement.reward
+package com.github.p1k0chu.bacup.function.reward.generator
 
-import com.github.p1k0chu.bacup.data.advancement.AdventureTabGenerator
-import com.github.p1k0chu.bacup.data.function.FunctionGenerator
-import com.github.p1k0chu.bacup.data.function.MCFunction
+import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator
+import com.github.p1k0chu.bacup.function.FunctionGenerator
+import com.github.p1k0chu.bacup.function.MCFunction
+import com.github.p1k0chu.bacup.function.reward.rewardsBuilder
 import net.minecraft.registry.RegistryWrapper
 import java.util.function.Consumer
 
-object RewardFunctionGenerator : FunctionGenerator {
+object AdventureTabRewardsGenerator : FunctionGenerator {
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<MCFunction>) {
         rewardsBuilder(consumer) {
             tab(AdventureTabGenerator.TAB_NAME) {

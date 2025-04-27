@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.data.function
+package com.github.p1k0chu.bacup.function
 
 import net.minecraft.util.Identifier
 

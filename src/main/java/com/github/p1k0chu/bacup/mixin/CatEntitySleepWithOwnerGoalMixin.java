@@ -22,7 +22,7 @@ public class CatEntitySleepWithOwnerGoalMixin {
     @Inject(method = "method_64176", at = @At("HEAD"))
     void awardCriteria(BlockPos.Mutable mutable, ServerWorld world, ItemStack stack, CallbackInfo ci) {
         if(cat.getOwner() instanceof ServerPlayerEntity player) {
-            Main.getCAT_GIFT_RECEIVED().trigger(player, stack);
+            Main.CAT_GIFT_RECEIVED.trigger(player, stack);
         }
     }
 }

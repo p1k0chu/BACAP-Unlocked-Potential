@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.data.language
+package com.github.p1k0chu.bacup.language
 
 import com.github.p1k0chu.bacup.Main
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder

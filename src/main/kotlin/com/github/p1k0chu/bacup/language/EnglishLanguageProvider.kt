@@ -1,6 +1,6 @@
-package com.github.p1k0chu.bacup.data.language
+package com.github.p1k0chu.bacup.language
 
-import com.github.p1k0chu.bacup.data.advancement.AdventureTabGenerator
+import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.registry.RegistryWrapper

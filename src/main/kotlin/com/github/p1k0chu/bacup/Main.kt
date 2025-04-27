@@ -9,9 +9,8 @@ import org.slf4j.LoggerFactory
 
 object Main : ModInitializer {
     const val MOD_ID: String = "bac-unlocked-potential"
-    val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
 
-    @JvmStatic
+    @JvmField
     val CAT_GIFT_RECEIVED: CatGiftReceivedCriterion = Criteria.register(
         id("cat_gift_received"), CatGiftReceivedCriterion()
     )

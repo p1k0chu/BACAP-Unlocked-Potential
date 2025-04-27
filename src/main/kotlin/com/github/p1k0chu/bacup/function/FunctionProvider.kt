@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.data.function
+package com.github.p1k0chu.bacup.function
 
 import com.google.common.hash.Hashing
 import com.google.common.hash.HashingOutputStream

@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.utils
+package com.github.p1k0chu.bacup.advancement
 
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementDisplay

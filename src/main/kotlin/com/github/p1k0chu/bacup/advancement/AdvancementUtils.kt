@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.utils
+package com.github.p1k0chu.bacup.advancement
 
 import com.github.p1k0chu.bacup.Main
 import com.mojang.authlib.properties.Property
@@ -21,7 +21,7 @@ fun advancement(id: String, block: Advancement.Builder.() -> Unit): AdvancementE
 }
 
 fun id(tab: String, name: String): String {
-    return "${Main.MOD_ID}:$tab/$name"
+    return Main.id("$tab/$name")
 }
 
 /**

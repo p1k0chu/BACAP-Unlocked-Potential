@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.advancement.reward
+package com.github.p1k0chu.bacup.function.reward
 
 object BacConstants {
     const val TAB_COLOR = "gray"

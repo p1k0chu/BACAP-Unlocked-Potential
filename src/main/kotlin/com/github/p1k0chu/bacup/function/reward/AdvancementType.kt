@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.advancement.reward
+package com.github.p1k0chu.bacup.function.reward
 
 import net.minecraft.advancement.AdvancementFrame
 
@@ -25,10 +25,10 @@ enum class AdvancementType(val message: String, val titleColor: String, val desc
     );
 
     fun from(frame: AdvancementFrame): AdvancementType {
-        return when(frame) {
+        return when (frame) {
             AdvancementFrame.TASK -> TASK
-            AdvancementFrame.CHALLENGE -> CHALLENGE
             AdvancementFrame.GOAL -> GOAL
+            AdvancementFrame.CHALLENGE -> CHALLENGE
         }
     }
 }
