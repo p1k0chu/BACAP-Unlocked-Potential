@@ -5,6 +5,7 @@ import com.github.p1k0chu.bacup.data.function.MCFunction
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import java.util.function.Consumer
+import kotlin.properties.Delegates
 
 class RewardsBuilder(
     val consumer: Consumer<MCFunction>
@@ -22,6 +23,7 @@ class RewardsBuilder(
             private val itemRewards: MutableList<ItemStack> = mutableListOf()
             var trophy: ItemStack? = null
             var type: AdvancementType = AdvancementType.TASK
+            var exp: Int? = null
 
             fun item(item: ItemStack) {
                 itemRewards.add(item)
@@ -49,6 +51,11 @@ class RewardsBuilder(
                 consumer.accept(MCFunction(
                     Identifier.of(Main.MOD_ID, "$tab/$name"),
                     mainRewardFunctionGen(Identifier.of(Main.MOD_ID, "$tab/$name"))
+                ))
+
+                consumer.accept(MCFunction(
+                    Identifier.of(Main.MOD_ID, "exp/$tab/$name"),
+                    expGen(exp)
                 ))
 
                 // TODO: trophy
@@ -92,6 +99,15 @@ val bac_teams = listOf(
 fun messageGen(tab: String, title: String, description: String, type: AdvancementType): String {
     return """
         tellraw @a {"translate":"${type.message}","with":[{"selector":"@s"},{"color":"${type.titleColor}","text":"["},{"color":"${type.titleColor}","translate":"$title","hover_event":{"action":"show_text","value":{"color":"${type.titleColor}","translate":"$title","extra":[{"text":"\n"},{"color":"${type.descriptionColor}","translate":"$description"},{"text":"\n\n"},{"color":"$TAB_COLOR","italic":true,"translate":"%1${'$'}s tab","with":[{"translate":"$tab"}]}]}}},{"color":"${type.titleColor}","text":"]"}]}
+    """.trimIndent()
+}
+
+fun expGen(amount: Int?): String {
+    if(amount == null) return ""
+
+    return """
+        xp add @s $amount
+        tellraw @s {"color":"blue","text":" +$amount ","extra":[{"translate":"Experience"}]}
     """.trimIndent()
 }
 
