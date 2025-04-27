@@ -24,6 +24,11 @@ class EnglishLanguageProvider(
                 title("A Meow Massages The Heart")
                 description("Receive every kind of gifts from your cat")
             }
+
+            advancement(AdventureTabGenerator.LOCK_MAP) {
+                title("Do It For The Frame")
+                description("Use a glass pane in a cartography table to lock a map, preventing it from updating")
+            }
         }
     }
 }
