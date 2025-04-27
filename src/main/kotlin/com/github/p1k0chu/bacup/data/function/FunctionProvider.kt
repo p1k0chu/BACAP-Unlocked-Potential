@@ -65,7 +65,3 @@ class FunctionProvider(
         }, Util.getMainWorkerExecutor().named("saveStable"))
     }
 }
-
-data class MCFunction(
-    val id: Identifier, val body: String
-)
