@@ -1,7 +1,9 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
+import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.CatGiftReceivedCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
@@ -18,6 +20,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
 
     const val CAT_GIFT = "cat_gift"
     const val ALL_CAT_GIFTS = "all_cat_gifts"
+    const val LOCK_MAP = "lock_map"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -54,6 +57,14 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                     )
                 })
             }
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, LOCK_MAP) {
+            parent(reference("blazeandcave:adventure/mapmakers_table"))
+            display {
+                icon = Items.GLASS_PANE.defaultStack
+            }
+            criterion("lock", Main.MAP_LOCKED.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
     }
 }

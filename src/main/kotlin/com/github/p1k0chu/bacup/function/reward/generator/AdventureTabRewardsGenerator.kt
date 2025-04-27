@@ -16,6 +16,7 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                 advancement(AdventureTabGenerator.ALL_CAT_GIFTS) {
                     type = AdvancementType.GOAL
                 }
+                advancement(AdventureTabGenerator.LOCK_MAP)
             }
         }
     }
