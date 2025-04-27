@@ -12,12 +12,12 @@ import java.util.function.Consumer
 class RewardsBuilder(
     val consumer: Consumer<MCFunction>
 ) {
-    fun tab(tab: String, block: RewardTabBuilder.() -> Unit) {
+    inline fun tab(tab: String, block: RewardTabBuilder.() -> Unit) {
         RewardTabBuilder(tab).block()
     }
 
     inner class RewardTabBuilder(private val tab: String) {
-        fun advancement(id: String, block: RewardAdvancementBuilder.() -> Unit = {}) {
+        inline fun advancement(id: String, block: RewardAdvancementBuilder.() -> Unit = {}) {
             RewardAdvancementBuilder(id).apply(block).build()
         }
 

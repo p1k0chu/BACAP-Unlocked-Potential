@@ -13,12 +13,12 @@ fun description(tab: String, name: String): MutableText {
     return Text.translatable("${Main.MOD_ID}.advancement.$tab.$name.desc")
 }
 
-fun TranslationBuilder.advancementTab(name: String, block: AdvancementTabTranslationBuilder.() -> Unit) {
+inline fun TranslationBuilder.advancementTab(name: String, block: AdvancementTabTranslationBuilder.() -> Unit) {
     AdvancementTabTranslationBuilder(this, name).block()
 }
 
 class AdvancementTabTranslationBuilder(val transBuilder: TranslationBuilder, val tab: String) {
-    fun advancement(id: String, block: AdvancementBuilder.() -> Unit) {
+    inline fun advancement(id: String, block: AdvancementBuilder.() -> Unit) {
         AdvancementBuilder(id).block()
     }
 

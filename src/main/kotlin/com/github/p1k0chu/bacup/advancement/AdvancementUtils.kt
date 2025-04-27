@@ -13,13 +13,6 @@ import net.minecraft.item.Items
 import net.minecraft.util.Identifier
 import java.util.*
 
-fun advancement(id: String, block: Advancement.Builder.() -> Unit): AdvancementEntry {
-    val builder = Advancement.Builder.createUntelemetered()
-    builder.apply(block)
-    builder.rewards(AdvancementRewards.Builder.function(Identifier.of(id)))
-    return builder.build(Identifier.of(id))
-}
-
 fun id(tab: String, name: String): String {
     return Main.id("$tab/$name")
 }
