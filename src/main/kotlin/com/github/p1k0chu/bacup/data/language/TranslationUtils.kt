@@ -18,17 +18,18 @@ fun TranslationBuilder.advancementTab(name: String, block: AdvancementTabTransla
 }
 
 class AdvancementTabTranslationBuilder(val transBuilder: TranslationBuilder, val tab: String) {
-    fun advancement(id: String, block: AdvancementTranslationBuilder.() -> Unit) {
-        AdvancementTranslationBuilder(transBuilder, tab, id).block()
+    fun advancement(id: String, block: AdvancementBuilder.() -> Unit) {
+        AdvancementBuilder(id).block()
+    }
+
+    inner class AdvancementBuilder(val id: String) {
+        fun title(title: String) {
+            transBuilder.add("${Main.MOD_ID}.advancement.$tab.$id.title", title)
+        }
+
+        fun description(description: String) {
+            transBuilder.add("${Main.MOD_ID}.advancement.$tab.$id.desc", description)
+        }
     }
 }
 
-class AdvancementTranslationBuilder(val transBuilder: TranslationBuilder, val tab: String, val id: String) {
-    fun title(title: String) {
-        transBuilder.add("${Main.MOD_ID}.advancement.$tab.$id.title", title)
-    }
-
-    fun description(description: String) {
-        transBuilder.add("${Main.MOD_ID}.advancement.$tab.$id.desc", description)
-    }
-}
