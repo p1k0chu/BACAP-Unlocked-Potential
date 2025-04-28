@@ -20,8 +20,13 @@ object Main : ModInitializer {
     )
 
     @JvmField
-    val WHEN_PIGS_FLY = Criteria.register(
+    val WHEN_PIGS_FLY: EmptyCriterion = Criteria.register(
         id("when_pigs_fly"), EmptyCriterion()
+    )
+
+    @JvmField
+    val DISENCHANT_GRINDSTONE: EmptyCriterion = Criteria.register(
+        id("disenchant_grindstone"), EmptyCriterion()
     )
 
     override fun onInitialize() {

@@ -5,6 +5,8 @@
   "mixins": [
     "CartographyTableScreenHandlerAnon5Mixin",
     "CatEntitySleepWithOwnerGoalMixin",
+    "GrindstoneScreenHandlerAccessor",
+    "GrindstoneScreenHandlerAnon4Mixin",
     "LivingEntityMixin",
     "PigEntityMixin"
   ],

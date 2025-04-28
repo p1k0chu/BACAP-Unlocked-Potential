@@ -2,6 +2,7 @@ package com.github.p1k0chu.bacup.advancement
 
 import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator
 import com.github.p1k0chu.bacup.advancement.generator.AnimalsTabGenerator
+import com.github.p1k0chu.bacup.advancement.generator.EnchantingTabGenerator
 import net.minecraft.data.DataOutput
 import net.minecraft.data.advancement.AdvancementProvider
 import net.minecraft.registry.RegistryWrapper
@@ -13,7 +14,8 @@ fun createAdvancementProvider(
     return AdvancementProvider(
         output, registriesFuture, listOf(
             AdventureTabGenerator,
-            AnimalsTabGenerator
+            AnimalsTabGenerator,
+            EnchantingTabGenerator,
         )
     )
 }
