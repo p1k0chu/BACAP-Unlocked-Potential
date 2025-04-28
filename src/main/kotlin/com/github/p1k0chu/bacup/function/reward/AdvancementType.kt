@@ -15,13 +15,13 @@ enum class AdvancementType(val message: String, val titleColor: String, val desc
     ),
     CHALLENGE(
         "%1\$s has completed the challenge %2\$s%3\$s%4\$s",
-        "#FF2A2A",
-        "#DC2727"
+        "dark_purple",
+        "#C900C7"
     ),
     SUPER_CHALLENGE(
         "%1\$s has completed the super challenge %2\$s%3\$s%4\$s",
-        "dark_purple",
-        "#49DB49"
+        "#FF2A2A",
+        "#DC2727"
     );
 
     fun from(frame: AdvancementFrame): AdvancementType {
