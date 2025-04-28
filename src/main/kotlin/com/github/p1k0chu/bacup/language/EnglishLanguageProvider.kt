@@ -53,6 +53,11 @@ class EnglishLanguageProvider(
                 title("Alternative Fuel")
                 description("Power a furnace with a kelp block")
             }
+
+            advancement(FarmingTabGenerator.SUPER_FUEL) {
+                title("Super Fuel")
+                description("Power a furnace with lava")
+            }
         }
     }
 }
