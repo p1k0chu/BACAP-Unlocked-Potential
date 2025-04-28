@@ -1,9 +1,6 @@
 package com.github.p1k0chu.bacup.language
 
-import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator
-import com.github.p1k0chu.bacup.advancement.generator.AnimalsTabGenerator
-import com.github.p1k0chu.bacup.advancement.generator.EnchantingTabGenerator
-import com.github.p1k0chu.bacup.advancement.generator.FarmingTabGenerator
+import com.github.p1k0chu.bacup.advancement.generator.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.registry.RegistryWrapper
@@ -57,6 +54,13 @@ class EnglishLanguageProvider(
             advancement(FarmingTabGenerator.SUPER_FUEL) {
                 title("Super Fuel")
                 description("Power a furnace with lava")
+            }
+        }
+
+        translationBuilder.advancementTab(MonstersTabGenerator.TAB_NAME) {
+            advancement(MonstersTabGenerator.BEAM_ME_UP) {
+                title("Beam Me Up")
+                description("Teleport over 100 meters from a single throw of an Ender Pearl")
             }
         }
     }
