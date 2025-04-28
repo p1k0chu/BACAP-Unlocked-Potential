@@ -19,6 +19,11 @@ object Main : ModInitializer {
         id("map_locked"), EmptyCriterion()
     )
 
+    @JvmField
+    val WHEN_PIGS_FLY = Criteria.register(
+        id("when_pigs_fly"), EmptyCriterion()
+    )
+
     override fun onInitialize() {
     }
 

@@ -1,6 +1,7 @@
 package com.github.p1k0chu.bacup.language
 
 import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator
+import com.github.p1k0chu.bacup.advancement.generator.AnimalsTabGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.registry.RegistryWrapper
@@ -28,6 +29,13 @@ class EnglishLanguageProvider(
             advancement(AdventureTabGenerator.LOCK_MAP) {
                 title("Do It For The Frame")
                 description("Use a glass pane in a cartography table to lock a map, preventing it from updating")
+            }
+        }
+
+        translationBuilder.advancementTab(AnimalsTabGenerator.TAB_NAME) {
+            advancement(AnimalsTabGenerator.WHEN_PIGS_FLY) {
+                title("When Pigs Fly")
+                description("Ride a pig off a cliff")
             }
         }
     }

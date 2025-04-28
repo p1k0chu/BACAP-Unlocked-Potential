@@ -14,7 +14,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net/minecraft/screen/CartographyTableScreenHandler$5")
-public class CartographyTableScreenHandlerAnon5Mixin {
+public abstract class CartographyTableScreenHandlerAnon5Mixin {
+    // this is a synthetic field for outer class
     @Shadow()
     @Final
     CartographyTableScreenHandler field_17303;
