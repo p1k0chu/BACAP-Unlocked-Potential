@@ -35,6 +35,11 @@ object Main : ModInitializer {
         id("furnace_fuel_consumed"), FurnaceFuelConsumedCriterion()
     )
 
+    @JvmField
+    val BEAM_ME_UP: EmptyCriterion = Criteria.register(
+        id("beam_me_up"), EmptyCriterion()
+    )
+
     override fun onInitialize() {
     }
 

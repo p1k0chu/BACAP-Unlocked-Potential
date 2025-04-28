@@ -7,6 +7,7 @@
     "AbstractFurnaceScreenHandlerMixin",
     "CartographyTableScreenHandlerAnon5Mixin",
     "CatEntitySleepWithOwnerGoalMixin",
+    "EnderPearlEntityMixin",
     "GrindstoneScreenHandlerAccessor",
     "GrindstoneScreenHandlerAnon4Mixin",
     "LivingEntityMixin",
