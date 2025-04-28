@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "CartographyTableScreenHandlerAnon5Mixin",
-    "CatEntitySleepWithOwnerGoalMixin"
+    "CatEntitySleepWithOwnerGoalMixin",
+    "LivingEntityMixin",
+    "PigEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net.minecraft.entity.passive.CatEntity$SleepWithOwnerGoal")
-public class CatEntitySleepWithOwnerGoalMixin {
+public abstract class CatEntitySleepWithOwnerGoalMixin {
     @Shadow
     @Final
     private CatEntity cat;
