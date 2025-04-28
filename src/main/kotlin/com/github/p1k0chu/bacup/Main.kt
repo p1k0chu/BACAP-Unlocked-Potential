@@ -2,6 +2,7 @@ package com.github.p1k0chu.bacup
 
 import com.github.p1k0chu.bacup.advancement.criteria.CatGiftReceivedCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.FurnaceFuelConsumedCriterion
 import net.fabricmc.api.ModInitializer
 import net.minecraft.advancement.criterion.Criteria
 
@@ -27,6 +28,11 @@ object Main : ModInitializer {
     @JvmField
     val DISENCHANT_GRINDSTONE: EmptyCriterion = Criteria.register(
         id("disenchant_grindstone"), EmptyCriterion()
+    )
+
+    @JvmField
+    val FURNACE_FUEL_CONSUMED: FurnaceFuelConsumedCriterion = Criteria.register(
+        id("furnace_fuel_consumed"), FurnaceFuelConsumedCriterion()
     )
 
     override fun onInitialize() {
