@@ -1,7 +1,5 @@
 package com.github.p1k0chu.bacup.function.reward
 
-import net.minecraft.advancement.AdvancementFrame
-
 enum class AdvancementType(val message: String, val titleColor: String, val descriptionColor: String) {
     TASK(
         "%1\$s has made the advancement %2\$s%3\$s%4\$s",
@@ -28,12 +26,4 @@ enum class AdvancementType(val message: String, val titleColor: String, val desc
         "light_purple",
         "#DE4ADC"
     );
-
-    fun from(frame: AdvancementFrame): AdvancementType {
-        return when (frame) {
-            AdvancementFrame.TASK -> TASK
-            AdvancementFrame.GOAL -> GOAL
-            AdvancementFrame.CHALLENGE -> CHALLENGE
-        }
-    }
 }
