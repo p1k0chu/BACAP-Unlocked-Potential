@@ -3,6 +3,8 @@
   "package": "com.github.p1k0chu.bacup.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AbstractFurnaceBlockEntityMixin",
+    "AbstractFurnaceScreenHandlerMixin",
     "CartographyTableScreenHandlerAnon5Mixin",
     "CatEntitySleepWithOwnerGoalMixin",
     "GrindstoneScreenHandlerAccessor",

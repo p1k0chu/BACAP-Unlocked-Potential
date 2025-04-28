@@ -3,6 +3,7 @@ package com.github.p1k0chu.bacup.language
 import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator
 import com.github.p1k0chu.bacup.advancement.generator.AnimalsTabGenerator
 import com.github.p1k0chu.bacup.advancement.generator.EnchantingTabGenerator
+import com.github.p1k0chu.bacup.advancement.generator.FarmingTabGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.registry.RegistryWrapper
@@ -44,6 +45,13 @@ class EnglishLanguageProvider(
             advancement(EnchantingTabGenerator.DISENCHANTED) {
                 title("Disenchanted")
                 description("Use a Grindstone to get experience from an enchanted item.")
+            }
+        }
+
+        translationBuilder.advancementTab(FarmingTabGenerator.TAB_NAME) {
+            advancement(FarmingTabGenerator.ALTERNATIVE_FUEL) {
+                title("Alternative Fuel")
+                description("Power a furnace with a kelp block")
             }
         }
     }
