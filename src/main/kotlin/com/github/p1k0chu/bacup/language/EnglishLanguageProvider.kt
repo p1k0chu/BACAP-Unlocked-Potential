@@ -2,6 +2,7 @@ package com.github.p1k0chu.bacup.language
 
 import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator
 import com.github.p1k0chu.bacup.advancement.generator.AnimalsTabGenerator
+import com.github.p1k0chu.bacup.advancement.generator.EnchantingTabGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.registry.RegistryWrapper
@@ -36,6 +37,13 @@ class EnglishLanguageProvider(
             advancement(AnimalsTabGenerator.WHEN_PIGS_FLY) {
                 title("When Pigs Fly")
                 description("Ride a pig off a cliff")
+            }
+        }
+
+        translationBuilder.advancementTab(EnchantingTabGenerator.TAB_NAME) {
+            advancement(EnchantingTabGenerator.DISENCHANTED) {
+                title("Disenchanted")
+                description("Use a Grindstone to get experience from an enchanted item.")
             }
         }
     }
