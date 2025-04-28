@@ -17,9 +17,10 @@ object FarmingTabGenerator : AdvancementTabGenerator {
     const val TAB_NAME = "farming"
 
     const val ALTERNATIVE_FUEL = "alternative_fuel"
+    const val SUPER_FUEL = "super_fuel"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
-        advancement(TAB_NAME, ALTERNATIVE_FUEL) {
+        val altFuel = advancement(TAB_NAME, ALTERNATIVE_FUEL) {
             parent(reference("blazeandcave:farming/aquatic_biofuel"))
             display {
                 icon = Items.DRIED_KELP_BLOCK.defaultStack
@@ -30,6 +31,20 @@ object FarmingTabGenerator : AdvancementTabGenerator {
                         Optional.empty(), Optional.of(
                             ItemPredicate.Builder.create()
                                 .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.DRIED_KELP_BLOCK)
+                                .build()))))
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, SUPER_FUEL) {
+            parent(altFuel)
+            display {
+                icon = Items.LAVA_BUCKET.defaultStack
+            }
+            criterion(
+                "fuel", Main.FURNACE_FUEL_CONSUMED.create(
+                    FurnaceFuelConsumedCriterion.Conditions(
+                        Optional.empty(), Optional.of(
+                            ItemPredicate.Builder.create()
+                                .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.LAVA_BUCKET)
                                 .build()))))
         }.also(consumer::accept)
     }
