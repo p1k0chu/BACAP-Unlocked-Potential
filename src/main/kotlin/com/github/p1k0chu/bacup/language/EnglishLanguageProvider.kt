@@ -67,6 +67,10 @@ class EnglishLanguageProvider(
                 title("Beam Me Up")
                 description("Teleport over 100 meters from a single throw of an Ender Pearl")
             }
+            advancement(MonstersTabGenerator.FORGED_BY_FLESH) {
+                title("Forged by Flesh")
+                description("Retrieve an iron ingot from a defeated zombie")
+            }
         }
 
         translationBuilder.advancementTab(MiningTabGenerator.TAB_NAME) {
