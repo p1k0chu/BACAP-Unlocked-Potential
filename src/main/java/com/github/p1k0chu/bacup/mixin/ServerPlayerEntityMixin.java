@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.ServerPlayerEntityPetsTamedCounter;
+import com.github.p1k0chu.bacup.imixin.ServerPlayerEntityPetsTamedCounter;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.entity.EntityType;
 import net.minecraft.server.network.ServerPlayerEntity;

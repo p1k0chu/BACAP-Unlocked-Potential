@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.AbstractFurnaceBlockEntityWhoOpened;
+import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityWhoOpened;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;

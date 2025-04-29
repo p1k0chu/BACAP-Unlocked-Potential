@@ -1,10 +1,9 @@
 package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.Main;
-import com.github.p1k0chu.bacup.ServerPlayerEntityPetsTamedCounter;
+import com.github.p1k0chu.bacup.imixin.ServerPlayerEntityPetsTamedCounter;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;

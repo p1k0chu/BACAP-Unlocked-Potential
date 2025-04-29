@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup;
+package com.github.p1k0chu.bacup.imixin;
 
 import net.minecraft.entity.EntityType;
 
