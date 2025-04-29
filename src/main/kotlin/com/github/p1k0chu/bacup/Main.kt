@@ -48,6 +48,10 @@ object Main : ModInitializer {
     val ENTITY_DROPPED_LOOT: EntityDroppedLootCriterion = Criteria.register(
         id("entity_dropped_loot"), EntityDroppedLootCriterion()
     )
+    @JvmField
+    val GET_RAID_OF_IT: EmptyCriterion = Criteria.register(
+        id("get_raid_of_it"), EmptyCriterion()
+    )
 
     override fun onInitialize() {
     }
