@@ -1,8 +1,8 @@
 package com.github.p1k0chu.bacup.imixin;
 
-import net.minecraft.entity.player.PlayerEntity;
+import java.util.UUID;
 
 public interface AbstractFurnaceBlockEntityWhoOpened {
-    void setPlayer(PlayerEntity player);
-    PlayerEntity getPlayer();
+    void setPlayer(UUID player);
+    UUID getPlayer();
 }
