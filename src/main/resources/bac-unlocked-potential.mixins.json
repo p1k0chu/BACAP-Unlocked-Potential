@@ -12,6 +12,7 @@
     "GrindstoneScreenHandlerAccessor",
     "GrindstoneScreenHandlerAnon4Mixin",
     "LivingEntityMixin",
+    "MerchantEntityMixin",
     "PigEntityMixin",
     "ServerPlayerEntityMixin",
     "TameableEntityMixin"
