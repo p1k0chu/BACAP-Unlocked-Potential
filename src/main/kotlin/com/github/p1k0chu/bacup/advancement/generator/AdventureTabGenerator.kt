@@ -29,6 +29,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
     const val ALL_CAT_GIFTS = "all_cat_gifts"
     const val LOCK_MAP = "lock_map"
     const val PLETHORA_OF_CATS = "plethora_of_cats"
+    const val GET_RAID_OF_IT = "get_raid_of_it"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -97,6 +98,14 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 icon = Items.GLASS_PANE.defaultStack
             }
             criterion("lock", Main.MAP_LOCKED.create(EmptyCriterion.Conditions()))
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, GET_RAID_OF_IT) {
+            parent(reference("blazeandcave:adventure/were_being_attacked"))
+            display {
+                icon = Items.MILK_BUCKET.defaultStack
+            }
+            criterion("get_raid_of_it", Main.GET_RAID_OF_IT.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
     }
 }

@@ -21,6 +21,7 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                     type = AdvancementType.GOAL
                 }
                 advancement(AdventureTabGenerator.LOCK_MAP)
+                advancement(AdventureTabGenerator.GET_RAID_OF_IT)
             }
         }
     }
