@@ -17,6 +17,7 @@ fun createAdvancementProvider(
             FarmingTabGenerator,
             MonstersTabGenerator,
             MiningTabGenerator,
+            StatisticsTabGenerator,
         )
     )
 }

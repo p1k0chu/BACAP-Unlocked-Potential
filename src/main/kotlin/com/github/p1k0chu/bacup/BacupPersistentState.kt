@@ -19,7 +19,7 @@ class BacupPersistentState(
     val players: MutableMap<UUID, PlayerData> = players?.toMutableMap() ?: mutableMapOf()
 
     companion object {
-        val CODEC = RecordCodecBuilder.create { instance ->
+        val CODEC: Codec<BacupPersistentState> = RecordCodecBuilder.create { instance ->
             instance.group(
                 Codec.unboundedMap(Uuids.CODEC, PlayerData.CODEC)
                     .fieldOf("players")
@@ -54,17 +54,23 @@ class BacupPersistentState(
     }
 }
 
+/**
+ * @param emeraldsObtained emeralds obtained through trade with merchants
+ */
 class PlayerData(
-    petsTamed: Map<EntityType<*>, Int>? = null
+    petsTamed: Map<EntityType<*>, Int>? = null,
+    var emeraldsObtained: Int = 0
 ) {
     val petsTamed: MutableMap<EntityType<*>, Int> = petsTamed?.toMutableMap() ?: mutableMapOf()
 
     companion object {
-        val CODEC = RecordCodecBuilder.create { instance ->
+        val CODEC: Codec<PlayerData> = RecordCodecBuilder.create { instance ->
             instance.group(
                 Codec.unboundedMap(EntityType.CODEC, Codec.INT)
                     .fieldOf("petsTamed")
-                    .forGetter(PlayerData::petsTamed)
+                    .forGetter(PlayerData::petsTamed),
+                Codec.INT.optionalFieldOf("emeralds_obtained", 0)
+                    .forGetter(PlayerData::emeraldsObtained)
             ).apply(instance, ::PlayerData)
         }
     }

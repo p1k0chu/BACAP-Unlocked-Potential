@@ -75,5 +75,20 @@ class EnglishLanguageProvider(
                 description("Smelt leaf litter using leaf litter")
             }
         }
+
+        translationBuilder.advancementTab(StatisticsTabGenerator.TAB_NAME) {
+            advancement(StatisticsTabGenerator.THE_STOCK_MARKET) {
+                title("The Stock Market")
+                description("Obtain a stack of emerald blocks through trading")
+            }
+            advancement(StatisticsTabGenerator.SMALL_BUSINESS) {
+                title("Small Business")
+                description("Buy 1000 emeralds in total")
+            }
+            advancement(StatisticsTabGenerator.SMALL_INDIE_COMPANY) {
+                title("Small Indie Company")
+                description("Make 27 stacks of emerald blocks on sales")
+            }
+        }
     }
 }

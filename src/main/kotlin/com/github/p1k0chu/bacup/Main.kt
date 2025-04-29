@@ -40,6 +40,10 @@ object Main : ModInitializer {
     val COOKED_WITH_FUEL: FurnaceCookedWithFuelCriterion = Criteria.register(
         id("cooked_with_fuel"), FurnaceCookedWithFuelCriterion()
     )
+    @JvmField
+    val TRADED_FOR_EMERALDS: TradedForEmeraldsCriterion = Criteria.register(
+        id("traded_for_emeralds"), TradedForEmeraldsCriterion()
+    )
 
     override fun onInitialize() {
     }
