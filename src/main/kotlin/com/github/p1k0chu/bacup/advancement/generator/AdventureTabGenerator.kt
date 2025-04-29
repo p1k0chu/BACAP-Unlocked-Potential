@@ -4,15 +4,22 @@ import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.CatGiftReceivedCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.PetTamedCriterion
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
+import net.minecraft.enchantment.Enchantments
+import net.minecraft.entity.EntityType
 import net.minecraft.item.Items
+import net.minecraft.predicate.NumberRange
+import net.minecraft.predicate.entity.EntityPredicate
+import net.minecraft.predicate.entity.EntityTypePredicate
 import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
+import java.util.*
 import java.util.function.Consumer
 
 object AdventureTabGenerator : AdvancementTabGenerator {
@@ -21,6 +28,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
     const val CAT_GIFT = "cat_gift"
     const val ALL_CAT_GIFTS = "all_cat_gifts"
     const val LOCK_MAP = "lock_map"
+    const val PLETHORA_OF_CATS = "plethora_of_cats"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -33,8 +41,32 @@ object AdventureTabGenerator : AdvancementTabGenerator {
             criterion("gift", CatGiftReceivedCriterion.Conditions.builder {})
         }.also(consumer::accept)
 
-        advancement(TAB_NAME, ALL_CAT_GIFTS) {
+        val plethoraOfCats = advancement(TAB_NAME, PLETHORA_OF_CATS) {
             parent(catGift)
+            display {
+                frame = AdvancementFrame.GOAL
+                icon = Items.COD.defaultStack
+            }
+            criterion(
+                "20", Main.PET_TAMED.create(
+                    PetTamedCriterion.Conditions(
+                        Optional.empty(),
+                        Optional.of(
+                            EntityPredicate.Builder.create().type(
+                                EntityTypePredicate.create(
+                                    wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE),
+                                    EntityType.CAT
+                                )
+                            ).build()
+                        ),
+                        Optional.of(NumberRange.IntRange.atLeast(20)),
+                    )
+                )
+            )
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, ALL_CAT_GIFTS) {
+            parent(plethoraOfCats)
             display {
                 frame = AdvancementFrame.GOAL
                 // cat king; https://minecraft-heads.com/custom-heads/head/104289-cat-king

@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.AbstractFurnaceBlockEntityWhoOpened;
+import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityWhoOpened;
 import com.github.p1k0chu.bacup.Main;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BlockState;
