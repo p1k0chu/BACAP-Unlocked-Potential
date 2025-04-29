@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -17,19 +18,21 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.UUID;
+
 @Mixin(AbstractFurnaceBlockEntity.class)
 public abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnaceBlockEntityWhoOpened {
     @Unique
     @Nullable
-    private PlayerEntity lastPlayerOpened;
+    private UUID lastPlayerOpened;
 
     @Override
-    public void setPlayer(PlayerEntity player) {
+    public void setPlayer(UUID player) {
         lastPlayerOpened = player;
     }
 
     @Override
-    public PlayerEntity getPlayer() {
+    public UUID getPlayer() {
         return lastPlayerOpened;
     }
 
@@ -41,9 +44,13 @@ public abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnace
                              CallbackInfo ci,
                              @Local(ordinal = 0) ItemStack fuel) {
 
-        var whoOpened = (AbstractFurnaceBlockEntityWhoOpened) blockEntity;
-        if(whoOpened.getPlayer() instanceof ServerPlayerEntity serverPlayerEntity) {
-            Main.FURNACE_FUEL_CONSUMED.trigger(serverPlayerEntity, fuel);
+        UUID whoOpened = ((AbstractFurnaceBlockEntityWhoOpened) blockEntity).getPlayer();
+
+        MinecraftServer server = world.getServer();
+        ServerPlayerEntity player = server.getPlayerManager().getPlayer(whoOpened);
+
+        if(player != null) {
+            Main.FURNACE_FUEL_CONSUMED.trigger(player, fuel);
         }
     }
 }
