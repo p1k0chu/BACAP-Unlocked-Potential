@@ -18,6 +18,11 @@ public class TameableEntityMixin {
     void setTamedBy(PlayerEntity player, CallbackInfo ci, @Local ServerPlayerEntity serverPlayerEntity) {
         TameableEntity tamed = (TameableEntity) (Object) this;
         EntityType<?> type = (tamed).getType();
+
+        if(!ServerPlayerEntityPetsTamedCounter.isTracked(type)) {
+            return;
+        }
+
         int total = ((ServerPlayerEntityPetsTamedCounter) serverPlayerEntity).bacup$increment(type);
 
         Main.PET_TAMED.trigger(serverPlayerEntity, tamed, total);
