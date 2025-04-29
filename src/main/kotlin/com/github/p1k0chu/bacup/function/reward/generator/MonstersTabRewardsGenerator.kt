@@ -19,6 +19,11 @@ object MonstersTabRewardsGenerator : FunctionGenerator {
                     exp = 50
                     item(ItemStack(Items.ENDER_PEARL, 1))
                 }
+                advancement(MonstersTabGenerator.FORGED_BY_FLESH) {
+                    type = AdvancementType.GOAL
+                    exp = 50
+                    item(ItemStack(Items.IRON_INGOT, 1))
+                }
             }
         }
     }

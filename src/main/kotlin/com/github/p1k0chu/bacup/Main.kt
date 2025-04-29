@@ -44,6 +44,10 @@ object Main : ModInitializer {
     val TRADED_FOR_EMERALDS: TradedForEmeraldsCriterion = Criteria.register(
         id("traded_for_emeralds"), TradedForEmeraldsCriterion()
     )
+    @JvmField
+    val ENTITY_DROPPED_LOOT: EntityDroppedLootCriterion = Criteria.register(
+        id("entity_dropped_loot"), EntityDroppedLootCriterion()
+    )
 
     override fun onInitialize() {
     }
