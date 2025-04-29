@@ -16,10 +16,10 @@ import java.util.function.Consumer
 object MiningTabGenerator : AdvancementTabGenerator {
     const val TAB_NAME = "mining"
 
-    const val LEAF = "blablabla"
+    const val LEAFTERALLY = "leafterally"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
-        advancement(TAB_NAME, LEAF) {
+        advancement(TAB_NAME, LEAFTERALLY) {
             parent(reference("blazeandcave:mining/renewable_energy"))
             display {
                 icon = Items.LEAF_LITTER.defaultStack

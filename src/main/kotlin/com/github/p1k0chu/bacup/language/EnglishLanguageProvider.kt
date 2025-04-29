@@ -70,8 +70,8 @@ class EnglishLanguageProvider(
         }
 
         translationBuilder.advancementTab(MiningTabGenerator.TAB_NAME) {
-            advancement(MiningTabGenerator.LEAF) {
-                title("Leaf :3")
+            advancement(MiningTabGenerator.LEAFTERALLY) {
+                title("Leafterally")
                 description("Smelt leaf litter using leaf litter")
             }
         }
