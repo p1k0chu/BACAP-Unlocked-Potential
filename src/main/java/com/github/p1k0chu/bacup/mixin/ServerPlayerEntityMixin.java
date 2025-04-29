@@ -21,15 +21,6 @@ public abstract class ServerPlayerEntityMixin implements ServerPlayerEntityPetsT
     }
 
     @Override
-    public int bacup$get(EntityType<?> entityType) {
-        PlayerData state = BacupPersistentState.getPlayerState((LivingEntity) (Object) this);
-
-        Map<EntityType<?>, Integer> x = state.getPetsTamed();
-
-        return x.computeIfAbsent(entityType, i -> 0);
-    }
-
-    @Override
     public int bacup$incrementEmeraldsObtained(int amount) {
         PlayerData state = BacupPersistentState.getPlayerState((LivingEntity) (Object) this);
 

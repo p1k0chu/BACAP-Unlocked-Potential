@@ -11,7 +11,6 @@ public interface ServerPlayerEntityPetsTamedCounter {
     );
 
     int bacup$increment(EntityType<?> entityType);
-    int bacup$get(EntityType<?> entityType);
 
     static <T extends Entity> boolean isTracked(EntityType<T> entityType) {
         return trackedTypes.contains(entityType);
