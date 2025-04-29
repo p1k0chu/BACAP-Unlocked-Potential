@@ -1,0 +1,26 @@
+package com.github.p1k0chu.bacup.language.generators
+
+import com.github.p1k0chu.bacup.advancement.generator.FarmingTabGenerator
+import com.github.p1k0chu.bacup.language.TranslationGenerator
+import com.github.p1k0chu.bacup.language.advancementTab
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
+import net.minecraft.registry.RegistryWrapper
+
+object FarmingTabTranslationGenerator : TranslationGenerator {
+    override fun accept(
+        wrapperLookup: RegistryWrapper.WrapperLookup,
+        translationBuilder: FabricLanguageProvider.TranslationBuilder
+    ) {
+        translationBuilder.advancementTab(FarmingTabGenerator.TAB_NAME) {
+            advancement(FarmingTabGenerator.ALTERNATIVE_FUEL) {
+                title("Alternative Fuel")
+                description("Power a furnace with a kelp block")
+            }
+
+            advancement(FarmingTabGenerator.SUPER_FUEL) {
+                title("Super Fuel")
+                description("Power a furnace with lava")
+            }
+        }
+    }
+}
