@@ -1,9 +1,6 @@
 package com.github.p1k0chu.bacup
 
-import com.github.p1k0chu.bacup.advancement.criteria.CatGiftReceivedCriterion
-import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
-import com.github.p1k0chu.bacup.advancement.criteria.FurnaceFuelConsumedCriterion
-import com.github.p1k0chu.bacup.advancement.criteria.PetTamedCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.*
 import net.fabricmc.api.ModInitializer
 import net.minecraft.advancement.criterion.Criteria
 
@@ -38,6 +35,10 @@ object Main : ModInitializer {
     @JvmField
     val PET_TAMED: PetTamedCriterion = Criteria.register(
         id("pet_tamed"), PetTamedCriterion()
+    )
+    @JvmField
+    val COOKED_WITH_FUEL: FurnaceCookedWithFuelCriterion = Criteria.register(
+        id("cooked_with_fuel"), FurnaceCookedWithFuelCriterion()
     )
 
     override fun onInitialize() {

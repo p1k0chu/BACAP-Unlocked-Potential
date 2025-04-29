@@ -29,7 +29,7 @@ public class AbstractFurnaceScreenHandlerMixin {
            CallbackInfo ci) {
 
         if (inventory instanceof AbstractFurnaceBlockEntity furnace) {
-            ((AbstractFurnaceBlockEntityWhoOpened) furnace).setPlayer(playerInventory.player.getUuid());
+            ((AbstractFurnaceBlockEntityWhoOpened) furnace).bacup$setPlayer(playerInventory.player.getUuid());
         }
     }
 }
