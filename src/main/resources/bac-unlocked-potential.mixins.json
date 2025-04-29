@@ -11,7 +11,9 @@
     "GrindstoneScreenHandlerAccessor",
     "GrindstoneScreenHandlerAnon4Mixin",
     "LivingEntityMixin",
-    "PigEntityMixin"
+    "PigEntityMixin",
+    "ServerPlayerEntityMixin",
+    "TameableEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

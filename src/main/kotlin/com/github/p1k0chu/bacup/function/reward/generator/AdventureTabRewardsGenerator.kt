@@ -13,6 +13,10 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
         rewardsBuilder(consumer) {
             tab(AdventureTabGenerator.TAB_NAME) {
                 advancement(AdventureTabGenerator.CAT_GIFT)
+                advancement(AdventureTabGenerator.PLETHORA_OF_CATS) {
+                    type = AdvancementType.GOAL
+                    exp = 50
+                }
                 advancement(AdventureTabGenerator.ALL_CAT_GIFTS) {
                     type = AdvancementType.GOAL
                 }

@@ -20,6 +20,11 @@ class EnglishLanguageProvider(
                 description("Receive a gift from a tamed cat in the morning.")
             }
 
+            advancement(AdventureTabGenerator.PLETHORA_OF_CATS) {
+                title("Plethora of Cats")
+                description("Befriend twenty stray cats")
+            }
+
             advancement(AdventureTabGenerator.ALL_CAT_GIFTS) {
                 title("A Meow Massages The Heart")
                 description("Receive every kind of gifts from your cat")
