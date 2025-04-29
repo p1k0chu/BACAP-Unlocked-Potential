@@ -16,6 +16,10 @@ object AnimalsTabTranslationGenerator : TranslationGenerator {
                 title("When Pigs Fly")
                 description("Ride a pig off a cliff")
             }
+            advancement(AnimalsTabGenerator.DOG_ARMY) {
+                title("Dog Army")
+                description("Befriend twenty wolves")
+            }
         }
     }
 }

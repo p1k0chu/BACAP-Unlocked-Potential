@@ -7,7 +7,8 @@ import java.util.Set;
 
 public interface ServerPlayerEntityPetsTamedCounter {
     Set<EntityType<?>> trackedTypes = Set.of(
-            EntityType.CAT
+            EntityType.CAT,
+            EntityType.WOLF
     );
 
     int bacup$increment(EntityType<?> entityType);
