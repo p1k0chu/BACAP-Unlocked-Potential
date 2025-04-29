@@ -14,7 +14,8 @@ fun createFunctionProvider(
             AnimalsTabRewardsGenerator,
             EnchantingTabRewardsGenerator,
             FarmingTabRewardsGenerator,
-            MonstersTabRewardsGenerator
+            MonstersTabRewardsGenerator,
+            MiningTabRewardsGenerator,
         )
     )
 }

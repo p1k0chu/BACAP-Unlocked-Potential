@@ -8,6 +8,7 @@
     "CartographyTableScreenHandlerAnon5Mixin",
     "CatEntitySleepWithOwnerGoalMixin",
     "EnderPearlEntityMixin",
+    "FurnaceOutputSlotMixin",
     "GrindstoneScreenHandlerAccessor",
     "GrindstoneScreenHandlerAnon4Mixin",
     "LivingEntityMixin",

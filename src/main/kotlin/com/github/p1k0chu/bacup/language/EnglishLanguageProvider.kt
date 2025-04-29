@@ -68,5 +68,12 @@ class EnglishLanguageProvider(
                 description("Teleport over 100 meters from a single throw of an Ender Pearl")
             }
         }
+
+        translationBuilder.advancementTab(MiningTabGenerator.TAB_NAME) {
+            advancement(MiningTabGenerator.LEAF) {
+                title("Leaf :3")
+                description("Smelt leaf litter using leaf litter")
+            }
+        }
     }
 }

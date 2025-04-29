@@ -1,11 +1,13 @@
 package com.github.p1k0chu.bacup.mixin;
 
+import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityLastFuel;
 import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityWhoOpened;
 import com.github.p1k0chu.bacup.Main;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,19 +23,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.UUID;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
-public abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnaceBlockEntityWhoOpened {
+public abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnaceBlockEntityWhoOpened, AbstractFurnaceBlockEntityLastFuel {
     @Unique
     @Nullable
     private UUID lastPlayerOpened;
 
+    @Unique
+    @Nullable
+    private Item lastConsumedFuel;
+
     @Override
-    public void setPlayer(UUID player) {
+    public void bacup$setPlayer(UUID player) {
         lastPlayerOpened = player;
     }
 
     @Override
-    public UUID getPlayer() {
+    public UUID bacup$getPlayer() {
         return lastPlayerOpened;
+    }
+
+    @Override
+    public @Nullable Item bacup$getLastFuel() {
+        return lastConsumedFuel;
+    }
+
+    @Override
+    public void bacup$setLastFuel(@Nullable Item fuel) {
+        lastConsumedFuel = fuel;
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;decrement(I)V"))
@@ -43,8 +59,9 @@ public abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnace
                              AbstractFurnaceBlockEntity blockEntity,
                              CallbackInfo ci,
                              @Local(ordinal = 0) ItemStack fuel) {
+        ((AbstractFurnaceBlockEntityLastFuel)blockEntity).bacup$setLastFuel(fuel.getItem());
 
-        UUID whoOpened = ((AbstractFurnaceBlockEntityWhoOpened) blockEntity).getPlayer();
+        UUID whoOpened = ((AbstractFurnaceBlockEntityWhoOpened) blockEntity).bacup$getPlayer();
 
         MinecraftServer server = world.getServer();
         ServerPlayerEntity player = server.getPlayerManager().getPlayer(whoOpened);
