@@ -3,10 +3,13 @@ package com.github.p1k0chu.bacup.advancement.criteria
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.advancement.criterion.AbstractCriterion
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.predicate.entity.EntityPredicate
 import net.minecraft.predicate.entity.LootContextPredicate
 import net.minecraft.predicate.item.ItemPredicate
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.RegistryWrapper.WrapperLookup
 import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
 
@@ -40,6 +43,17 @@ class SingleItemCriterion : AbstractCriterion<SingleItemCriterion.Conditions>() 
                     ItemPredicate.CODEC.listOf().optionalFieldOf("item", emptyList())
                         .forGetter(Conditions::item)
                 ).apply(instance, SingleItemCriterion::Conditions)
+            }
+
+            fun items(wrapperLookup: WrapperLookup, vararg items: ItemConvertible): Conditions {
+                return Conditions(
+                    Optional.empty(),
+                    items.map { item ->
+                        ItemPredicate.Builder.create()
+                            .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), item)
+                            .build()
+                    }
+                )
             }
         }
     }
