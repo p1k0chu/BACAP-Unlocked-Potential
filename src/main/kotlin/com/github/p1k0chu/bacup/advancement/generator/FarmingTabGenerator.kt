@@ -2,7 +2,7 @@ package com.github.p1k0chu.bacup.advancement.generator
 
 import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
-import com.github.p1k0chu.bacup.advancement.criteria.FurnaceFuelConsumedCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.SingleItemCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
@@ -27,7 +27,7 @@ object FarmingTabGenerator : AdvancementTabGenerator {
             }
             criterion(
                 "fuel", Main.FURNACE_FUEL_CONSUMED.create(
-                    FurnaceFuelConsumedCriterion.Conditions(
+                    SingleItemCriterion.Conditions(
                         Optional.empty(), Optional.of(
                             ItemPredicate.Builder.create()
                                 .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.DRIED_KELP_BLOCK)
@@ -41,7 +41,7 @@ object FarmingTabGenerator : AdvancementTabGenerator {
             }
             criterion(
                 "fuel", Main.FURNACE_FUEL_CONSUMED.create(
-                    FurnaceFuelConsumedCriterion.Conditions(
+                    SingleItemCriterion.Conditions(
                         Optional.empty(), Optional.of(
                             ItemPredicate.Builder.create()
                                 .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.LAVA_BUCKET)

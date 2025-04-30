@@ -25,8 +25,8 @@ object Main : ModInitializer {
         id("disenchant_grindstone"), EmptyCriterion()
     )
     @JvmField
-    val FURNACE_FUEL_CONSUMED: FurnaceFuelConsumedCriterion = Criteria.register(
-        id("furnace_fuel_consumed"), FurnaceFuelConsumedCriterion()
+    val FURNACE_FUEL_CONSUMED: SingleItemCriterion = Criteria.register(
+        id("furnace_fuel_consumed"), SingleItemCriterion()
     )
     @JvmField
     val BEAM_ME_UP: EmptyCriterion = Criteria.register(
