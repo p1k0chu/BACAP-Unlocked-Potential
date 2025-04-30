@@ -14,7 +14,7 @@ object EndTabTranslationGenerator : TranslationGenerator {
         translationBuilder.advancementTab(EndTabGenerator.TAB_NAME) {
             advancement(EndTabGenerator.DRAGON2_0) {
                 title("Dragon 2.0")
-                description("Summon a stronger dragon using 10 ender crystals")
+                description("Summon a \"stronger\" dragon using 10 ender crystals")
             }
         }
     }
