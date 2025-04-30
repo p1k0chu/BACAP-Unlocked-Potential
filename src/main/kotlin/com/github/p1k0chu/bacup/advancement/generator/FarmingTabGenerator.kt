@@ -33,7 +33,7 @@ object FarmingTabGenerator : AdvancementTabGenerator {
             criterion(
                 "fuel", Main.FURNACE_FUEL_CONSUMED.create(
                     SingleItemCriterion.Conditions(
-                        Optional.empty(), Optional.of(
+                        Optional.empty(), listOf(
                             ItemPredicate.Builder.create()
                                 .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.DRIED_KELP_BLOCK)
                                 .build()))))
@@ -47,7 +47,7 @@ object FarmingTabGenerator : AdvancementTabGenerator {
             criterion(
                 "fuel", Main.FURNACE_FUEL_CONSUMED.create(
                     SingleItemCriterion.Conditions(
-                        Optional.empty(), Optional.of(
+                        Optional.empty(), listOf(
                             ItemPredicate.Builder.create()
                                 .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.LAVA_BUCKET)
                                 .build()))))

@@ -21,14 +21,14 @@ class SingleItemCriterion : AbstractCriterion<SingleItemCriterion.Conditions>() 
 
     class Conditions(
         private val _player: Optional<LootContextPredicate>,
-        private val item: Optional<ItemPredicate>
+        private val item: List<ItemPredicate>
     ) : AbstractCriterion.Conditions {
-        constructor() : this(Optional.empty(), Optional.empty())
+        constructor() : this(Optional.empty(), listOf())
 
         override fun player() = _player
 
         fun matches(stack: ItemStack): Boolean {
-            return item.isEmpty || item.get().test(stack)
+            return item.any { it.test(stack) }
         }
 
         companion object {
@@ -37,7 +37,7 @@ class SingleItemCriterion : AbstractCriterion<SingleItemCriterion.Conditions>() 
                 instance.group(
                     EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
                         .forGetter(Conditions::player),
-                    ItemPredicate.CODEC.optionalFieldOf("item")
+                    ItemPredicate.CODEC.listOf().optionalFieldOf("item", emptyList())
                         .forGetter(Conditions::item)
                 ).apply(instance, SingleItemCriterion::Conditions)
             }
