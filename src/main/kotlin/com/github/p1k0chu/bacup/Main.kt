@@ -41,8 +41,8 @@ object Main : ModInitializer {
         id("cooked_with_fuel"), FurnaceCookedWithFuelCriterion()
     )
     @JvmField
-    val TRADED_FOR_EMERALDS: TradedForEmeraldsCriterion = Criteria.register(
-        id("traded_for_emeralds"), TradedForEmeraldsCriterion()
+    val TRADED_FOR_EMERALDS: SingleIntRangeCriterion = Criteria.register(
+        id("traded_for_emeralds"), SingleIntRangeCriterion()
     )
     @JvmField
     val ENTITY_DROPPED_LOOT: EntityDroppedLootCriterion = Criteria.register(

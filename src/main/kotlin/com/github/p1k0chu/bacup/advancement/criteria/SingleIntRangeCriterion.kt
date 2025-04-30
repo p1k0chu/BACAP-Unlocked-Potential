@@ -9,23 +9,23 @@ import net.minecraft.predicate.entity.LootContextPredicate
 import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
 
-class TradedForEmeraldsCriterion : AbstractCriterion<TradedForEmeraldsCriterion.Conditions>() {
+class SingleIntRangeCriterion : AbstractCriterion<SingleIntRangeCriterion.Conditions>() {
     override fun getConditionsCodec() = Conditions.CODEC
 
-    fun trigger(player: ServerPlayerEntity, total: Int) {
+    fun trigger(player: ServerPlayerEntity, amount: Int) {
         this.trigger(player) { conditions ->
-            conditions.matches(total)
+            conditions.matches(amount)
         }
     }
 
     class Conditions(
         private val _player: Optional<LootContextPredicate>,
-        private val total: Optional<NumberRange.IntRange>
+        private val amount: Optional<NumberRange.IntRange>
     ) : AbstractCriterion.Conditions {
         override fun player() = _player
 
         fun matches(total: Int): Boolean {
-            return this.total.isEmpty || this.total.get().test(total)
+            return this.amount.isEmpty || this.amount.get().test(total)
         }
 
         companion object {
@@ -34,9 +34,9 @@ class TradedForEmeraldsCriterion : AbstractCriterion<TradedForEmeraldsCriterion.
                 instance.group(
                     EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
                         .forGetter(Conditions::player),
-                    NumberRange.IntRange.CODEC.optionalFieldOf("total")
-                        .forGetter(Conditions::total)
-                ).apply(instance, TradedForEmeraldsCriterion::Conditions)
+                    NumberRange.IntRange.CODEC.optionalFieldOf("amount")
+                        .forGetter(Conditions::amount)
+                ).apply(instance, SingleIntRangeCriterion::Conditions)
             }
         }
     }
