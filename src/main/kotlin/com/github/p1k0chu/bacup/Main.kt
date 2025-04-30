@@ -25,8 +25,8 @@ object Main : ModInitializer {
         id("disenchant_grindstone"), EmptyCriterion()
     )
     @JvmField
-    val FURNACE_FUEL_CONSUMED: FurnaceFuelConsumedCriterion = Criteria.register(
-        id("furnace_fuel_consumed"), FurnaceFuelConsumedCriterion()
+    val FURNACE_FUEL_CONSUMED: SingleItemCriterion = Criteria.register(
+        id("furnace_fuel_consumed"), SingleItemCriterion()
     )
     @JvmField
     val BEAM_ME_UP: EmptyCriterion = Criteria.register(
@@ -51,6 +51,10 @@ object Main : ModInitializer {
     @JvmField
     val GET_RAID_OF_IT: EmptyCriterion = Criteria.register(
         id("get_raid_of_it"), EmptyCriterion()
+    )
+    @JvmField
+    val CACTUS_DESTROY_ITEM: SingleItemCriterion = Criteria.register(
+        id("thrown_item_died_to_cactus"), SingleItemCriterion()
     )
 
     override fun onInitialize() {

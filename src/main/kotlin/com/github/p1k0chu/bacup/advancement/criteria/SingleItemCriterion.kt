@@ -10,24 +10,25 @@ import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
 
-class FurnaceFuelConsumedCriterion : AbstractCriterion<FurnaceFuelConsumedCriterion.Conditions>() {
+class SingleItemCriterion : AbstractCriterion<SingleItemCriterion.Conditions>() {
     override fun getConditionsCodec() = Conditions.CODEC
 
-    fun trigger(player: ServerPlayerEntity, fuel: ItemStack) {
+    fun trigger(player: ServerPlayerEntity, item: ItemStack) {
         this.trigger(player) { conditions ->
-            conditions.matches(fuel)
+            conditions.matches(item)
         }
     }
 
     class Conditions(
         private val _player: Optional<LootContextPredicate>,
-        private val fuel: Optional<ItemPredicate>
+        private val item: Optional<ItemPredicate>
     ) : AbstractCriterion.Conditions {
+        constructor() : this(Optional.empty(), Optional.empty())
 
         override fun player() = _player
 
         fun matches(stack: ItemStack): Boolean {
-            return fuel.isEmpty || fuel.get().test(stack)
+            return item.isEmpty || item.get().test(stack)
         }
 
         companion object {
@@ -36,9 +37,9 @@ class FurnaceFuelConsumedCriterion : AbstractCriterion<FurnaceFuelConsumedCriter
                 instance.group(
                     EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
                         .forGetter(Conditions::player),
-                    ItemPredicate.CODEC.optionalFieldOf("fuel")
-                        .forGetter(Conditions::fuel)
-                ).apply(instance, FurnaceFuelConsumedCriterion::Conditions)
+                    ItemPredicate.CODEC.optionalFieldOf("item")
+                        .forGetter(Conditions::item)
+                ).apply(instance, SingleItemCriterion::Conditions)
             }
         }
     }
