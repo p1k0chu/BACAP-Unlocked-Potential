@@ -5,6 +5,7 @@ import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.CatGiftReceivedCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.PetTamedCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
@@ -30,6 +31,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
     const val LOCK_MAP = "lock_map"
     const val PLETHORA_OF_CATS = "plethora_of_cats"
     const val GET_RAID_OF_IT = "get_raid_of_it"
+    const val CAN_YOU_HEAR_IT_FROM_HERE = "can_you_hear_it_from_here"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -106,6 +108,18 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 icon = Items.MILK_BUCKET.defaultStack
             }
             criterion("get_raid_of_it", Main.GET_RAID_OF_IT.create(EmptyCriterion.Conditions()))
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, CAN_YOU_HEAR_IT_FROM_HERE) {
+            parent(reference("blazeandcave:adventure/oh_look_it_dings"))
+            display {
+                icon = Items.ARROW.defaultStack
+                frame = AdvancementFrame.CHALLENGE
+            }
+            criterion("50", Main.BELL_SHOT_FROM_DISTANCE.create(
+                SingleIntRangeCriterion.Conditions(
+                    Optional.empty(),
+                    Optional.of(NumberRange.IntRange.atLeast(50)))))
         }.also(consumer::accept)
     }
 }
