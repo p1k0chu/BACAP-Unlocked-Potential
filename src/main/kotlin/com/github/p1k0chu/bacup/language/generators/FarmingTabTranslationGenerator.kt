@@ -21,6 +21,11 @@ object FarmingTabTranslationGenerator : TranslationGenerator {
                 title("Super Fuel")
                 description("Power a furnace with lava")
             }
+
+            advancement(FarmingTabGenerator.TRASH_BIN) {
+                title("Trash Bin")
+                description("Throw an item into a cactus")
+            }
         }
     }
 }

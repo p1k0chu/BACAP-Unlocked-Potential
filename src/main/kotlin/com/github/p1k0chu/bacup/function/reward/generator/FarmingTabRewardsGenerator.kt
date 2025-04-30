@@ -17,6 +17,7 @@ object FarmingTabRewardsGenerator : FunctionGenerator {
                     item(ItemStack(Items.DRIED_KELP_BLOCK, 1))
                 }
                 advancement(FarmingTabGenerator.SUPER_FUEL)
+                advancement(FarmingTabGenerator.TRASH_BIN)
             }
         }
     }

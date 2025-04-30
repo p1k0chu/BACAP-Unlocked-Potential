@@ -52,6 +52,10 @@ object Main : ModInitializer {
     val GET_RAID_OF_IT: EmptyCriterion = Criteria.register(
         id("get_raid_of_it"), EmptyCriterion()
     )
+    @JvmField
+    val CACTUS_DESTROY_ITEM: SingleItemCriterion = Criteria.register(
+        id("thrown_item_died_to_cactus"), SingleItemCriterion()
+    )
 
     override fun onInitialize() {
     }

@@ -23,6 +23,7 @@ class SingleItemCriterion : AbstractCriterion<SingleItemCriterion.Conditions>() 
         private val _player: Optional<LootContextPredicate>,
         private val item: Optional<ItemPredicate>
     ) : AbstractCriterion.Conditions {
+        constructor() : this(Optional.empty(), Optional.empty())
 
         override fun player() = _player
 
