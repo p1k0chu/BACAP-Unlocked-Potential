@@ -8,6 +8,8 @@
     "CartographyTableScreenHandlerAnon5Mixin",
     "CatEntitySleepWithOwnerGoalMixin",
     "ClearAllEffectsConsumeEffectMixin",
+    "EnderDragonFightAccessor",
+    "EnderDragonSpawnStateAnon4Mixin",
     "EnderPearlEntityMixin",
     "FurnaceOutputSlotMixin",
     "GrindstoneScreenHandlerAccessor",

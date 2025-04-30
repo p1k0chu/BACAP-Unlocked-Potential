@@ -31,6 +31,7 @@ fun createTranslationProvider(
             MiningTabTranslationGenerator,
             MonstersTabTranslationGenerator,
             StatisticsTabTranslationGenerator,
+            EndTabTranslationGenerator,
         )
     )
 }

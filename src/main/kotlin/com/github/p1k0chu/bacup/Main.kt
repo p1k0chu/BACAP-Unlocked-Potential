@@ -56,6 +56,10 @@ object Main : ModInitializer {
     val CACTUS_DESTROY_ITEM: SingleItemCriterion = Criteria.register(
         id("thrown_item_died_to_cactus"), SingleItemCriterion()
     )
+    @JvmField
+    val SPAWN_DRAGON_WITH_CRYSTALS: SingleIntRangeCriterion = Criteria.register(
+        id("spawn_dragon_with_crystals"), SingleIntRangeCriterion()
+    )
 
     override fun onInitialize() {
     }
