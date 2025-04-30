@@ -4,6 +4,7 @@ import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import net.minecraft.advancement.AdvancementEntry
+import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
 import net.minecraft.enchantment.Enchantments
@@ -25,6 +26,7 @@ object EndTabGenerator : AdvancementTabGenerator {
                 icon = Items.END_CRYSTAL.defaultStack.apply {
                     addEnchantment(wrapperLookup.getEntryOrThrow(Enchantments.BLAST_PROTECTION), 1)
                 }
+                frame = AdvancementFrame.GOAL
             }
             criterion("10", Main.SPAWN_DRAGON_WITH_CRYSTALS.create(
                 SingleIntRangeCriterion.Conditions(
