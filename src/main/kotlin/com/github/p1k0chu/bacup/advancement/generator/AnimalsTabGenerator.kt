@@ -22,6 +22,7 @@ object AnimalsTabGenerator : AdvancementTabGenerator {
 
     const val WHEN_PIGS_FLY = "when_pigs_fly"
     const val DOG_ARMY = "dog_army"
+    const val WOLOLO = "wololo"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         advancement(TAB_NAME, WHEN_PIGS_FLY) {
@@ -51,6 +52,15 @@ object AnimalsTabGenerator : AdvancementTabGenerator {
                     )
                 )
             ))
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, WOLOLO) {
+            parent(reference("blazeandcave:animal/live_and_let_dye"))
+            display {
+                icon = Items.TOTEM_OF_UNDYING.defaultStack
+                frame = AdvancementFrame.CHALLENGE
+            }
+            criterion("wololo", Main.WOLOLO.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
     }
 }

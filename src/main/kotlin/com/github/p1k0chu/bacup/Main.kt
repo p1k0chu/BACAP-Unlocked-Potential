@@ -69,6 +69,10 @@ object Main : ModInitializer {
     val PROJECTILE_LIT_BLOCK: SingleBlockCriterion = Criteria.register(
         id("projectile_lit_block"), SingleBlockCriterion()
     )
+    @JvmField
+    val WOLOLO: EmptyCriterion = Criteria.register(
+        id("wololo"), EmptyCriterion()
+    )
 
     override fun onInitialize() {
     }

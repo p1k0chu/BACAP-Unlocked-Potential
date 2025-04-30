@@ -22,7 +22,8 @@
     "MerchantEntityMixin",
     "PigEntityMixin",
     "ServerPlayerEntityMixin",
-    "TameableEntityMixin"
+    "TameableEntityMixin",
+    "WololoGoalMixin"
   ],
   "injectors": {
     "defaultRequire": 1
