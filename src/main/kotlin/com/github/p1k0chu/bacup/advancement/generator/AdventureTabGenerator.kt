@@ -2,22 +2,20 @@ package com.github.p1k0chu.bacup.advancement.generator
 
 import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
-import com.github.p1k0chu.bacup.advancement.criteria.CatGiftReceivedCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.PetTamedCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.SingleItemCriterion
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
-import net.minecraft.enchantment.Enchantments
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Items
 import net.minecraft.predicate.NumberRange
 import net.minecraft.predicate.entity.EntityPredicate
 import net.minecraft.predicate.entity.EntityTypePredicate
-import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import java.util.*
@@ -41,7 +39,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 icon =
                     getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmU5MTFlMjRjODU1M2ZlYWQ1YTJmMGEwZWM1OWM0YWY2MmYxMjZhZTcwZDZiZWQyNjFhZWQ0Zjk5YzE0YjQ5MiJ9fX0=")
             }
-            criterion("gift", CatGiftReceivedCriterion.Conditions.builder {})
+            criterion("gift", Main.CAT_GIFT_RECEIVED.create(SingleItemCriterion.Conditions()))
         }.also(consumer::accept)
 
         val plethoraOfCats = advancement(TAB_NAME, PLETHORA_OF_CATS) {
@@ -86,11 +84,11 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 Items.CHICKEN,
                 Items.PHANTOM_MEMBRANE
             ).forEach {
-                criterion(it.registryEntry.idAsString, CatGiftReceivedCriterion.Conditions.builder {
-                    items(
-                        ItemPredicate.Builder.create().items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), it).build()
+                criterion(
+                    it.registryEntry.idAsString, Main.CAT_GIFT_RECEIVED.create(
+                        SingleItemCriterion.Conditions.items(wrapperLookup, it)
                     )
-                })
+                )
             }
         }.also(consumer::accept)
 
