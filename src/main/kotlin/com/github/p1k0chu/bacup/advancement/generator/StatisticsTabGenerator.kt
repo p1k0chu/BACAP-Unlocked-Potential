@@ -2,7 +2,7 @@ package com.github.p1k0chu.bacup.advancement.generator
 
 import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
-import com.github.p1k0chu.bacup.advancement.criteria.TradedForEmeraldsCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.data.advancement.AdvancementTabGenerator
@@ -30,7 +30,7 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
             }
             criterion(
                 "576", Main.TRADED_FOR_EMERALDS.create(
-                    TradedForEmeraldsCriterion.Conditions(
+                    SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(NumberRange.IntRange.atLeast(576)),
                     )
@@ -48,7 +48,7 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
             }
             criterion(
                 "1000", Main.TRADED_FOR_EMERALDS.create(
-                    TradedForEmeraldsCriterion.Conditions(
+                    SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(NumberRange.IntRange.atLeast(1000)),
                     )
@@ -65,7 +65,7 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
             }
             criterion(
                 "15552", Main.TRADED_FOR_EMERALDS.create(
-                    TradedForEmeraldsCriterion.Conditions(
+                    SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(NumberRange.IntRange.atLeast(15552)),
                     )

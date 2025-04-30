@@ -41,8 +41,8 @@ object Main : ModInitializer {
         id("cooked_with_fuel"), FurnaceCookedWithFuelCriterion()
     )
     @JvmField
-    val TRADED_FOR_EMERALDS: TradedForEmeraldsCriterion = Criteria.register(
-        id("traded_for_emeralds"), TradedForEmeraldsCriterion()
+    val TRADED_FOR_EMERALDS: SingleIntRangeCriterion = Criteria.register(
+        id("traded_for_emeralds"), SingleIntRangeCriterion()
     )
     @JvmField
     val ENTITY_DROPPED_LOOT: EntityDroppedLootCriterion = Criteria.register(
@@ -55,6 +55,10 @@ object Main : ModInitializer {
     @JvmField
     val CACTUS_DESTROY_ITEM: SingleItemCriterion = Criteria.register(
         id("thrown_item_died_to_cactus"), SingleItemCriterion()
+    )
+    @JvmField
+    val SPAWN_DRAGON_WITH_CRYSTALS: SingleIntRangeCriterion = Criteria.register(
+        id("spawn_dragon_with_crystals"), SingleIntRangeCriterion()
     )
 
     override fun onInitialize() {

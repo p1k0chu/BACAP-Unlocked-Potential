@@ -17,6 +17,7 @@ fun createFunctionProvider(
             MonstersTabRewardsGenerator,
             MiningTabRewardsGenerator,
             StatisticsTabRewardsGenerator,
+            EndTabRewardsGenerator,
         )
     )
 }
