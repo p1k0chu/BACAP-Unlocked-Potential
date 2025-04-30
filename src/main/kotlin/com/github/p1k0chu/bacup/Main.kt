@@ -60,6 +60,10 @@ object Main : ModInitializer {
     val SPAWN_DRAGON_WITH_CRYSTALS: SingleIntRangeCriterion = Criteria.register(
         id("spawn_dragon_with_crystals"), SingleIntRangeCriterion()
     )
+    @JvmField
+    val BELL_SHOT_FROM_DISTANCE: SingleIntRangeCriterion = Criteria.register(
+        id("bell_shot_from_distance"), SingleIntRangeCriterion()
+    )
 
     override fun onInitialize() {
     }

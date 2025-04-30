@@ -5,6 +5,7 @@
   "mixins": [
     "AbstractFurnaceBlockEntityMixin",
     "AbstractFurnaceScreenHandlerMixin",
+    "BellBlockMixin",
     "CartographyTableScreenHandlerAnon5Mixin",
     "CatEntitySleepWithOwnerGoalMixin",
     "ClearAllEffectsConsumeEffectMixin",
