@@ -9,6 +9,7 @@
     "AnvilBlockMixin",
     "BellBlockMixin",
     "BlockMixin",
+    "BrushableBlockEntityMixin",
     "CampfireBlockMixin",
     "CartographyTableScreenHandlerAnon5Mixin",
     "CatEntitySleepWithOwnerGoalMixin",

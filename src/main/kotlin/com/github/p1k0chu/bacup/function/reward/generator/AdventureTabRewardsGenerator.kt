@@ -26,6 +26,10 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                     type = AdvancementType.CHALLENGE
                     exp = 50
                 }
+                advancement(AdventureTabGenerator.MASTER_ARCHEOLOGIST) {
+                    type =  AdvancementType.HIDDEN
+                    exp = 200
+                }
             }
         }
     }
