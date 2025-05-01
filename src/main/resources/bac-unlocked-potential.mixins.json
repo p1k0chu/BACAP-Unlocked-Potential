@@ -3,9 +3,11 @@
   "package": "com.github.p1k0chu.bacup.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AbstractCandleBlockMixin",
     "AbstractFurnaceBlockEntityMixin",
     "AbstractFurnaceScreenHandlerMixin",
     "BellBlockMixin",
+    "CampfireBlockMixin",
     "CartographyTableScreenHandlerAnon5Mixin",
     "CatEntitySleepWithOwnerGoalMixin",
     "ClearAllEffectsConsumeEffectMixin",
