@@ -1,11 +1,18 @@
 package com.github.p1k0chu.bacup.function.reward
 
 import com.github.p1k0chu.bacup.Main
+import com.github.p1k0chu.bacup.function.MCFunction
 import com.github.p1k0chu.bacup.function.reward.BacConstants.TAB_COLOR
 import com.github.p1k0chu.bacup.function.reward.BacConstants.bac_teams
-import com.github.p1k0chu.bacup.function.MCFunction
-import net.minecraft.item.Item
+import com.mojang.serialization.JsonOps
+import it.unimi.dsi.fastutil.objects.ReferenceSortedSets
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.CustomModelDataComponent
+import net.minecraft.component.type.NbtComponent
+import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.NbtOps
 import net.minecraft.util.Identifier
 import java.util.function.Consumer
 
@@ -21,22 +28,14 @@ class RewardsBuilder(
             RewardAdvancementBuilder(id).apply(block).build()
         }
 
-        inner class RewardAdvancementBuilder(val name: String) {
+        inner class RewardAdvancementBuilder(private val name: String) {
             private val itemRewards: MutableList<ItemStack> = mutableListOf()
-            private var _trophy: TrophyBuilder? = null
+            var trophy: ItemStack? = null
             var type: AdvancementType = AdvancementType.TASK
             var exp: Int? = null
 
             fun item(item: ItemStack) {
                 itemRewards.add(item)
-            }
-
-            fun trophy(block: TrophyBuilder.() -> Unit) {
-                _trophy = TrophyBuilder().apply(block)
-            }
-
-            fun noTrophy() {
-                _trophy = null
             }
 
             fun build() {
@@ -55,8 +54,8 @@ class RewardsBuilder(
                 // item reward function
                 consumer.accept(
                     MCFunction(
-                    Identifier.of(Main.MOD_ID, "reward/$tab/$name"),
-                    itemRewards.joinToString(separator = "\n") { giveGen(it) })
+                        Identifier.of(Main.MOD_ID, "reward/$tab/$name"),
+                        itemRewards.joinToString(separator = "\n") { giveGen(it) })
                 )
 
                 // main reward function
@@ -75,49 +74,9 @@ class RewardsBuilder(
 
                 consumer.accept(
                     MCFunction(
-                        Identifier.of(Main.MOD_ID, "trophy/$tab/$name"), _trophy?.build() ?: ""
+                        Identifier.of(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(trophy)
                     )
                 )
-            }
-
-
-            inner class TrophyBuilder {
-                lateinit var item: Item
-                var name: String? = null
-                var lore: String? = null
-                var enchantmentGlint: Boolean? = null
-
-                var color: String = "white"
-                var loreColor: String = "white"
-
-                var italic: Boolean = false
-                var bold: Boolean = true
-
-                /**
-                 * Returns a minecraft function for a trophy
-                 */
-                fun build(): String {
-                    val functionBody = StringBuilder()
-                    functionBody.appendLine("give @s ${item.registryEntry.idAsString}[")
-
-                    if (enchantmentGlint != null) {
-                        functionBody.appendLine("enchantment_glint_override=$enchantmentGlint, ")
-                    }
-                    functionBody.appendLine("custom_name={italic:$italic,bold:$bold,color:\"$color\",translate:\"${name ?: item.translationKey}\"}, ")
-
-                    if (lore != null) {
-                        functionBody.appendLine("lore=[{color:\"$loreColor\",translate:\"$lore\"},{text:\" \"},{translate:\"Awarded for achieving\",color:\"gray\"},{translate:\"${Main.MOD_ID}.advancement.$tab.$name.title\",color:\"${type.titleColor}\",italic:false}], ")
-                    }
-
-                    functionBody.append(
-                        """
-                        custom_model_data={floats:[I;131]}, tooltip_display={}, custom_data={Trophy:1}] 1
-                        tellraw @s {"color": "gold", "text": " +1 ", "extra": [{"translate": "${name ?: item.translationKey}"}]}
-                        """.trimIndent()
-                    )
-
-                    return functionBody.toString()
-                }
             }
         }
     }
@@ -199,6 +158,39 @@ fun mainRewardFunctionGen(advancementId: Identifier): String {
     }
 
     functionBody.append("function #bacap_fanpacks:adventure/a_chiptune_relic")
+
+    return functionBody.toString()
+}
+
+/**
+ * Returns a minecraft function for a trophy
+ */
+fun trophyGen(item: ItemStack?): String {
+    if(item == null) return ""
+
+    // setup useful trophy data
+    item.set(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelDataComponent(listOf(131f), listOf(), listOf(), listOf()))
+    item.set(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplayComponent(false, ReferenceSortedSets.emptySet()))
+
+    NbtCompound().let { customData ->
+        customData.putInt("Trophy", 1)
+        item.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(customData))
+    }
+
+    val functionBody = StringBuilder()
+    functionBody.append("give @s ${item.registryEntry.idAsString}[")
+
+    item.components.mapNotNull { component ->
+        if(!item.hasChangedComponent(component.type)) return@mapNotNull null
+
+        "${component.type}=${component.encode(NbtOps.INSTANCE).orThrow}"
+    }.joinTo(functionBody, separator = ",")
+
+    functionBody.append("""
+        ] 1
+        tellraw @s {"color": "gold", "text": " +1 ", "extra": [{"translate": "${item.customName?.string ?: item.item.translationKey}"}]}
+        """.trimIndent()
+    )
 
     return functionBody.toString()
 }
