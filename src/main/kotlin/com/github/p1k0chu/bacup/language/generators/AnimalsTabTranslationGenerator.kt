@@ -20,6 +20,10 @@ object AnimalsTabTranslationGenerator : TranslationGenerator {
                 title("Dog Army")
                 description("Befriend twenty wolves")
             }
+            advancement(AnimalsTabGenerator.WOLOLO) {
+                title("Wololo")
+                description("Watch evoker recolor blue sheep in red")
+            }
         }
     }
 }
