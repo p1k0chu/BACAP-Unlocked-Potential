@@ -33,7 +33,7 @@ class SingleBlockCriterion : AbstractCriterion<SingleBlockCriterion.Conditions>(
         override fun player() = _player
 
         fun matches(world: ServerWorld, blockPos: BlockPos): Boolean {
-            return this.block.any { it.test(world, blockPos) }
+            return this.block.isEmpty() || this.block.any { it.test(world, blockPos) }
         }
 
         companion object {
