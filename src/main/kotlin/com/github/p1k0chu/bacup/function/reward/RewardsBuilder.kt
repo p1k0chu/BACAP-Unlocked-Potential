@@ -4,15 +4,19 @@ import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.function.MCFunction
 import com.github.p1k0chu.bacup.function.reward.BacConstants.TAB_COLOR
 import com.github.p1k0chu.bacup.function.reward.BacConstants.bac_teams
-import com.mojang.serialization.JsonOps
+import com.github.p1k0chu.bacup.language.title
 import it.unimi.dsi.fastutil.objects.ReferenceSortedSets
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.CustomModelDataComponent
+import net.minecraft.component.type.LoreComponent
 import net.minecraft.component.type.NbtComponent
 import net.minecraft.component.type.TooltipDisplayComponent
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtOps
+import net.minecraft.text.Style
+import net.minecraft.text.Text
+import net.minecraft.util.Colors
 import net.minecraft.util.Identifier
 import java.util.function.Consumer
 
@@ -74,7 +78,7 @@ class RewardsBuilder(
 
                 consumer.accept(
                     MCFunction(
-                        Identifier.of(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(trophy)
+                        Identifier.of(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(tab, name, trophy)
                     )
                 )
             }
@@ -169,8 +173,8 @@ fun mainRewardFunctionGen(advancementId: Identifier): String {
 /**
  * Returns a minecraft function for a trophy
  */
-fun trophyGen(item: ItemStack?): String {
-    if(item == null) return ""
+fun trophyGen(tab: String, name: String, item: ItemStack?): String {
+    if (item == null) return ""
 
     // setup useful trophy data
     item.set(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelDataComponent(listOf(131f), listOf(), listOf(), listOf()))
@@ -181,18 +185,48 @@ fun trophyGen(item: ItemStack?): String {
         item.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(customData))
     }
 
+    item.customName?.getWithStyle(
+        Style.EMPTY
+            .withBold(true)
+            .withItalic(false)
+    )
+        ?.firstOrNull()
+        ?.let { customName ->
+            item.set(DataComponentTypes.CUSTOM_NAME, customName)
+        }
+
+    // change lore formatting and
+    // add extra lines to lore
+    val lore = item.get(DataComponentTypes.LORE)
+    val lines: List<Text>? = lore?.lines?.flatMap { line ->
+        line.getWithStyle(
+            Style.EMPTY.withBold(false).withItalic(true).withColor(item.customName?.style?.color)
+        )
+    }
+
+    item.set(
+        DataComponentTypes.LORE, LoreComponent(lines ?: listOf()).with(Text.empty()).with(
+            Text.of("Awarded for achieving").getWithStyle(
+                Style.EMPTY.withColor(Colors.GRAY)
+            ).first()
+        ).with(
+            title(tab, name)
+        )
+    )
+
     val functionBody = StringBuilder()
     functionBody.append("give @s ${item.registryEntry.idAsString}[")
 
     item.components.mapNotNull { component ->
-        if(!item.hasChangedComponent(component.type)) return@mapNotNull null
+        if (!item.hasChangedComponent(component.type)) return@mapNotNull null
 
         "${component.type}=${component.encode(NbtOps.INSTANCE).orThrow}"
     }.joinTo(functionBody, separator = ",")
 
-    functionBody.append("""
+    functionBody.append(
+        """
         ] 1
-        tellraw @s {"color": "gold", "text": " +1 ", "extra": [{"translate": "${item.customName?.string ?: item.item.translationKey}"}]}
+        tellraw @s {"color": "${item.customName?.style?.color ?: "white"}", "text": " +${item.count} ", "extra": [{"translate": "${item.customName?.string ?: item.item.translationKey}"}]}
         """.trimIndent()
     )
 
