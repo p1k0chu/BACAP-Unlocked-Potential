@@ -4,16 +4,15 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.advancement.criterion.AbstractCriterion
 import net.minecraft.block.Block
-import net.minecraft.block.pattern.CachedBlockPosition
 import net.minecraft.predicate.BlockPredicate
 import net.minecraft.predicate.entity.EntityPredicate
 import net.minecraft.predicate.entity.LootContextPredicate
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper.WrapperLookup
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 import java.util.*
 
 class SingleBlockCriterion : AbstractCriterion<SingleBlockCriterion.Conditions>() {
@@ -54,6 +53,17 @@ class SingleBlockCriterion : AbstractCriterion<SingleBlockCriterion.Conditions>(
                     blocks.map { block ->
                         BlockPredicate.Builder.create()
                             .blocks(wrapperLookup.getOrThrow(RegistryKeys.BLOCK), block)
+                            .build()
+                    }
+                )
+            }
+
+            fun tags(wrapperLookup: WrapperLookup, vararg tags: TagKey<Block>): Conditions {
+                return Conditions(
+                    Optional.empty(),
+                    tags.map { tag ->
+                        BlockPredicate.Builder.create()
+                            .tag(wrapperLookup.getOrThrow(RegistryKeys.BLOCK), tag)
                             .build()
                     }
                 )

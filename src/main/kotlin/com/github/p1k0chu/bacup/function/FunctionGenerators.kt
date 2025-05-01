@@ -18,6 +18,7 @@ fun createFunctionProvider(
             MiningTabRewardsGenerator,
             StatisticsTabRewardsGenerator,
             EndTabRewardsGenerator,
+            BuildingTabRewardsGenerator,
         )
     )
 }
