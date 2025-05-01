@@ -19,6 +19,7 @@ fun createAdvancementProvider(
             MiningTabGenerator,
             StatisticsTabGenerator,
             EndTabGenerator,
+            BuildingTabGenerator,
         )
     )
 }

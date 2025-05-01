@@ -64,6 +64,11 @@ object Main : ModInitializer {
     val BELL_SHOT_FROM_DISTANCE: SingleIntRangeCriterion = Criteria.register(
         id("bell_shot_from_distance"), SingleIntRangeCriterion()
     )
+    /// works on certain blocks because others don't matter
+    @JvmField
+    val PROJECTILE_LIT_BLOCK: SingleBlockCriterion = Criteria.register(
+        id("projectile_lit_block"), SingleBlockCriterion()
+    )
 
     override fun onInitialize() {
     }

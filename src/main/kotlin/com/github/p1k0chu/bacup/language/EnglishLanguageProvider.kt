@@ -32,6 +32,7 @@ fun createTranslationProvider(
             MonstersTabTranslationGenerator,
             StatisticsTabTranslationGenerator,
             EndTabTranslationGenerator,
+            BuildingTabTranslationGenerator,
         )
     )
 }
