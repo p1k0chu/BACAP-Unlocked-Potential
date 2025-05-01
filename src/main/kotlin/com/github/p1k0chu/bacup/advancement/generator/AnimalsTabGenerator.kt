@@ -58,7 +58,7 @@ object AnimalsTabGenerator : AdvancementTabGenerator {
             parent(reference("blazeandcave:animal/live_and_let_dye"))
             display {
                 icon = Items.TOTEM_OF_UNDYING.defaultStack
-                frame = AdvancementFrame.CHALLENGE
+                frame = AdvancementFrame.GOAL
             }
             criterion("wololo", Main.WOLOLO.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)

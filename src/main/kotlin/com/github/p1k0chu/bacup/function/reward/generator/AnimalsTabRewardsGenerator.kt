@@ -18,8 +18,8 @@ object AnimalsTabRewardsGenerator : FunctionGenerator {
                     exp = 50
                 }
                 advancement(AnimalsTabGenerator.WOLOLO) {
-                    type = AdvancementType.CHALLENGE
-                    exp = 50
+                    type = AdvancementType.GOAL
+                    exp = 1
                 }
             }
         }
