@@ -157,7 +157,7 @@ fun mainRewardFunctionGen(advancementId: Identifier): String {
         )
     }
 
-    functionBody.append("function #bacap_fanpacks:adventure/a_chiptune_relic")
+    functionBody.append("function #bacapup_fanpacks:$path")
 
     return functionBody.toString()
 }
