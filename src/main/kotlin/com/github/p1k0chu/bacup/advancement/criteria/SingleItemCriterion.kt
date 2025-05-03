@@ -31,7 +31,7 @@ class SingleItemCriterion : AbstractCriterion<SingleItemCriterion.Conditions>() 
         override fun player() = _player
 
         fun matches(stack: ItemStack): Boolean {
-            return item.any { it.test(stack) }
+            return item.isEmpty() || item.any { it.test(stack) }
         }
 
         companion object {
