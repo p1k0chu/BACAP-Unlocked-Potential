@@ -17,12 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FurnaceOutputSlotMixin {
     @Inject(method = "onTakeItem", at = @At("RETURN"))
     void onTakeItem(PlayerEntity player, ItemStack stack, CallbackInfo ci) {
-        if(!(player instanceof ServerPlayerEntity)) return;
+        if(stack.isEmpty()) return;
 
-        if(((FurnaceOutputSlot) (Object) this).inventory instanceof AbstractFurnaceBlockEntity furnace) {
-            Item fuel = ((AbstractFurnaceBlockEntityLastFuel) furnace).bacup$getLastFuel();
-            if(fuel != null) {
-                Main.COOKED_WITH_FUEL.trigger((ServerPlayerEntity) player, fuel, stack);
+        if (player instanceof ServerPlayerEntity serverPlayer) {
+            if (((FurnaceOutputSlot) (Object) this).inventory instanceof AbstractFurnaceBlockEntity furnace) {
+                Item fuel = ((AbstractFurnaceBlockEntityLastFuel) furnace).bacup$getLastFuel();
+                if (fuel != null) {
+                    Main.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, stack);
+                }
             }
         }
     }
