@@ -73,6 +73,10 @@ object Main : ModInitializer {
     val WOLOLO: EmptyCriterion = Criteria.register(
         id("wololo"), EmptyCriterion()
     )
+    @JvmField
+    val ANVIL_KILL: SingleEntityCriterion = Criteria.register(
+        id("anvil_kill"), SingleEntityCriterion()
+    )
 
     override fun onInitialize() {
     }

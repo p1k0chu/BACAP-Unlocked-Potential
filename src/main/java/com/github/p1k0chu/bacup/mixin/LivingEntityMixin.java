@@ -1,7 +1,10 @@
 package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.imixin.AnvilBlockWhoPlaced;
+import net.minecraft.block.AnvilBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,8 +17,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 @Mixin(LivingEntity.class)
@@ -35,5 +40,24 @@ public abstract class LivingEntityMixin {
             });
         }
         return lootConsumer;
+    }
+
+    @Inject(method = "onDeath", at = @At("HEAD"))
+    void onDeath(DamageSource damageSource, CallbackInfo ci) {
+        LivingEntity entity = ((LivingEntity) (Object) this);
+
+        Entity source = damageSource.getSource();
+
+        if(source instanceof FallingBlockEntity fallingBlockEntity) {
+            if(fallingBlockEntity.getBlockState().getBlock() instanceof AnvilBlock anvil) {
+                UUID placer = ((AnvilBlockWhoPlaced) anvil).bacup$getPlacer();
+
+                if(placer != null) {
+                    if(entity.getWorld().getPlayerByUuid(placer) instanceof ServerPlayerEntity player) {
+                        Main.ANVIL_KILL.trigger(player, entity);
+                    }
+                }
+            }
+        }
     }
 }
