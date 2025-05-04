@@ -7,16 +7,23 @@ import com.github.p1k0chu.bacup.advancement.criteria.PetTamedCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.SingleItemCriterion
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
+import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
+import net.minecraft.advancement.criterion.Criteria
+import net.minecraft.advancement.criterion.InventoryChangedCriterion
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Items
+import net.minecraft.item.map.MapState
 import net.minecraft.predicate.NumberRange
+import net.minecraft.predicate.component.ComponentPredicateTypes
+import net.minecraft.predicate.component.ComponentsPredicate
 import net.minecraft.predicate.entity.EntityPredicate
 import net.minecraft.predicate.entity.EntityTypePredicate
+import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import java.util.*
@@ -32,6 +39,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
     const val GET_RAID_OF_IT = "get_raid_of_it"
     const val CAN_YOU_HEAR_IT_FROM_HERE = "can_you_hear_it_from_here"
     const val MASTER_ARCHEOLOGIST = "master_archaeologist"
+    const val MAXIMUM_COVERAGE = "maximum_coverage"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -116,10 +124,14 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 icon = Items.ARROW.defaultStack
                 frame = AdvancementFrame.CHALLENGE
             }
-            criterion("50", Main.BELL_SHOT_FROM_DISTANCE.create(
-                SingleIntRangeCriterion.Conditions(
-                    Optional.empty(),
-                    Optional.of(NumberRange.IntRange.atLeast(50)))))
+            criterion(
+                "50", Main.BELL_SHOT_FROM_DISTANCE.create(
+                    SingleIntRangeCriterion.Conditions(
+                        Optional.empty(),
+                        Optional.of(NumberRange.IntRange.atLeast(50))
+                    )
+                )
+            )
         }.also(consumer::accept)
 
         advancement(TAB_NAME, MASTER_ARCHEOLOGIST) {
@@ -139,6 +151,24 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                     )
                 )
             }
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, MAXIMUM_COVERAGE) {
+            parent(reference("blazeandcave:adventure/mapmakers_table"))
+            display {
+                icon = Items.FILLED_MAP.defaultStack
+            }
+            criterion(
+                "max_coverage", InventoryChangedCriterion.Conditions.items(
+                    ItemPredicate.Builder.create().components(
+                        ComponentsPredicate.Builder.create().partial(
+                            Main.mapStatePredicate,
+                            MapStatePredicate(scale = NumberRange.IntRange.exactly(MapState.MAX_SCALE))
+                        )
+                            .build()
+                    ).build()
+                )
+            )
         }.also(consumer::accept)
     }
 

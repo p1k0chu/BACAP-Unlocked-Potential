@@ -46,6 +46,11 @@ object AdventureTabTranslationGenerator : TranslationGenerator {
                 title("Master Archeologist")
                 description("Get every item possible from sus sand or gravel")
             }
+
+            advancement(AdventureTabGenerator.MAXIMUM_COVERAGE) {
+                title("Maximum Coverage")
+                description("Fully expand a map")
+            }
         }
     }
 }
