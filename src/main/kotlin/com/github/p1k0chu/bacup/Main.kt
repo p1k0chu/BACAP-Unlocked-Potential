@@ -76,7 +76,7 @@ object Main : ModInitializer {
     @JvmField
     val ANVIL_KILL: SingleEntityCriterion = Criteria.register(
         id("anvil_kill"), SingleEntityCriterion()
-    }
+    )
     @JvmField
     val SUS_BLOCK_GOT_ITEM: SingleItemCriterion = Criteria.register(
         id("sus_block_got_item"), SingleItemCriterion()
