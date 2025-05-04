@@ -27,7 +27,7 @@
     ]
   },
   "mixins": [
-    "bac-unlocked-potential.mixins.json"
+    "bacapup.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
