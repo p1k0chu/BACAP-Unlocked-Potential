@@ -4,6 +4,7 @@ import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.function.MCFunction
 import com.github.p1k0chu.bacup.function.reward.BacConstants.TAB_COLOR
 import com.github.p1k0chu.bacup.function.reward.BacConstants.bac_teams
+import com.github.p1k0chu.bacup.function.reward.BacConstants.tab_titles
 import com.github.p1k0chu.bacup.language.title
 import it.unimi.dsi.fastutil.objects.ReferenceSortedSets
 import net.minecraft.component.DataComponentTypes
@@ -100,7 +101,7 @@ fun giveGen(item: ItemStack): String {
 
 fun messageGen(tab: String, title: String, description: String, type: AdvancementType): String {
     return """
-        tellraw @a {"translate":"${type.message}","with":[{"selector":"@s"},{"color":"${type.titleColor}","text":"["},{"color":"${type.titleColor}","translate":"$title","hover_event":{"action":"show_text","value":{"color":"${type.titleColor}","translate":"$title","extra":[{"text":"\n"},{"color":"${type.descriptionColor}","translate":"$description"},{"text":"\n\n"},{"color":"$TAB_COLOR","italic":true,"translate":"%1${'$'}s tab","with":[{"translate":"$tab"}]}]}}},{"color":"${type.titleColor}","text":"]"}]}
+        tellraw @a {"translate":"${type.message}","with":[{"selector":"@s"},{"color":"${type.titleColor}","text":"["},{"color":"${type.titleColor}","translate":"$title","hover_event":{"action":"show_text","value":{"color":"${type.titleColor}","translate":"$title","extra":[{"text":"\n"},{"color":"${type.descriptionColor}","translate":"$description"},{"text":"\n\n"},{"color":"$TAB_COLOR","italic":true,"translate":"%1${'$'}s tab","with":[{"translate":"${tab_titles[tab]}"}]}]}}},{"color":"${type.titleColor}","text":"]"}]}
     """.trimIndent()
 }
 

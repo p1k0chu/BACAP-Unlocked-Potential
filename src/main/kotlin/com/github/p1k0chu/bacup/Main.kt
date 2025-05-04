@@ -6,7 +6,7 @@ import net.minecraft.advancement.criterion.Criteria
 
 
 object Main : ModInitializer {
-    const val MOD_ID: String = "bac-unlocked-potential"
+    const val MOD_ID: String = "bacapup"
 
     @JvmField
     val CAT_GIFT_RECEIVED: SingleItemCriterion = Criteria.register(
