@@ -30,6 +30,7 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                     type =  AdvancementType.HIDDEN
                     exp = 200
                 }
+                advancement(AdventureTabGenerator.MAXIMUM_COVERAGE)
             }
         }
     }
