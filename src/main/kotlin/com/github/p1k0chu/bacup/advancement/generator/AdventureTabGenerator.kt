@@ -9,6 +9,7 @@ import com.github.p1k0chu.bacup.advancement.criteria.SingleItemCriterion
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
 import net.minecraft.entity.EntityType
@@ -30,6 +31,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
     const val PLETHORA_OF_CATS = "plethora_of_cats"
     const val GET_RAID_OF_IT = "get_raid_of_it"
     const val CAN_YOU_HEAR_IT_FROM_HERE = "can_you_hear_it_from_here"
+    const val MASTER_ARCHEOLOGIST = "master_archaeologist"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -119,5 +121,83 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                     Optional.empty(),
                     Optional.of(NumberRange.IntRange.atLeast(50)))))
         }.also(consumer::accept)
+
+        advancement(TAB_NAME, MASTER_ARCHEOLOGIST) {
+            parent(reference("blazeandcave:adventure/a_suspicious_advancement"))
+            display {
+                icon = Items.BRUSH.defaultStack.apply {
+                    set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+                }
+                frame = AdvancementFrame.CHALLENGE
+                hidden = true
+            }
+
+            susLoot.forEach { item ->
+                criterion(
+                    item.registryEntry.idAsString, Main.SUS_BLOCK_GOT_ITEM.create(
+                        SingleItemCriterion.Conditions.items(wrapperLookup, item)
+                    )
+                )
+            }
+        }.also(consumer::accept)
     }
+
+    private val susLoot = listOf(
+        Items.ARMS_UP_POTTERY_SHERD,
+        Items.BREWER_POTTERY_SHERD,
+        Items.STICK,
+        Items.SUSPICIOUS_STEW,
+        Items.CLAY,
+        Items.BRICK,
+        Items.YELLOW_DYE,
+        Items.BLUE_DYE,
+        Items.LIGHT_BLUE_DYE,
+        Items.WHITE_DYE,
+        Items.ORANGE_DYE,
+        Items.RED_CANDLE,
+        Items.GREEN_CANDLE,
+        Items.PURPLE_CANDLE,
+        Items.BROWN_CANDLE,
+        Items.MAGENTA_STAINED_GLASS_PANE,
+        Items.PINK_STAINED_GLASS_PANE,
+        Items.BLUE_STAINED_GLASS_PANE,
+        Items.LIGHT_BLUE_STAINED_GLASS_PANE,
+        Items.RED_STAINED_GLASS_PANE,
+        Items.YELLOW_STAINED_GLASS_PANE,
+        Items.PURPLE_STAINED_GLASS_PANE,
+        Items.SPRUCE_HANGING_SIGN,
+        Items.OAK_HANGING_SIGN,
+        Items.WHEAT_SEEDS,
+        Items.BEETROOT_SEEDS,
+        Items.DEAD_BUSH,
+        Items.FLOWER_POT,
+        Items.STRING,
+        Items.LEAD,
+        Items.BURN_POTTERY_SHERD,
+        Items.DANGER_POTTERY_SHERD,
+        Items.FRIEND_POTTERY_SHERD,
+        Items.HEART_POTTERY_SHERD,
+        Items.HEARTBREAK_POTTERY_SHERD,
+        Items.HOWL_POTTERY_SHERD,
+        Items.SHEAF_POTTERY_SHERD,
+        Items.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE,
+        Items.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE,
+        Items.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE,
+        Items.HOST_ARMOR_TRIM_SMITHING_TEMPLATE,
+        Items.MUSIC_DISC_RELIC,
+        Items.ANGLER_POTTERY_SHERD,
+        Items.SHELTER_POTTERY_SHERD,
+        Items.SNORT_POTTERY_SHERD,
+        Items.SNIFFER_EGG,
+        Items.BLADE_POTTERY_SHERD,
+        Items.EXPLORER_POTTERY_SHERD,
+        Items.MOURNER_POTTERY_SHERD,
+        Items.PLENTY_POTTERY_SHERD,
+        Items.IRON_AXE,
+        Items.EMERALD,
+        Items.WHEAT,
+        Items.WOODEN_HOE,
+        Items.COAL,
+        Items.GOLD_NUGGET
+    )
 }

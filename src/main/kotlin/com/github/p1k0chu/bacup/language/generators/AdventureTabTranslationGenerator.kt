@@ -41,6 +41,11 @@ object AdventureTabTranslationGenerator : TranslationGenerator {
                 title("Can you hear it from here?")
                 description("Shoot a bell from more than 50 blocks away")
             }
+
+            advancement(AdventureTabGenerator.MASTER_ARCHEOLOGIST) {
+                title("Master Archeologist")
+                description("Get every item possible from sus sand or gravel")
+            }
         }
     }
 }
