@@ -12,6 +12,10 @@ object StatisticsTabTranslationGenerator : TranslationGenerator {
         translationBuilder: FabricLanguageProvider.TranslationBuilder
     ) {
         translationBuilder.advancementTab(StatisticsTabGenerator.TAB_NAME) {
+            advancement(StatisticsTabGenerator.EMERALD_PORTFOLIO) {
+                title("Emerald Portfolio")
+                description("Obtain 200 emeralds through trade")
+            }
             advancement(StatisticsTabGenerator.THE_STOCK_MARKET) {
                 title("The Stock Market")
                 description("Obtain a stack of emerald blocks through trading")

@@ -14,11 +14,12 @@ object StatisticsTabRewardsGenerator : FunctionGenerator {
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<MCFunction>) {
         rewardsBuilder(consumer) {
             tab(StatisticsTabGenerator.TAB_NAME) {
+                advancement(StatisticsTabGenerator.EMERALD_PORTFOLIO)
                 advancement(StatisticsTabGenerator.THE_STOCK_MARKET) {
-                    exp = 50
+                    type = AdvancementType.GOAL
                 }
                 advancement(StatisticsTabGenerator.SMALL_BUSINESS) {
-                    type = AdvancementType.GOAL
+                    type = AdvancementType.CHALLENGE
                     item(ItemStack(Items.EMERALD, 8))
                     exp = 50
                 }
