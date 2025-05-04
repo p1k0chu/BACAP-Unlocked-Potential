@@ -20,6 +20,7 @@ fun createAdvancementProvider(
             StatisticsTabGenerator,
             EndTabGenerator,
             BuildingTabGenerator,
+            ChallengesTabGenerator
         )
     )
 }
