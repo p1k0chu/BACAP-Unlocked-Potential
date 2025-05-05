@@ -1,6 +1,7 @@
 package com.github.p1k0chu.bacup
 
 import com.github.p1k0chu.bacup.advancement.criteria.*
+import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicateTypes
 import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
@@ -95,6 +96,10 @@ object Main : ModInitializer {
     )
 
     var serverInstance: MinecraftServer? = null
+
+    init {
+        MapColorPredicateTypes
+    }
 
     override fun onInitialize() {
         ServerLifecycleEvents.SERVER_STARTING.register { server ->
