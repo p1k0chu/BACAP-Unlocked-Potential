@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -27,7 +27,7 @@ public abstract class ItemEntityMixin {
         if(!source.isOf(DamageTypes.CACTUS)) return;
 
         if(getOwner() instanceof ServerPlayerEntity player) {
-            Main.CACTUS_DESTROY_ITEM.trigger(player, getStack());
+            Criteria.CACTUS_DESTROY_ITEM.trigger(player, getStack());
         }
     }
 }

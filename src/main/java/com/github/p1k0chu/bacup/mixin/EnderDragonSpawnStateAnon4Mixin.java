@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import net.minecraft.entity.boss.dragon.EnderDragonFight;
 import net.minecraft.entity.decoration.EndCrystalEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -17,7 +17,7 @@ public class EnderDragonSpawnStateAnon4Mixin {
     @Inject(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/boss/dragon/EnderDragonFight;setSpawnState(Lnet/minecraft/entity/boss/dragon/EnderDragonSpawnState;)V"))
     void run(ServerWorld world, EnderDragonFight fight, List<EndCrystalEntity> crystals, int tick, BlockPos pos, CallbackInfo ci) {
         for (var player : ((EnderDragonFightAccessor) fight).getBossBar().getPlayers()) {
-            Main.SPAWN_DRAGON_WITH_CRYSTALS.trigger(player, crystals.size());
+            Criteria.SPAWN_DRAGON_WITH_CRYSTALS.trigger(player, crystals.size());
         }
     }
 }

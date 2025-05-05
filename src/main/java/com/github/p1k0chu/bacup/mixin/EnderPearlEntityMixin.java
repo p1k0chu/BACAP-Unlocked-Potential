@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -18,7 +18,7 @@ public class EnderPearlEntityMixin {
         Vec3d pearlPos = ((EnderPearlEntity)(Object)this).getPos();
 
         if(pearlPos.distanceTo(player.getPos()) >= 100) {
-            Main.BEAM_ME_UP.trigger(player);
+            Criteria.BEAM_ME_UP.trigger(player);
         }
     }
 }

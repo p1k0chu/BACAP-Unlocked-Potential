@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.FurnaceCookedWithFuelCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.data.advancement.AdvancementTabGenerator
@@ -25,7 +25,7 @@ object MiningTabGenerator : AdvancementTabGenerator {
                 icon = Items.LEAF_LITTER.defaultStack
             }
             criterion(
-                "fuel", Main.COOKED_WITH_FUEL.create(
+                "fuel", Criteria.COOKED_WITH_FUEL.create(
                     FurnaceCookedWithFuelCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(

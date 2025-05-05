@@ -1,11 +1,10 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleBlockCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementRequirements
-import net.minecraft.block.Blocks
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
 import net.minecraft.item.Items
@@ -25,17 +24,17 @@ object BuildingTabGenerator : AdvancementTabGenerator {
                 icon = Items.BOW.defaultStack
             }
             criterion(
-                "candle", Main.PROJECTILE_LIT_BLOCK.create(
+                "candle", Criteria.PROJECTILE_LIT_BLOCK.create(
                     SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CANDLES)
                 )
             )
             criterion(
-                "candle_cake", Main.PROJECTILE_LIT_BLOCK.create(
+                "candle_cake", Criteria.PROJECTILE_LIT_BLOCK.create(
                     SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CANDLE_CAKES)
                 )
             )
             criterion(
-                "campfire", Main.PROJECTILE_LIT_BLOCK.create(
+                "campfire", Criteria.PROJECTILE_LIT_BLOCK.create(
                     SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CAMPFIRES)
                 )
             )

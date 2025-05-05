@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,7 +22,7 @@ public abstract class CatEntitySleepWithOwnerGoalMixin {
     @Inject(method = "method_64176", at = @At("HEAD"))
     void awardCriteria(BlockPos.Mutable mutable, ServerWorld world, ItemStack stack, CallbackInfo ci) {
         if(cat.getOwner() instanceof ServerPlayerEntity player) {
-            Main.CAT_GIFT_RECEIVED.trigger(player, stack);
+            Criteria.CAT_GIFT_RECEIVED.trigger(player, stack);
         }
     }
 }

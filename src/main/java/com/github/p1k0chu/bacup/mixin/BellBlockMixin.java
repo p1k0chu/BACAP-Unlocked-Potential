@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BellBlock;
 import net.minecraft.block.BlockState;
@@ -21,6 +21,6 @@ public class BellBlockMixin {
         if (!(player instanceof ServerPlayerEntity)) return;
 
         double distance = hit.getPos().distanceTo(player.getPos());
-        Main.BELL_SHOT_FROM_DISTANCE.trigger((ServerPlayerEntity) player, (int) distance);
+        Criteria.BELL_SHOT_FROM_DISTANCE.trigger((ServerPlayerEntity) player, (int) distance);
     }
 }

@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ public class ClearAllEffectsConsumeEffectMixin {
         if(!(user instanceof ServerPlayerEntity)) return;
 
         if(user.hasStatusEffect(StatusEffects.BAD_OMEN) || user.hasStatusEffect(StatusEffects.RAID_OMEN)) {
-            Main.GET_RAID_OF_IT.trigger((ServerPlayerEntity) user);
+            Criteria.GET_RAID_OF_IT.trigger((ServerPlayerEntity) user);
         }
     }
 }

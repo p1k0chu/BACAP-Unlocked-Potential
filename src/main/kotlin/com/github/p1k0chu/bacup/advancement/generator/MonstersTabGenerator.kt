@@ -1,14 +1,13 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.EntityDroppedLootCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
-import net.minecraft.entity.EntityType
 import net.minecraft.item.Items
 import net.minecraft.predicate.entity.EntityPredicate
 import net.minecraft.predicate.item.ItemPredicate
@@ -31,7 +30,7 @@ object MonstersTabGenerator : AdvancementTabGenerator {
                 icon = Items.ENDER_PEARL.defaultStack
                 frame = AdvancementFrame.GOAL
             }
-            criterion("beam_me_up", Main.BEAM_ME_UP.create(EmptyCriterion.Conditions()))
+            criterion("beam_me_up", Criteria.BEAM_ME_UP.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
 
         advancement(TAB_NAME, FORGED_BY_FLESH) {
@@ -40,7 +39,7 @@ object MonstersTabGenerator : AdvancementTabGenerator {
                 icon = Items.IRON_INGOT.defaultStack
                 frame = AdvancementFrame.GOAL
             }
-            criterion("iron_ingot", Main.ENTITY_DROPPED_LOOT.create(
+            criterion("iron_ingot", Criteria.ENTITY_DROPPED_LOOT.create(
                 EntityDroppedLootCriterion.Conditions(
                     Optional.empty(),
                     Optional.of(EntityPredicate.Builder.create()

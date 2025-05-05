@@ -1,12 +1,11 @@
 package com.github.p1k0chu.bacup.mixin;
 
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityLastFuel;
 import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityWhoOpened;
-import com.github.p1k0chu.bacup.Main;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -67,7 +66,7 @@ public abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnace
         ServerPlayerEntity player = server.getPlayerManager().getPlayer(whoOpened);
 
         if(player != null) {
-            Main.FURNACE_FUEL_CONSUMED.trigger(player, fuel);
+            Criteria.FURNACE_FUEL_CONSUMED.trigger(player, fuel);
         }
     }
 }

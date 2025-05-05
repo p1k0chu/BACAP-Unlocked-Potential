@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -29,7 +29,7 @@ public abstract class CartographyTableScreenHandlerAnon5Mixin {
         var second = field_17303.slots.get(1).getStack();
 
         if(second.isOf(Items.GLASS_PANE)) {
-            Main.MAP_LOCKED.trigger((ServerPlayerEntity) player);
+            Criteria.MAP_LOCKED.trigger((ServerPlayerEntity) player);
         }
     }
 }

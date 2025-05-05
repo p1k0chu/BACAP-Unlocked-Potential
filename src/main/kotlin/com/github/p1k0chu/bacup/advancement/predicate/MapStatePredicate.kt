@@ -22,7 +22,7 @@ class MapStatePredicate(
     val colors: Optional<MapColorPredicate> = Optional.empty()
 ) : ComponentSubPredicate<MapIdComponent> {
     companion object {
-        val CODEC = RecordCodecBuilder.create { instance ->
+        val CODEC: Codec<MapStatePredicate> = RecordCodecBuilder.create { instance ->
             instance.group(
                 NumberRange.IntRange.CODEC.optionalFieldOf("scale", NumberRange.IntRange.ANY)
                     .forGetter(MapStatePredicate::scale),

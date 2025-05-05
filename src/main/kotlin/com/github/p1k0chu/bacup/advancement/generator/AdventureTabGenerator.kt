@@ -2,16 +2,12 @@ package com.github.p1k0chu.bacup.advancement.generator
 
 import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
-import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
-import com.github.p1k0chu.bacup.advancement.criteria.PetTamedCriterion
-import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
-import com.github.p1k0chu.bacup.advancement.criteria.SingleItemCriterion
+import com.github.p1k0chu.bacup.advancement.criteria.*
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicate
 import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
-import net.minecraft.advancement.criterion.Criteria
 import net.minecraft.advancement.criterion.InventoryChangedCriterion
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.data.advancement.AdvancementTabGenerator
@@ -20,7 +16,6 @@ import net.minecraft.entity.EntityType
 import net.minecraft.item.Items
 import net.minecraft.item.map.MapState
 import net.minecraft.predicate.NumberRange
-import net.minecraft.predicate.component.ComponentPredicateTypes
 import net.minecraft.predicate.component.ComponentsPredicate
 import net.minecraft.predicate.entity.EntityPredicate
 import net.minecraft.predicate.entity.EntityTypePredicate
@@ -51,7 +46,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 icon =
                     getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmU5MTFlMjRjODU1M2ZlYWQ1YTJmMGEwZWM1OWM0YWY2MmYxMjZhZTcwZDZiZWQyNjFhZWQ0Zjk5YzE0YjQ5MiJ9fX0=")
             }
-            criterion("gift", Main.CAT_GIFT_RECEIVED.create(SingleItemCriterion.Conditions()))
+            criterion("gift", Criteria.CAT_GIFT_RECEIVED.create(SingleItemCriterion.Conditions()))
         }.also(consumer::accept)
 
         val plethoraOfCats = advancement(TAB_NAME, PLETHORA_OF_CATS) {
@@ -61,7 +56,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 icon = Items.COD.defaultStack
             }
             criterion(
-                "20", Main.PET_TAMED.create(
+                "20", Criteria.PET_TAMED.create(
                     PetTamedCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(
@@ -97,7 +92,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 Items.PHANTOM_MEMBRANE
             ).forEach {
                 criterion(
-                    it.registryEntry.idAsString, Main.CAT_GIFT_RECEIVED.create(
+                    it.registryEntry.idAsString, Criteria.CAT_GIFT_RECEIVED.create(
                         SingleItemCriterion.Conditions.items(wrapperLookup, it)
                     )
                 )
@@ -109,7 +104,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
             display {
                 icon = Items.GLASS_PANE.defaultStack
             }
-            criterion("lock", Main.MAP_LOCKED.create(EmptyCriterion.Conditions()))
+            criterion("lock", Criteria.MAP_LOCKED.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
 
         advancement(TAB_NAME, GET_RAID_OF_IT) {
@@ -117,7 +112,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
             display {
                 icon = Items.MILK_BUCKET.defaultStack
             }
-            criterion("get_raid_of_it", Main.GET_RAID_OF_IT.create(EmptyCriterion.Conditions()))
+            criterion("get_raid_of_it", Criteria.GET_RAID_OF_IT.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
 
         advancement(TAB_NAME, CAN_YOU_HEAR_IT_FROM_HERE) {
@@ -127,7 +122,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 frame = AdvancementFrame.CHALLENGE
             }
             criterion(
-                "50", Main.BELL_SHOT_FROM_DISTANCE.create(
+                "50", Criteria.BELL_SHOT_FROM_DISTANCE.create(
                     SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(NumberRange.IntRange.atLeast(50))
@@ -148,7 +143,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
 
             susLoot.forEach { item ->
                 criterion(
-                    item.registryEntry.idAsString, Main.SUS_BLOCK_GOT_ITEM.create(
+                    item.registryEntry.idAsString, Criteria.SUS_BLOCK_GOT_ITEM.create(
                         SingleItemCriterion.Conditions.items(wrapperLookup, item)
                     )
                 )

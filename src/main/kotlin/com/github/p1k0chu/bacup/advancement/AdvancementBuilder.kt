@@ -4,7 +4,6 @@ import com.github.p1k0chu.bacup.language.description
 import com.github.p1k0chu.bacup.language.title
 import net.minecraft.advancement.*
 import net.minecraft.item.ItemStack
-import net.minecraft.text.Text
 import net.minecraft.util.AssetInfo
 import net.minecraft.util.Identifier
 import java.util.*

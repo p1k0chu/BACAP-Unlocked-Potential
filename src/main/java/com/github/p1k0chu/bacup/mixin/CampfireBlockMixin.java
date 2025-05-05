@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
@@ -19,7 +19,7 @@ public class CampfireBlockMixin {
     @Inject(method = "onProjectileHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z", shift = At.Shift.AFTER))
     void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile, CallbackInfo ci, @Local ServerWorld serverWorld) {
         if (projectile.getOwner() instanceof ServerPlayerEntity player) {
-            Main.PROJECTILE_LIT_BLOCK.trigger(player, serverWorld, hit.getBlockPos());
+            Criteria.PROJECTILE_LIT_BLOCK.trigger(player, serverWorld, hit.getBlockPos());
         }
     }
 }

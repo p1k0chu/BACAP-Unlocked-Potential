@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityLastFuel;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +23,7 @@ public class FurnaceOutputSlotMixin {
             if (((FurnaceOutputSlot) (Object) this).inventory instanceof AbstractFurnaceBlockEntity furnace) {
                 Item fuel = ((AbstractFurnaceBlockEntityLastFuel) furnace).bacup$getLastFuel();
                 if (fuel != null) {
-                    Main.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, stack);
+                    Criteria.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, stack);
                 }
             }
         }

@@ -2,18 +2,15 @@ package com.github.p1k0chu.bacup.advancement.generator
 
 import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleItemCriterion
-import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import net.minecraft.advancement.AdvancementEntry
-import net.minecraft.component.DataComponentTypes
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
-import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.Items
 import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.text.Text
 import java.util.*
 import java.util.function.Consumer
 
@@ -31,7 +28,7 @@ object FarmingTabGenerator : AdvancementTabGenerator {
                 icon = Items.DRIED_KELP_BLOCK.defaultStack
             }
             criterion(
-                "fuel", Main.FURNACE_FUEL_CONSUMED.create(
+                "fuel", Criteria.FURNACE_FUEL_CONSUMED.create(
                     SingleItemCriterion.Conditions(
                         Optional.empty(), listOf(
                             ItemPredicate.Builder.create()
@@ -45,7 +42,7 @@ object FarmingTabGenerator : AdvancementTabGenerator {
                 icon = Items.LAVA_BUCKET.defaultStack
             }
             criterion(
-                "fuel", Main.FURNACE_FUEL_CONSUMED.create(
+                "fuel", Criteria.FURNACE_FUEL_CONSUMED.create(
                     SingleItemCriterion.Conditions(
                         Optional.empty(), listOf(
                             ItemPredicate.Builder.create()
@@ -58,7 +55,7 @@ object FarmingTabGenerator : AdvancementTabGenerator {
             display {
                 icon = Items.COMPOSTER.defaultStack
             }
-            criterion("trash_bin", Main.CACTUS_DESTROY_ITEM.create(SingleItemCriterion.Conditions()))
+            criterion("trash_bin", Criteria.CACTUS_DESTROY_ITEM.create(SingleItemCriterion.Conditions()))
         }.also(consumer::accept)
     }
 }

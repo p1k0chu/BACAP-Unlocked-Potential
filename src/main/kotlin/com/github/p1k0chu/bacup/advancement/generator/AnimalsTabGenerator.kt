@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.PetTamedCriterion
 import net.minecraft.advancement.AdvancementEntry
@@ -30,7 +30,7 @@ object AnimalsTabGenerator : AdvancementTabGenerator {
             display {
                 icon = Items.SADDLE.defaultStack
             }
-            criterion("when_pigs_fly", Main.WHEN_PIGS_FLY.create(EmptyCriterion.Conditions()))
+            criterion("when_pigs_fly", Criteria.WHEN_PIGS_FLY.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
 
         advancement(TAB_NAME, DOG_ARMY) {
@@ -39,7 +39,7 @@ object AnimalsTabGenerator : AdvancementTabGenerator {
                 icon = Items.BONE.defaultStack
                 frame = AdvancementFrame.GOAL
             }
-            criterion("woof", Main.PET_TAMED.create(
+            criterion("woof", Criteria.PET_TAMED.create(
                 PetTamedCriterion.Conditions(
                     Optional.empty(),
                     Optional.of(
@@ -60,7 +60,7 @@ object AnimalsTabGenerator : AdvancementTabGenerator {
                 icon = Items.TOTEM_OF_UNDYING.defaultStack
                 frame = AdvancementFrame.GOAL
             }
-            criterion("wololo", Main.WOLOLO.create(EmptyCriterion.Conditions()))
+            criterion("wololo", Criteria.WOLOLO.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
     }
 }

@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.imixin.ServerPlayerEntityPetsTamedCounter;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.EntityType;
@@ -25,6 +25,6 @@ public class TameableEntityMixin {
 
         int total = ((ServerPlayerEntityPetsTamedCounter) serverPlayerEntity).bacup$increment(type);
 
-        Main.PET_TAMED.trigger(serverPlayerEntity, tamed, total);
+        Criteria.PET_TAMED.trigger(serverPlayerEntity, tamed, total);
     }
 }

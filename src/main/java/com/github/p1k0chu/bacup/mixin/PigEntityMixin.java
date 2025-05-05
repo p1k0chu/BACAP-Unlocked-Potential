@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
@@ -18,7 +18,7 @@ public abstract class PigEntityMixin extends LivingEntityMixin {
             Entity passenger = ((PigEntity)(Object)this).getFirstPassenger();
 
             if(passenger instanceof ServerPlayerEntity player) {
-                Main.WHEN_PIGS_FLY.trigger(player);
+                Criteria.WHEN_PIGS_FLY.trigger(player);
             }
         }
     }
