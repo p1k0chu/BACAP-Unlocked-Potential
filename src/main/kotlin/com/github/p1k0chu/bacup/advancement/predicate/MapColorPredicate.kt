@@ -2,15 +2,12 @@ package com.github.p1k0chu.bacup.advancement.predicate
 
 import com.github.p1k0chu.bacup.Main
 import com.mojang.serialization.Codec
-import com.mojang.serialization.Lifecycle
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.minecraft.predicate.NumberRange
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.SimpleRegistry
 import net.minecraft.util.Identifier
 import java.util.function.Predicate
 

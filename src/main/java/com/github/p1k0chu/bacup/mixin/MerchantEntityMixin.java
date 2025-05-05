@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.imixin.ServerPlayerEntityTradedEmeralds;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +27,7 @@ public abstract class MerchantEntityMixin {
 
             if (item.isOf(Items.EMERALD)) {
                 int total = ((ServerPlayerEntityTradedEmeralds) player).bacup$incrementEmeraldsObtained(item.getCount());
-                Main.TRADED_FOR_EMERALDS.trigger(player, total);
+                Criteria.TRADED_FOR_EMERALDS.trigger(player, total);
             }
         }
     }

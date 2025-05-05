@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
@@ -51,6 +51,6 @@ public abstract class GrindstoneScreenHandlerAnon4Mixin {
             }
         }
 
-        Main.DISENCHANT_GRINDSTONE.trigger((ServerPlayerEntity) player);
+        Criteria.DISENCHANT_GRINDSTONE.trigger((ServerPlayerEntity) player);
     }
 }

@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.data.advancement.AdvancementTabGenerator
@@ -21,7 +21,7 @@ object EnchantingTabGenerator : AdvancementTabGenerator {
             display {
                 icon = Items.GRINDSTONE.defaultStack
             }
-            criterion("disenchanted", Main.DISENCHANT_GRINDSTONE.create(EmptyCriterion.Conditions()))
+            criterion("disenchanted", Criteria.DISENCHANT_GRINDSTONE.create(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
     }
 }

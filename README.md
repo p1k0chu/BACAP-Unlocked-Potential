@@ -14,7 +14,7 @@ You'll find builds in releases
 - [Fabric API](https://modrinth.com/mod/fabric-api)
 - [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin)
 
-2. Install [BACAP](https://bit.ly/3u9BXTr) in your world
+1. Install [BACAP](https://bit.ly/3u9BXTr) in your world
     > you dont need to install this addon per-world, if you installed the mod it will work
 
 

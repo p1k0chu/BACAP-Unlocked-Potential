@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import net.minecraft.block.entity.BrushableBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -24,7 +24,7 @@ public abstract class BrushableBlockEntityMixin {
     void spawnItem(ServerWorld world, LivingEntity brusher, ItemStack brush, CallbackInfo ci) {
         if (brusher instanceof ServerPlayerEntity player) {
             ItemStack item = getItem();
-            Main.SUS_BLOCK_GOT_ITEM.trigger(player, item);
+            Criteria.SUS_BLOCK_GOT_ITEM.trigger(player, item);
         }
     }
 }

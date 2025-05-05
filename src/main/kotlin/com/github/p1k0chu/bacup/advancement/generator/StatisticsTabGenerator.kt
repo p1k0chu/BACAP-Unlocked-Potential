@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
@@ -29,7 +29,7 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
             display {
                 icon = Items.EMERALD.defaultStack
             }
-            criterion("200", Main.TRADED_FOR_EMERALDS.create(
+            criterion("200", Criteria.TRADED_FOR_EMERALDS.create(
                 SingleIntRangeCriterion.Conditions(
                     Optional.empty(),
                     Optional.of(NumberRange.IntRange.atLeast(200))
@@ -46,7 +46,7 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
                 frame = AdvancementFrame.GOAL
             }
             criterion(
-                "576", Main.TRADED_FOR_EMERALDS.create(
+                "576", Criteria.TRADED_FOR_EMERALDS.create(
                     SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(NumberRange.IntRange.atLeast(576)),
@@ -62,7 +62,7 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
                 frame = AdvancementFrame.CHALLENGE
             }
             criterion(
-                "1000", Main.TRADED_FOR_EMERALDS.create(
+                "1000", Criteria.TRADED_FOR_EMERALDS.create(
                     SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(NumberRange.IntRange.atLeast(1000)),
@@ -79,7 +79,7 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
                 hidden = true
             }
             criterion(
-                "15552", Main.TRADED_FOR_EMERALDS.create(
+                "15552", Criteria.TRADED_FOR_EMERALDS.create(
                     SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(NumberRange.IntRange.atLeast(15552)),

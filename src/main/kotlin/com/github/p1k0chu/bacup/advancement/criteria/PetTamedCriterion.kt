@@ -29,7 +29,7 @@ class PetTamedCriterion : AbstractCriterion<PetTamedCriterion.Conditions>() {
 
         fun matches(player: ServerPlayerEntity, pet: TameableEntity, total: Int): Boolean {
             return (this.total.isEmpty || this.total.get().test(total))
-                    && (this.pet.isEmpty || this.pet.get().test(player, pet));
+                    && (this.pet.isEmpty || this.pet.get().test(player, pet))
         }
 
         companion object {

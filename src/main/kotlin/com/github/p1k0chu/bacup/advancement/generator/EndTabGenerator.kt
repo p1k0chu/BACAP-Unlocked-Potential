@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
@@ -28,7 +28,7 @@ object EndTabGenerator : AdvancementTabGenerator {
                 }
                 frame = AdvancementFrame.GOAL
             }
-            criterion("10", Main.SPAWN_DRAGON_WITH_CRYSTALS.create(
+            criterion("10", Criteria.SPAWN_DRAGON_WITH_CRYSTALS.create(
                 SingleIntRangeCriterion.Conditions(
                     Optional.empty(),
                     Optional.of(NumberRange.IntRange.atLeast(10)))))

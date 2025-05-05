@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.imixin.AnvilBlockWhoPlaced;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.entity.Entity;
@@ -35,9 +35,7 @@ public abstract class LivingEntityMixin {
     @ModifyArg(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootWorldContext;JLjava/util/function/Consumer;)V"), index = 2)
     Consumer<ItemStack> modifyLootConsumer(Consumer<ItemStack> lootConsumer) {
         if (getAttackingPlayer() instanceof ServerPlayerEntity serverPlayerEntity) {
-            return lootConsumer.andThen(stack -> {
-                Main.ENTITY_DROPPED_LOOT.trigger(serverPlayerEntity, (LivingEntity) (Object) this, stack);
-            });
+            return lootConsumer.andThen(stack -> Criteria.ENTITY_DROPPED_LOOT.trigger(serverPlayerEntity, (LivingEntity) (Object) this, stack));
         }
         return lootConsumer;
     }
@@ -54,7 +52,7 @@ public abstract class LivingEntityMixin {
 
                 if(placer != null) {
                     if(entity.getWorld().getPlayerByUuid(placer) instanceof ServerPlayerEntity player) {
-                        Main.ANVIL_KILL.trigger(player, entity);
+                        Criteria.ANVIL_KILL.trigger(player, entity);
                     }
                 }
             }

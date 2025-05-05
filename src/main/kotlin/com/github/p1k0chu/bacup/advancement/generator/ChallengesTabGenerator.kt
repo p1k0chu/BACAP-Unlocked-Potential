@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleEntityCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
@@ -28,7 +28,7 @@ object ChallengesTabGenerator : AdvancementTabGenerator {
             }
 
             KILLABLE_MOBS.forEach { mob ->
-                criterion(mob.registryEntry.idAsString, Main.ANVIL_KILL.create(
+                criterion(mob.registryEntry.idAsString, Criteria.ANVIL_KILL.create(
                     SingleEntityCriterion.Conditions(
                         Optional.empty(),
                         listOf(
