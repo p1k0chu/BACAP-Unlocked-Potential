@@ -7,6 +7,7 @@ import com.github.p1k0chu.bacup.advancement.criteria.PetTamedCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import com.github.p1k0chu.bacup.advancement.criteria.SingleItemCriterion
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
+import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicate
 import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
@@ -40,6 +41,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
     const val CAN_YOU_HEAR_IT_FROM_HERE = "can_you_hear_it_from_here"
     const val MASTER_ARCHEOLOGIST = "master_archaeologist"
     const val MAXIMUM_COVERAGE = "maximum_coverage"
+    const val PAINT_IT_RED = "paint_it_red"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -169,6 +171,27 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                     ).build()
                 )
             )
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, PAINT_IT_RED) {
+            parent(reference("blazeandcave:adventure/mapmaker"))
+            display {
+                icon = getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ4NjM2MmQwZjY4OTVkOWMyMmNlN2JmNjRkODU3Mjc2MDFiNWQ5ODNmZmM1YTUzZmE1YmYzYjQ3OTRkMWZkMSJ9fX0=")
+                frame = AdvancementFrame.CHALLENGE
+            }
+            criterion("paint_it_red", InventoryChangedCriterion.Conditions.items(
+                ItemPredicate.Builder.create()
+                    .components(
+                        ComponentsPredicate.Builder.create()
+                            .partial(
+                                Main.mapStatePredicate,
+                                MapStatePredicate(colors = Optional.of(MapColorPredicate.AllSame(
+                                    NumberRange.IntRange.between(16, 19)
+                                ))) // FIRE: tnt, lava, fire, redstone block
+                            )
+                            .build()
+                    )
+            ))
         }.also(consumer::accept)
     }
 

@@ -51,6 +51,11 @@ object AdventureTabTranslationGenerator : TranslationGenerator {
                 title("Maximum Coverage")
                 description("Fully expand a map")
             }
+
+            advancement(AdventureTabGenerator.PAINT_IT_RED) {
+                title("Paint it, red")
+                description("Fill a map with red color")
+            }
         }
     }
 }
