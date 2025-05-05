@@ -31,6 +31,9 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                     exp = 200
                 }
                 advancement(AdventureTabGenerator.MAXIMUM_COVERAGE)
+                advancement(AdventureTabGenerator.PAINT_IT_RED) {
+                    type = AdvancementType.CHALLENGE
+                }
             }
         }
     }

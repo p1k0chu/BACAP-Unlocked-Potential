@@ -18,7 +18,8 @@ class MapStatePredicate(
     val centerX: NumberRange.IntRange = NumberRange.IntRange.ANY,
     val centerZ: NumberRange.IntRange = NumberRange.IntRange.ANY,
     val dimension: Optional<RegistryKey<World>> = Optional.empty(),
-    val locked: Optional<Boolean> = Optional.empty()
+    val locked: Optional<Boolean> = Optional.empty(),
+    val colors: Optional<MapColorPredicate> = Optional.empty()
 ) : ComponentSubPredicate<MapIdComponent> {
     companion object {
         val CODEC = RecordCodecBuilder.create { instance ->
@@ -32,7 +33,9 @@ class MapStatePredicate(
                 World.CODEC.optionalFieldOf("dimension")
                     .forGetter(MapStatePredicate::dimension),
                 Codec.BOOL.optionalFieldOf("locked")
-                    .forGetter(MapStatePredicate::locked)
+                    .forGetter(MapStatePredicate::locked),
+                MapColorPredicate.CODEC.optionalFieldOf("colors")
+                    .forGetter(MapStatePredicate::colors)
             ).apply(instance, ::MapStatePredicate)
         }
     }
@@ -50,6 +53,7 @@ class MapStatePredicate(
                 && centerZ.test(mapState.centerZ)
                 && (dimension.isEmpty || dimension.get() == mapState.dimension)
                 && (locked.isEmpty || locked.get() == mapState.locked)
+                && (colors.isEmpty || colors.get().test(mapState.colors))
     }
 
     override fun getComponentType(): ComponentType<MapIdComponent> {
