@@ -41,8 +41,8 @@ class MapStatePredicate(
     }
 
     override fun test(component: MapIdComponent): Boolean {
-        val world = Main.serverInstance!!.overworld
-        val state = world!!.getMapState(component) ?: return false
+        val world = Main.serverInstance?.overworld
+        val state = world?.getMapState(component) ?: return false
 
         return test(state)
     }
