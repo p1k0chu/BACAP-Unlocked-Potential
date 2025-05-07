@@ -33,7 +33,8 @@ fun createTranslationProvider(
             StatisticsTabTranslationGenerator,
             EndTabTranslationGenerator,
             BuildingTabTranslationGenerator,
-            ChallengesTabTranslationGenerator
+            ChallengesTabTranslationGenerator,
+            MessagesTranslationGenerator,
         )
     )
 }

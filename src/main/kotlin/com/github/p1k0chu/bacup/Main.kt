@@ -3,12 +3,16 @@ package com.github.p1k0chu.bacup
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicateTypes
 import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
+import com.github.p1k0chu.bacup.command.BacapupCommand
+import com.mojang.brigadier.CommandDispatcher
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.minecraft.predicate.component.ComponentPredicate
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.command.ServerCommandSource
 
 
 object Main : ModInitializer {
@@ -34,6 +38,9 @@ object Main : ModInitializer {
         }
         ServerLifecycleEvents.SERVER_STOPPED.register {
             serverInstance = null
+        }
+        CommandRegistrationCallback.EVENT.register { dispatcher: CommandDispatcher<ServerCommandSource>, _, _ ->
+            BacapupCommand.register(dispatcher)
         }
     }
 
