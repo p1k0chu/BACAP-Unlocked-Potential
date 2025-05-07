@@ -19,12 +19,13 @@ interface MapColorPredicate : Predicate<ByteArray> {
 
     fun getType(): MapColorPredicateType<*>
 
-    class AllSame(val color: NumberRange.IntRange) : MapColorPredicate {
+    class AllSame(val colors: List<NumberRange.IntRange>) : MapColorPredicate {
         companion object {
             val CODEC: MapCodec<AllSame> = RecordCodecBuilder.mapCodec { instance ->
                 instance.group(
-                    NumberRange.IntRange.CODEC.fieldOf("color")
-                        .forGetter(AllSame::color)
+                    NumberRange.IntRange.CODEC.listOf()
+                        .fieldOf("color")
+                        .forGetter(AllSame::colors)
                 ).apply(instance, ::AllSame)
             }
         }
@@ -33,7 +34,7 @@ interface MapColorPredicate : Predicate<ByteArray> {
             return MapColorPredicateTypes.ALL_SAME
         }
 
-        override fun test(colors: ByteArray): Boolean = colors.all { color.test(it.toInt()) }
+        override fun test(colors: ByteArray): Boolean = colors.all { color -> this.colors.any { it.test(color.toInt()) } }
     }
 
     class IsFilled(val isFilled: Boolean) : MapColorPredicate {
