@@ -188,6 +188,8 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                                                 listOf(
                                                     // FIRE: tnt, lava, fire, redstone block
                                                     NumberRange.IntRange.between(16, 19),
+                                                    // COLOR_RED
+                                                    NumberRange.IntRange.between(112, 115)
                                                 )
                                             )
                                         )
