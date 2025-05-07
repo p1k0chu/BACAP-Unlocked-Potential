@@ -171,22 +171,30 @@ object AdventureTabGenerator : AdvancementTabGenerator {
         advancement(TAB_NAME, PAINT_IT_RED) {
             parent(reference("blazeandcave:adventure/mapmaker"))
             display {
-                icon = getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ4NjM2MmQwZjY4OTVkOWMyMmNlN2JmNjRkODU3Mjc2MDFiNWQ5ODNmZmM1YTUzZmE1YmYzYjQ3OTRkMWZkMSJ9fX0=")
+                icon =
+                    getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ4NjM2MmQwZjY4OTVkOWMyMmNlN2JmNjRkODU3Mjc2MDFiNWQ5ODNmZmM1YTUzZmE1YmYzYjQ3OTRkMWZkMSJ9fX0=")
                 frame = AdvancementFrame.CHALLENGE
             }
-            criterion("paint_it_red", InventoryChangedCriterion.Conditions.items(
-                ItemPredicate.Builder.create()
-                    .components(
-                        ComponentsPredicate.Builder.create()
-                            .partial(
-                                Main.mapStatePredicate,
-                                MapStatePredicate(colors = Optional.of(MapColorPredicate.AllSame(
-                                    NumberRange.IntRange.between(16, 19)
-                                ))) // FIRE: tnt, lava, fire, redstone block
-                            )
-                            .build()
-                    )
-            ))
+            criterion(
+                "paint_it_red", InventoryChangedCriterion.Conditions.items(
+                    ItemPredicate.Builder.create()
+                        .components(
+                            ComponentsPredicate.Builder.create()
+                                .partial(
+                                    Main.mapStatePredicate,
+                                    MapStatePredicate(
+                                        colors = Optional.of(
+                                            MapColorPredicate.AllSame(
+                                                // FIRE: tnt, lava, fire, redstone block
+                                                NumberRange.IntRange.between(16, 19)
+                                            )
+                                        )
+                                    )
+                                )
+                                .build()
+                        )
+                )
+            )
         }.also(consumer::accept)
     }
 
