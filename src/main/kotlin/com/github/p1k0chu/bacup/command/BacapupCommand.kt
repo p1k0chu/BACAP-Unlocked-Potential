@@ -1,6 +1,10 @@
 package com.github.p1k0chu.bacup.command
 
 import com.github.p1k0chu.bacup.BacupPersistentState
+import com.github.p1k0chu.bacup.Main
+import com.github.p1k0chu.bacup.language.generators.MessagesTranslationGenerator
+import com.github.p1k0chu.bacup.language.generators.MessagesTranslationGenerator.BOUGHT_EMERALDS
+import com.github.p1k0chu.bacup.language.generators.MessagesTranslationGenerator.PETS_TAMED
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
@@ -20,7 +24,8 @@ object BacapupCommand {
                             val text = Text.empty()
 
                             if (state.petsTamed.isNotEmpty()) {
-                                text.append(Text.literal("Pets tamed:\n"))
+                                text.append(Text.translatable(PETS_TAMED))
+                                    .append(Text.literal(":\n"))
 
                                 state.petsTamed.forEach { (mob, count) ->
                                     text.append(Text.translatable(mob.translationKey))
@@ -33,7 +38,9 @@ object BacapupCommand {
                             }
 
                             if (state.emeraldsObtained != 0) {
-                                text.append("\nBought emeralds: ")
+                                text.append("\n")
+                                    .append(Text.translatable(BOUGHT_EMERALDS))
+                                    .append(": ")
                                     .append(
                                         Text.literal("${state.emeraldsObtained}")
                                             .withColor(Formatting.GOLD.colorValue!!)
