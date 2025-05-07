@@ -185,8 +185,10 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                                     MapStatePredicate(
                                         colors = Optional.of(
                                             MapColorPredicate.AllSame(
-                                                // FIRE: tnt, lava, fire, redstone block
-                                                NumberRange.IntRange.between(16, 19)
+                                                listOf(
+                                                    // FIRE: tnt, lava, fire, redstone block
+                                                    NumberRange.IntRange.between(16, 19),
+                                                )
                                             )
                                         )
                                     )
