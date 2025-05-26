@@ -4,6 +4,7 @@ import com.github.p1k0chu.bacup.BacupPersistentState
 import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.language.generators.MessagesTranslationGenerator
 import com.github.p1k0chu.bacup.language.generators.MessagesTranslationGenerator.BOUGHT_EMERALDS
+import com.github.p1k0chu.bacup.language.generators.MessagesTranslationGenerator.GLGLTU_COUNTER
 import com.github.p1k0chu.bacup.language.generators.MessagesTranslationGenerator.PETS_TAMED
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
@@ -43,6 +44,16 @@ object BacapupCommand {
                                     .append(": ")
                                     .append(
                                         Text.literal("${state.emeraldsObtained}")
+                                            .withColor(Formatting.GOLD.colorValue!!)
+                                    )
+                            }
+
+                            if (state.glgltuCounter > 0) {
+                                text.append("\n")
+                                    .append(Text.translatable(GLGLTU_COUNTER))
+                                    .append(": ")
+                                    .append(
+                                        Text.literal(state.glgltuCounter.toString())
                                             .withColor(Formatting.GOLD.colorValue!!)
                                     )
                             }

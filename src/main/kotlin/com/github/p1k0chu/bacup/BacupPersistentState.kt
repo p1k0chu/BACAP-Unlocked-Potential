@@ -59,7 +59,8 @@ class BacupPersistentState(
  */
 class PlayerData(
     petsTamed: Map<EntityType<*>, Int>? = null,
-    var emeraldsObtained: Int = 0
+    var emeraldsObtained: Int = 0,
+    var glgltuCounter: Int = 0,
 ) {
     val petsTamed: MutableMap<EntityType<*>, Int> = petsTamed?.toMutableMap() ?: mutableMapOf()
 
@@ -70,7 +71,9 @@ class PlayerData(
                     .fieldOf("petsTamed")
                     .forGetter(PlayerData::petsTamed),
                 Codec.INT.optionalFieldOf("emeralds_obtained", 0)
-                    .forGetter(PlayerData::emeraldsObtained)
+                    .forGetter(PlayerData::emeraldsObtained),
+                Codec.INT.optionalFieldOf("glgltu_counter", 0)
+                    .forGetter(PlayerData::glgltuCounter)
             ).apply(instance, ::PlayerData)
         }
     }

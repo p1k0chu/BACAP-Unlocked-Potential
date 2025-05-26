@@ -8,11 +8,15 @@ import com.mojang.brigadier.CommandDispatcher
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
+import net.fabricmc.fabric.api.message.v1.ServerMessageEvents
+import net.minecraft.network.message.MessageType
+import net.minecraft.network.message.SignedMessage
 import net.minecraft.predicate.component.ComponentPredicate
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.server.network.ServerPlayerEntity
 
 
 object Main : ModInitializer {
@@ -41,6 +45,13 @@ object Main : ModInitializer {
         }
         CommandRegistrationCallback.EVENT.register { dispatcher: CommandDispatcher<ServerCommandSource>, _, _ ->
             BacapupCommand.register(dispatcher)
+        }
+        ServerMessageEvents.CHAT_MESSAGE.register { msg: SignedMessage, player: ServerPlayerEntity, _ ->
+            if(msg.content.string.contains("глглту")) {
+                val state = BacupPersistentState.getPlayerState(player)
+
+                Criteria.GLGLTU.trigger(player, ++state.glgltuCounter)
+            }
         }
     }
 

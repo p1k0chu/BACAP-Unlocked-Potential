@@ -77,4 +77,8 @@ object Criteria {
     val SUS_BLOCK_GOT_ITEM: SingleItemCriterion = Criteria.register(
         id("sus_block_got_item"), SingleItemCriterion()
     )
+    @JvmField
+    val GLGLTU: SingleIntRangeCriterion = Criteria.register(
+        id("glgltu"), SingleIntRangeCriterion()
+    )
 }

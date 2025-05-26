@@ -28,6 +28,18 @@ object StatisticsTabTranslationGenerator : TranslationGenerator {
                 title("Small Indie Company")
                 description("Make 27 stacks of emerald blocks on sales")
             }
+            advancement(StatisticsTabGenerator.GLGLTU) {
+                title("глглту")
+                description("Send your first глглту in chat")
+            }
+            advancement(StatisticsTabGenerator.GLGLTU_CULT) {
+                title("глглту cult")
+                description("Send 50 глглту in chat")
+            }
+            advancement(StatisticsTabGenerator.GLGLTU_3) {
+                title("You Can Mute Me, But You Can't Mute глглту")
+                description("Send 200 глглту in chat")
+            }
         }
     }
 }

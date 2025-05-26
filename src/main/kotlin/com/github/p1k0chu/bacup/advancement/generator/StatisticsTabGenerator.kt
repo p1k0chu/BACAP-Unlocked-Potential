@@ -23,6 +23,10 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
     const val SMALL_BUSINESS = "small_business"
     const val SMALL_INDIE_COMPANY = "small_indie_company"
 
+    const val GLGLTU = "glgltu"
+    const val GLGLTU_CULT = "glgltu_cult"
+    const val GLGLTU_3 = "glgltu_3"
+
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val emeraldPortfolio = advancement(TAB_NAME, EMERALD_PORTFOLIO) {
             parent(reference(ROOT))
@@ -86,6 +90,53 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
                     )
                 )
             )
+        }.also(consumer::accept)
+
+        val glgltu = advancement(TAB_NAME, GLGLTU) {
+            parent(reference(ROOT))
+            display {
+                icon = Items.FEATHER.defaultStack
+            }
+            criterion("glgltu", Criteria.GLGLTU.create(
+                SingleIntRangeCriterion.Conditions(
+                    Optional.empty(),
+                    Optional.of(
+                        NumberRange.IntRange.atLeast(1)
+                    )
+                )
+            ))
+        }.also(consumer::accept)
+
+        val glgltuCult = advancement(TAB_NAME, GLGLTU_CULT) {
+            parent(glgltu)
+            display {
+                icon = Items.FEATHER.defaultStack
+                frame = AdvancementFrame.GOAL
+            }
+            criterion("glgltu_cult", Criteria.GLGLTU.create(
+                SingleIntRangeCriterion.Conditions(
+                    Optional.empty(),
+                    Optional.of(
+                        NumberRange.IntRange.atLeast(50)
+                    )
+                )
+            ))
+        }.also(consumer::accept)
+
+        advancement(TAB_NAME, GLGLTU_3) {
+            parent(glgltuCult)
+            display {
+                icon = Items.WRITABLE_BOOK.defaultStack
+                frame = AdvancementFrame.CHALLENGE
+            }
+            criterion("glgltu_3", Criteria.GLGLTU.create(
+                SingleIntRangeCriterion.Conditions(
+                    Optional.empty(),
+                    Optional.of(
+                        NumberRange.IntRange.atLeast(200)
+                    )
+                )
+            ))
         }.also(consumer::accept)
     }
 }

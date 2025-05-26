@@ -27,6 +27,13 @@ object StatisticsTabRewardsGenerator : FunctionGenerator {
                     type = AdvancementType.HIDDEN
                     exp = 200
                 }
+                advancement(StatisticsTabGenerator.GLGLTU)
+                advancement(StatisticsTabGenerator.GLGLTU_CULT) {
+                    type = AdvancementType.GOAL
+                }
+                advancement(StatisticsTabGenerator.GLGLTU_3) {
+                    type = AdvancementType.CHALLENGE
+                }
             }
         }
     }
