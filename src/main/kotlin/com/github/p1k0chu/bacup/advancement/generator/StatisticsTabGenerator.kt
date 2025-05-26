@@ -6,9 +6,11 @@ import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.PotionContentsComponent
 import net.minecraft.data.advancement.AdvancementTabGenerator
 import net.minecraft.data.advancement.AdvancementTabGenerator.reference
 import net.minecraft.item.Items
+import net.minecraft.potion.Potions
 import net.minecraft.predicate.NumberRange
 import net.minecraft.registry.RegistryWrapper
 import java.util.*
@@ -95,7 +97,9 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
         val glgltu = advancement(TAB_NAME, GLGLTU) {
             parent(reference(ROOT))
             display {
-                icon = Items.FEATHER.defaultStack
+                icon = Items.TIPPED_ARROW.defaultStack.apply {
+                    set(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent(Potions.STRENGTH))
+                }
             }
             criterion("glgltu", Criteria.GLGLTU.create(
                 SingleIntRangeCriterion.Conditions(
@@ -110,7 +114,7 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
         val glgltuCult = advancement(TAB_NAME, GLGLTU_CULT) {
             parent(glgltu)
             display {
-                icon = Items.FEATHER.defaultStack
+                icon = Items.SPECTRAL_ARROW.defaultStack
                 frame = AdvancementFrame.GOAL
             }
             criterion("glgltu_cult", Criteria.GLGLTU.create(
