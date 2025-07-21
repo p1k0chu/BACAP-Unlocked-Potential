@@ -6,7 +6,7 @@ This "datapack" is actually a mod.
 Because of this, advancements that were impossible before now will be possible.  
 It comes bundled with a datapack required to run.
 
-You'll find builds in releases
+You'll find builds in releases, or in [Actions](https://github.com/p1k0chu/BACAP-Unlocked-Potential/actions) (click on latest action, scroll down and download the "Artifacts" zip file)
 
 # How to install
 
