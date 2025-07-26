@@ -20,6 +20,7 @@ import net.minecraft.predicate.component.ComponentsPredicate
 import net.minecraft.predicate.entity.EntityPredicate
 import net.minecraft.predicate.entity.EntityTypePredicate
 import net.minecraft.predicate.item.ItemPredicate
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import java.util.*
@@ -37,6 +38,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
     const val MASTER_ARCHEOLOGIST = "master_archaeologist"
     const val MAXIMUM_COVERAGE = "maximum_coverage"
     const val PAINT_IT_RED = "paint_it_red"
+    const val SECRET_SUPPLIES = "secret_supplies"
 
     override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -200,6 +202,40 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 )
             )
         }.also(consumer::accept)
+
+        advancement(TAB_NAME, SECRET_SUPPLIES) {
+            parent(reference("blazeandcave:adventure/shady_deals"))
+
+            display {
+                icon = Items.DEAD_BUSH.defaultStack
+                frame = AdvancementFrame.GOAL
+            }
+
+            criterion("milk_bucket", Criteria.WANDERING_TRADER_DROPPED_ITEM.create(
+                EntityDroppedLootCriterion.Conditions(
+                    Optional.empty(),
+                    Optional.of(EntityPredicate.Builder.create()
+                        .type(wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE), EntityType.WANDERING_TRADER)
+                        .build()),
+                    Optional.of(ItemPredicate.Builder.create()
+                        .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.MILK_BUCKET)
+                        .build())
+                )
+            ))
+
+            // don't check if it's invisibility cuz pointless
+            criterion("potion", Criteria.WANDERING_TRADER_DROPPED_ITEM.create(
+                EntityDroppedLootCriterion.Conditions(
+                    Optional.empty(),
+                    Optional.of(EntityPredicate.Builder.create()
+                        .type(wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE), EntityType.WANDERING_TRADER)
+                        .build()),
+                    Optional.of(ItemPredicate.Builder.create()
+                        .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.POTION)
+                        .build())
+                )
+            ))
+        }.let(consumer::accept)
     }
 
     private val susLoot = listOf(
