@@ -56,6 +56,11 @@ object AdventureTabTranslationGenerator : TranslationGenerator {
                 title("Paint it, red")
                 description("Fill a map with red color")
             }
+
+            advancement(AdventureTabGenerator.SECRET_SUPPLIES) {
+                title("Secret Supplies")
+                description("Acquire a potion of invisibility and milk bucket dropped from wandering traders")
+            }
         }
     }
 }

@@ -23,9 +23,11 @@
     "ItemEntityMixin",
     "LivingEntityMixin",
     "MerchantEntityMixin",
+    "MobEntityMixin",
     "PigEntityMixin",
     "ServerPlayerEntityMixin",
     "TameableEntityMixin",
+    "WanderingTraderEntityMixin",
     "WololoGoalMixin"
   ],
   "injectors": {
