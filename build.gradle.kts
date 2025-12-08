@@ -3,7 +3,6 @@ plugins {
     kotlin("jvm") version "2.2.21"
 }
 
-val mod_version: String by project
 val minecraft_version: String by project
 val loader_version: String by project
 val maven_group: String by project
@@ -51,7 +50,7 @@ dependencies {
 tasks.processResources {
     filesMatching("fabric.mod.json") {
         expand(
-            "version" to mod_version,
+            "version" to project.version,
             "minecraft_version" to minecraft_version,
             "loader_version" to loader_version,
             "kotlin_adapter_version" to kotlin_adapter_version
