@@ -6,27 +6,27 @@ import com.github.p1k0chu.bacup.advancement.criteria.*
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicate
 import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
-import net.minecraft.advancement.AdvancementEntry
-import net.minecraft.advancement.AdvancementFrame
-import net.minecraft.advancement.criterion.InventoryChangedCriterion
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.data.advancement.AdvancementTabGenerator
-import net.minecraft.data.advancement.AdvancementTabGenerator.reference
-import net.minecraft.entity.EntityType
-import net.minecraft.item.Items
-import net.minecraft.item.map.MapState
-import net.minecraft.predicate.NumberRange
-import net.minecraft.predicate.component.ComponentsPredicate
-import net.minecraft.predicate.entity.EntityPredicate
-import net.minecraft.predicate.entity.EntityTypePredicate
-import net.minecraft.predicate.item.ItemPredicate
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.critereon.InventoryChangeTrigger
+import net.minecraft.core.component.DataComponents
+import net.minecraft.data.advancements.AdvancementSubProvider
+import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.Items
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData
+import net.minecraft.advancements.critereon.MinMaxBounds
+import net.minecraft.advancements.critereon.DataComponentMatchers
+import net.minecraft.advancements.critereon.EntityPredicate
+import net.minecraft.advancements.critereon.EntityTypePredicate
+import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
+import net.minecraft.core.HolderLookup
 import java.util.*
 import java.util.function.Consumer
 
-object AdventureTabGenerator : AdvancementTabGenerator {
+object AdventureTabGenerator : AdvancementSubProvider {
     const val TAB_NAME = "adventure"
 
     const val CAT_GIFT = "cat_gift"
@@ -40,36 +40,36 @@ object AdventureTabGenerator : AdvancementTabGenerator {
     const val PAINT_IT_RED = "paint_it_red"
     const val SECRET_SUPPLIES = "secret_supplies"
 
-    override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
+    override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
-            parent(reference("blazeandcave:adventure/crazy_cat_lady"))
+            parent(createPlaceholder("blazeandcave:adventure/crazy_cat_lady"))
             display {
                 // cat head; https://minecraft-heads.com/custom-heads/head/66218-cat-plushie-siamese
                 icon =
                     getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmU5MTFlMjRjODU1M2ZlYWQ1YTJmMGEwZWM1OWM0YWY2MmYxMjZhZTcwZDZiZWQyNjFhZWQ0Zjk5YzE0YjQ5MiJ9fX0=")
             }
-            criterion("gift", Criteria.CAT_GIFT_RECEIVED.create(SingleItemCriterion.Conditions()))
+            addCriterion("gift", Criteria.CAT_GIFT_RECEIVED.createCriterion(SingleItemCriterion.Conditions()))
         }.also(consumer::accept)
 
         val plethoraOfCats = advancement(TAB_NAME, PLETHORA_OF_CATS) {
             parent(catGift)
             display {
-                frame = AdvancementFrame.GOAL
-                icon = Items.COD.defaultStack
+                frame = AdvancementType.GOAL
+                icon = Items.COD.defaultInstance
             }
-            criterion(
-                "20", Criteria.PET_TAMED.create(
+            addCriterion(
+                "20", Criteria.PET_TAMED.createCriterion(
                     PetTamedCriterion.Conditions(
                         Optional.empty(),
                         Optional.of(
-                            EntityPredicate.Builder.create().type(
-                                EntityTypePredicate.create(
-                                    wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE),
+                            EntityPredicate.Builder.entity().entityType(
+                                EntityTypePredicate.of(
+                                    wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE),
                                     EntityType.CAT
                                 )
                             ).build()
                         ),
-                        Optional.of(NumberRange.IntRange.atLeast(20)),
+                        Optional.of(MinMaxBounds.Ints.atLeast(20)),
                     )
                 )
             )
@@ -78,7 +78,7 @@ object AdventureTabGenerator : AdvancementTabGenerator {
         advancement(TAB_NAME, ALL_CAT_GIFTS) {
             parent(plethoraOfCats)
             display {
-                frame = AdvancementFrame.GOAL
+                frame = AdvancementType.GOAL
                 // cat king; https://minecraft-heads.com/custom-heads/head/104289-cat-king
                 icon =
                     getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRiZTYzOTRjOTE1Y2FjMzY0Y2YwMTFkM2Y4Y2EzNmU2YjBlOTk4NjA4ZWJmNGJiZDMxMmUzMjQ3MWQwODZkIn19fQ==")
@@ -93,8 +93,8 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                 Items.CHICKEN,
                 Items.PHANTOM_MEMBRANE
             ).forEach {
-                criterion(
-                    it.registryEntry.idAsString, Criteria.CAT_GIFT_RECEIVED.create(
+                addCriterion(
+                    it.builtInRegistryHolder().registeredName, Criteria.CAT_GIFT_RECEIVED.createCriterion(
                         SingleItemCriterion.Conditions.items(wrapperLookup, it)
                     )
                 )
@@ -102,50 +102,50 @@ object AdventureTabGenerator : AdvancementTabGenerator {
         }.also(consumer::accept)
 
         advancement(TAB_NAME, LOCK_MAP) {
-            parent(reference("blazeandcave:adventure/mapmakers_table"))
+            parent(createPlaceholder("blazeandcave:adventure/mapmakers_table"))
             display {
-                icon = Items.GLASS_PANE.defaultStack
+                icon = Items.GLASS_PANE.defaultInstance
             }
-            criterion("lock", Criteria.MAP_LOCKED.create(EmptyCriterion.Conditions()))
+            addCriterion("lock", Criteria.MAP_LOCKED.createCriterion(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
 
         advancement(TAB_NAME, GET_RAID_OF_IT) {
-            parent(reference("blazeandcave:adventure/were_being_attacked"))
+            parent(createPlaceholder("blazeandcave:adventure/were_being_attacked"))
             display {
-                icon = Items.MILK_BUCKET.defaultStack
+                icon = Items.MILK_BUCKET.defaultInstance
             }
-            criterion("get_raid_of_it", Criteria.GET_RAID_OF_IT.create(EmptyCriterion.Conditions()))
+            addCriterion("get_raid_of_it", Criteria.GET_RAID_OF_IT.createCriterion(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
 
         advancement(TAB_NAME, CAN_YOU_HEAR_IT_FROM_HERE) {
-            parent(reference("blazeandcave:adventure/oh_look_it_dings"))
+            parent(createPlaceholder("blazeandcave:adventure/oh_look_it_dings"))
             display {
-                icon = Items.ARROW.defaultStack
-                frame = AdvancementFrame.CHALLENGE
+                icon = Items.ARROW.defaultInstance
+                frame = AdvancementType.CHALLENGE
             }
-            criterion(
-                "50", Criteria.BELL_SHOT_FROM_DISTANCE.create(
+            addCriterion(
+                "50", Criteria.BELL_SHOT_FROM_DISTANCE.createCriterion(
                     SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
-                        Optional.of(NumberRange.IntRange.atLeast(50))
+                        Optional.of(MinMaxBounds.Ints.atLeast(50))
                     )
                 )
             )
         }.also(consumer::accept)
 
         advancement(TAB_NAME, MASTER_ARCHEOLOGIST) {
-            parent(reference("blazeandcave:adventure/a_suspicious_advancement"))
+            parent(createPlaceholder("blazeandcave:adventure/a_suspicious_advancement"))
             display {
-                icon = Items.BRUSH.defaultStack.apply {
-                    set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+                icon = Items.BRUSH.defaultInstance.apply {
+                    set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                 }
-                frame = AdvancementFrame.CHALLENGE
+                frame = AdvancementType.CHALLENGE
                 hidden = true
             }
 
             susLoot.forEach { item ->
-                criterion(
-                    item.registryEntry.idAsString, Criteria.SUS_BLOCK_GOT_ITEM.create(
+                addCriterion(
+                    item.builtInRegistryHolder().registeredName, Criteria.SUS_BLOCK_GOT_ITEM.createCriterion(
                         SingleItemCriterion.Conditions.items(wrapperLookup, item)
                     )
                 )
@@ -153,16 +153,16 @@ object AdventureTabGenerator : AdvancementTabGenerator {
         }.also(consumer::accept)
 
         advancement(TAB_NAME, MAXIMUM_COVERAGE) {
-            parent(reference("blazeandcave:adventure/mapmakers_table"))
+            parent(createPlaceholder("blazeandcave:adventure/mapmakers_table"))
             display {
-                icon = Items.FILLED_MAP.defaultStack
+                icon = Items.FILLED_MAP.defaultInstance
             }
-            criterion(
-                "max_coverage", InventoryChangedCriterion.Conditions.items(
-                    ItemPredicate.Builder.create().components(
-                        ComponentsPredicate.Builder.create().partial(
+            addCriterion(
+                "max_coverage", InventoryChangeTrigger.TriggerInstance.hasItems(
+                    ItemPredicate.Builder.item().withComponents(
+                        DataComponentMatchers.Builder.components().partial(
                             Main.mapStatePredicate,
-                            MapStatePredicate(scale = NumberRange.IntRange.exactly(MapState.MAX_SCALE))
+                            MapStatePredicate(scale = MinMaxBounds.Ints.exactly(MapItemSavedData.MAX_SCALE))
                         )
                             .build()
                     ).build()
@@ -171,17 +171,17 @@ object AdventureTabGenerator : AdvancementTabGenerator {
         }.also(consumer::accept)
 
         advancement(TAB_NAME, PAINT_IT_RED) {
-            parent(reference("blazeandcave:adventure/mapmaker"))
+            parent(createPlaceholder("blazeandcave:adventure/mapmaker"))
             display {
                 icon =
                     getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ4NjM2MmQwZjY4OTVkOWMyMmNlN2JmNjRkODU3Mjc2MDFiNWQ5ODNmZmM1YTUzZmE1YmYzYjQ3OTRkMWZkMSJ9fX0=")
-                frame = AdvancementFrame.CHALLENGE
+                frame = AdvancementType.CHALLENGE
             }
-            criterion(
-                "paint_it_red", InventoryChangedCriterion.Conditions.items(
-                    ItemPredicate.Builder.create()
-                        .components(
-                            ComponentsPredicate.Builder.create()
+            addCriterion(
+                "paint_it_red", InventoryChangeTrigger.TriggerInstance.hasItems(
+                    ItemPredicate.Builder.item()
+                        .withComponents(
+                            DataComponentMatchers.Builder.components()
                                 .partial(
                                     Main.mapStatePredicate,
                                     MapStatePredicate(
@@ -189,9 +189,9 @@ object AdventureTabGenerator : AdvancementTabGenerator {
                                             MapColorPredicate.AllSame(
                                                 listOf(
                                                     // FIRE: tnt, lava, fire, redstone block
-                                                    NumberRange.IntRange.between(16, 19),
+                                                    MinMaxBounds.Ints.between(16, 19),
                                                     // COLOR_RED
-                                                    NumberRange.IntRange.between(112, 115)
+                                                    MinMaxBounds.Ints.between(112, 115)
                                                 )
                                             )
                                         )
@@ -204,34 +204,38 @@ object AdventureTabGenerator : AdvancementTabGenerator {
         }.also(consumer::accept)
 
         advancement(TAB_NAME, SECRET_SUPPLIES) {
-            parent(reference("blazeandcave:adventure/shady_deals"))
+            parent(createPlaceholder("blazeandcave:adventure/shady_deals"))
 
             display {
-                icon = Items.DEAD_BUSH.defaultStack
-                frame = AdvancementFrame.GOAL
+                icon = Items.DEAD_BUSH.defaultInstance
+                frame = AdvancementType.GOAL
             }
 
-            criterion("milk_bucket", Criteria.WANDERING_TRADER_DROPPED_ITEM.create(
+            addCriterion("milk_bucket", Criteria.WANDERING_TRADER_DROPPED_ITEM.createCriterion(
                 EntityDroppedLootCriterion.Conditions(
                     Optional.empty(),
-                    Optional.of(EntityPredicate.Builder.create()
-                        .type(wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE), EntityType.WANDERING_TRADER)
+                    Optional.of(
+                        EntityPredicate.Builder.entity()
+                        .of(wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WANDERING_TRADER)
                         .build()),
-                    Optional.of(ItemPredicate.Builder.create()
-                        .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.MILK_BUCKET)
+                    Optional.of(
+                        ItemPredicate.Builder.item()
+                        .of(wrapperLookup.lookupOrThrow(Registries.ITEM), Items.MILK_BUCKET)
                         .build())
                 )
             ))
 
             // don't check if it's invisibility cuz pointless
-            criterion("potion", Criteria.WANDERING_TRADER_DROPPED_ITEM.create(
+            addCriterion("potion", Criteria.WANDERING_TRADER_DROPPED_ITEM.createCriterion(
                 EntityDroppedLootCriterion.Conditions(
                     Optional.empty(),
-                    Optional.of(EntityPredicate.Builder.create()
-                        .type(wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE), EntityType.WANDERING_TRADER)
+                    Optional.of(
+                        EntityPredicate.Builder.entity()
+                        .of(wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WANDERING_TRADER)
                         .build()),
-                    Optional.of(ItemPredicate.Builder.create()
-                        .items(wrapperLookup.getOrThrow(RegistryKeys.ITEM), Items.POTION)
+                    Optional.of(
+                        ItemPredicate.Builder.item()
+                        .of(wrapperLookup.lookupOrThrow(Registries.ITEM), Items.POTION)
                         .build())
                 )
             ))

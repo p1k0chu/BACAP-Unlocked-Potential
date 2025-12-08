@@ -2,68 +2,68 @@ package com.github.p1k0chu.bacup.advancement.criteria
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancement.criterion.AbstractCriterion
-import net.minecraft.block.Block
-import net.minecraft.predicate.BlockPredicate
-import net.minecraft.predicate.entity.EntityPredicate
-import net.minecraft.predicate.entity.LootContextPredicate
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.RegistryWrapper.WrapperLookup
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.math.BlockPos
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger
+import net.minecraft.world.level.block.Block
+import net.minecraft.advancements.critereon.BlockPredicate
+import net.minecraft.advancements.critereon.EntityPredicate
+import net.minecraft.advancements.critereon.ContextAwarePredicate
+import net.minecraft.core.registries.Registries
+import net.minecraft.core.HolderLookup.Provider
+import net.minecraft.tags.TagKey
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.core.BlockPos
 import java.util.*
 
-class SingleBlockCriterion : AbstractCriterion<SingleBlockCriterion.Conditions>() {
-    override fun getConditionsCodec() = Conditions.CODEC
+class SingleBlockCriterion : SimpleCriterionTrigger<SingleBlockCriterion.Conditions>() {
+    override fun codec() = Conditions.CODEC
 
-    fun trigger(player: ServerPlayerEntity, world: ServerWorld, blockPos: BlockPos) {
+    fun trigger(player: ServerPlayer, world: ServerLevel, blockPos: BlockPos) {
         this.trigger(player) { conditions ->
             conditions.matches(world, blockPos)
         }
     }
 
     class Conditions(
-        private val _player: Optional<LootContextPredicate>,
+        private val _player: Optional<ContextAwarePredicate>,
         private val block: List<BlockPredicate>
-    ) : AbstractCriterion.Conditions {
+    ) : SimpleCriterionTrigger.SimpleInstance {
         constructor() : this(Optional.empty(), listOf())
 
         override fun player() = _player
 
-        fun matches(world: ServerWorld, blockPos: BlockPos): Boolean {
-            return this.block.isEmpty() || this.block.any { it.test(world, blockPos) }
+        fun matches(world: ServerLevel, blockPos: BlockPos): Boolean {
+            return this.block.isEmpty() || this.block.any { it.matches(world, blockPos) }
         }
 
         companion object {
             @JvmStatic
             val CODEC: Codec<Conditions> = RecordCodecBuilder.create { instance ->
                 instance.group(
-                    EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
                         .forGetter(Conditions::player),
                     BlockPredicate.CODEC.listOf().optionalFieldOf("block", emptyList())
                         .forGetter(Conditions::block)
                 ).apply(instance, SingleBlockCriterion::Conditions)
             }
 
-            fun blocks(wrapperLookup: WrapperLookup, vararg blocks: Block): Conditions {
+            fun blocks(wrapperLookup: Provider, vararg blocks: Block): Conditions {
                 return Conditions(
                     Optional.empty(),
                     blocks.map { block ->
-                        BlockPredicate.Builder.create()
-                            .blocks(wrapperLookup.getOrThrow(RegistryKeys.BLOCK), block)
+                        BlockPredicate.Builder.block()
+                            .of(wrapperLookup.lookupOrThrow(Registries.BLOCK), block)
                             .build()
                     }
                 )
             }
 
-            fun tags(wrapperLookup: WrapperLookup, vararg tags: TagKey<Block>): Conditions {
+            fun tags(wrapperLookup: Provider, vararg tags: TagKey<Block>): Conditions {
                 return Conditions(
                     Optional.empty(),
                     tags.map { tag ->
-                        BlockPredicate.Builder.create()
-                            .tag(wrapperLookup.getOrThrow(RegistryKeys.BLOCK), tag)
+                        BlockPredicate.Builder.block()
+                            .of(wrapperLookup.lookupOrThrow(Registries.BLOCK), tag)
                             .build()
                     }
                 )

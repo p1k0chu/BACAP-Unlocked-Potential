@@ -1,13 +1,13 @@
 package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageTypes;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,14 +20,14 @@ public abstract class ItemEntityMixin {
     @Shadow
     public abstract @Nullable Entity getOwner();
 
-    @Shadow public abstract ItemStack getStack();
+    @Shadow public abstract ItemStack getItem();
 
-    @Inject(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ItemEntity;discard()V"))
-    void damage(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if(!source.isOf(DamageTypes.CACTUS)) return;
+    @Inject(method = "hurtServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/item/ItemEntity;discard()V"))
+    void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if(!source.is(DamageTypes.CACTUS)) return;
 
-        if(getOwner() instanceof ServerPlayerEntity player) {
-            Criteria.CACTUS_DESTROY_ITEM.trigger(player, getStack());
+        if(getOwner() instanceof ServerPlayer player) {
+            Criteria.CACTUS_DESTROY_ITEM.trigger(player, getItem());
         }
     }
 }

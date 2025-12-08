@@ -2,18 +2,18 @@ package com.github.p1k0chu.bacup
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.server.MinecraftServer
-import net.minecraft.util.Uuids
-import net.minecraft.world.PersistentState
-import net.minecraft.world.PersistentStateType
-import net.minecraft.world.World
+import net.minecraft.core.UUIDUtil
+import net.minecraft.world.level.saveddata.SavedData
+import net.minecraft.world.level.saveddata.SavedDataType
+import net.minecraft.world.level.Level
 import java.util.*
 
 class BacupPersistentState(
     players: Map<UUID, PlayerData>? = null
-) : PersistentState() {
+) : SavedData() {
     // java code may give immutable map in constructor
     // even if the parameter type is MutableMap
     val players: MutableMap<UUID, PlayerData> = players?.toMutableMap() ?: mutableMapOf()
@@ -21,15 +21,15 @@ class BacupPersistentState(
     companion object {
         val CODEC: Codec<BacupPersistentState> = RecordCodecBuilder.create { instance ->
             instance.group(
-                Codec.unboundedMap(Uuids.CODEC, PlayerData.CODEC)
+                Codec.unboundedMap(UUIDUtil.AUTHLIB_CODEC, PlayerData.CODEC)
                     .fieldOf("players")
                     .forGetter(BacupPersistentState::players)
             ).apply(instance, ::BacupPersistentState)
         }
 
         @JvmStatic
-        fun getType(): PersistentStateType<BacupPersistentState> {
-            return PersistentStateType(
+        fun getType(): SavedDataType<BacupPersistentState> {
+            return SavedDataType(
                 Main.id("persistent_state"),
                 { BacupPersistentState() },
                 { CODEC },
@@ -39,15 +39,15 @@ class BacupPersistentState(
 
         @JvmStatic
         fun getState(server: MinecraftServer): BacupPersistentState {
-            val manager = server.getWorld(World.OVERWORLD)!!.persistentStateManager
-            return manager.getOrCreate(getType())
+            val manager = server.getLevel(Level.OVERWORLD)!!.dataStorage
+            return manager.computeIfAbsent(getType())
         }
 
         @JvmStatic
         fun getPlayerState(player: LivingEntity): PlayerData {
-            val state = getState(player.server!!)
+            val state = getState(player.level().server!!)
 
-            state.markDirty()
+            state.setDirty()
 
             return state.players.getOrPut(player.uuid) { PlayerData() }
         }

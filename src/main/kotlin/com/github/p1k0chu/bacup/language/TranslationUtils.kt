@@ -2,15 +2,15 @@ package com.github.p1k0chu.bacup.language
 
 import com.github.p1k0chu.bacup.Main
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
-import net.minecraft.text.MutableText
-import net.minecraft.text.Text
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.network.chat.Component
 
-fun title(tab: String, name: String): MutableText {
-    return Text.translatable("${Main.MOD_ID}.advancement.$tab.$name.title")
+fun title(tab: String, name: String): MutableComponent {
+    return Component.translatable("${Main.MOD_ID}.advancement.$tab.$name.title")
 }
 
-fun description(tab: String, name: String): MutableText {
-    return Text.translatable("${Main.MOD_ID}.advancement.$tab.$name.desc")
+fun description(tab: String, name: String): MutableComponent {
+    return Component.translatable("${Main.MOD_ID}.advancement.$tab.$name.desc")
 }
 
 inline fun TranslationBuilder.advancementTab(name: String, block: AdvancementTabTranslationBuilder.() -> Unit) {

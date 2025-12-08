@@ -5,13 +5,13 @@ import com.github.p1k0chu.bacup.function.FunctionGenerator
 import com.github.p1k0chu.bacup.function.MCFunction
 import com.github.p1k0chu.bacup.function.reward.AdvancementType
 import com.github.p1k0chu.bacup.function.reward.rewardsBuilder
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.core.HolderLookup
 import java.util.function.Consumer
 
 object StatisticsTabRewardsGenerator : FunctionGenerator {
-    override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<MCFunction>) {
+    override fun accept(wrapperLookup: HolderLookup.Provider, consumer: Consumer<MCFunction>) {
         rewardsBuilder(consumer) {
             tab(StatisticsTabGenerator.TAB_NAME) {
                 advancement(StatisticsTabGenerator.EMERALD_PORTFOLIO)

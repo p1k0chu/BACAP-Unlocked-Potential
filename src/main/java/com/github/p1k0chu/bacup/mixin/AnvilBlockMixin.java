@@ -1,12 +1,12 @@
 package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.imixin.AnvilBlockWhoPlaced;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -25,8 +25,8 @@ public abstract class AnvilBlockMixin extends BlockMixin implements AnvilBlockWh
     }
 
     @Override
-    void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack, CallbackInfo ci) {
-        this.placer = placer.getUuid();
+    void onPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack, CallbackInfo ci) {
+        this.placer = placer.getUUID();
 
         super.onPlaced(world, pos, state, placer, itemStack, ci);
     }

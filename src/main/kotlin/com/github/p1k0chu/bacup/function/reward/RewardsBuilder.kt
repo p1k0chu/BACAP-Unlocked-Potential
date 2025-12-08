@@ -7,18 +7,18 @@ import com.github.p1k0chu.bacup.function.reward.BacConstants.bac_teams
 import com.github.p1k0chu.bacup.function.reward.BacConstants.tab_titles
 import com.github.p1k0chu.bacup.language.title
 import it.unimi.dsi.fastutil.objects.ReferenceSortedSets
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.CustomModelDataComponent
-import net.minecraft.component.type.LoreComponent
-import net.minecraft.component.type.NbtComponent
-import net.minecraft.component.type.TooltipDisplayComponent
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.component.CustomModelData
+import net.minecraft.world.item.component.ItemLore
+import net.minecraft.world.item.component.CustomData
+import net.minecraft.world.item.component.TooltipDisplay
+import net.minecraft.world.item.ItemStack
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
-import net.minecraft.text.Style
-import net.minecraft.text.Text
-import net.minecraft.util.Colors
-import net.minecraft.util.Identifier
+import net.minecraft.network.chat.Style
+import net.minecraft.network.chat.Component
+import net.minecraft.util.CommonColors
+import net.minecraft.resources.ResourceLocation
 import java.util.function.Consumer
 
 class RewardsBuilder(
@@ -47,7 +47,7 @@ class RewardsBuilder(
                 // the message function
                 consumer.accept(
                     MCFunction(
-                        Identifier.of(Main.MOD_ID, "msg/$tab/$name"), messageGen(
+                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "msg/$tab/$name"), messageGen(
                             tab,
                             "${Main.MOD_ID}.advancement.$tab.$name.title",
                             "${Main.MOD_ID}.advancement.$tab.$name.desc",
@@ -59,27 +59,27 @@ class RewardsBuilder(
                 // item reward function
                 consumer.accept(
                     MCFunction(
-                        Identifier.of(Main.MOD_ID, "reward/$tab/$name"),
+                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "reward/$tab/$name"),
                         itemRewards.joinToString(separator = "\n") { giveGen(it) })
                 )
 
                 // main reward function
                 consumer.accept(
                     MCFunction(
-                        Identifier.of(Main.MOD_ID, "$tab/$name"),
-                        mainRewardFunctionGen(Identifier.of(Main.MOD_ID, "$tab/$name"))
+                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "$tab/$name"),
+                        mainRewardFunctionGen(ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "$tab/$name"))
                     )
                 )
 
                 consumer.accept(
                     MCFunction(
-                        Identifier.of(Main.MOD_ID, "exp/$tab/$name"), expGen(exp)
+                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "exp/$tab/$name"), expGen(exp)
                     )
                 )
 
                 consumer.accept(
                     MCFunction(
-                        Identifier.of(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(tab, name, trophy)
+                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(tab, name, trophy)
                     )
                 )
             }
@@ -93,8 +93,8 @@ fun rewardsBuilder(consumer: Consumer<MCFunction>, block: RewardsBuilder.() -> U
 
 fun giveGen(item: ItemStack): String {
     return """
-        give @s ${item.registryEntry.idAsString} ${item.count}
-        tellraw @s {"color":"green","text":" +${item.count} ","extra":[{"translate":"${item.item.translationKey}"}]}
+        give @s ${item.itemHolder.registeredName} ${item.count}
+        tellraw @s {"color":"green","text":" +${item.count} ","extra":[{"translate":"${item.item.descriptionId}"}]}
     """.trimIndent()
 }
 
@@ -115,7 +115,7 @@ fun expGen(amount: Int?): String {
 }
 
 // hell.
-fun mainRewardFunctionGen(advancementId: Identifier): String {
+fun mainRewardFunctionGen(advancementId: ResourceLocation): String {
     val namespace: String = advancementId.namespace
     val path: String = advancementId.path
 
@@ -178,56 +178,56 @@ fun trophyGen(tab: String, name: String, item: ItemStack?): String {
     if (item == null) return ""
 
     // setup useful trophy data
-    item.set(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelDataComponent(listOf(131f), listOf(), listOf(), listOf()))
-    item.set(DataComponentTypes.TOOLTIP_DISPLAY, TooltipDisplayComponent(false, ReferenceSortedSets.emptySet()))
+    item.set(DataComponents.CUSTOM_MODEL_DATA, CustomModelData(listOf(131f), listOf(), listOf(), listOf()))
+    item.set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay(false, ReferenceSortedSets.emptySet()))
 
-    NbtCompound().let { customData ->
+    CompoundTag().let { customData ->
         customData.putInt("Trophy", 1)
-        item.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(customData))
+        item.set(DataComponents.CUSTOM_DATA, CustomData.of(customData))
     }
 
-    item.customName?.getWithStyle(
+    item.customName?.toFlatList(
         Style.EMPTY
             .withBold(true)
             .withItalic(false)
     )
         ?.firstOrNull()
         ?.let { customName ->
-            item.set(DataComponentTypes.CUSTOM_NAME, customName)
+            item.set(DataComponents.CUSTOM_NAME, customName)
         }
 
     // change lore formatting and
     // add extra lines to lore
-    val lore = item.get(DataComponentTypes.LORE)
-    val lines: List<Text>? = lore?.lines?.flatMap { line ->
-        line.getWithStyle(
+    val lore = item.get(DataComponents.LORE)
+    val lines: List<Component>? = lore?.lines?.flatMap { line ->
+        line.toFlatList(
             Style.EMPTY.withBold(false).withItalic(true).withColor(item.customName?.style?.color)
         )
     }
 
     item.set(
-        DataComponentTypes.LORE, LoreComponent(lines ?: listOf()).with(Text.empty()).with(
-            Text.of("Awarded for achieving").getWithStyle(
-                Style.EMPTY.withColor(Colors.GRAY)
+        DataComponents.LORE, ItemLore(lines ?: listOf()).withLineAdded(Component.empty()).withLineAdded(
+            Component.nullToEmpty("Awarded for achieving").toFlatList(
+                Style.EMPTY.withColor(CommonColors.GRAY)
             ).first()
-        ).with(
+        ).withLineAdded(
             title(tab, name)
         )
     )
 
     val functionBody = StringBuilder()
-    functionBody.append("give @s ${item.registryEntry.idAsString}[")
+    functionBody.append("give @s ${item.itemHolder.registeredName}[")
 
     item.components.mapNotNull { component ->
-        if (!item.hasChangedComponent(component.type)) return@mapNotNull null
+        if (!item.hasNonDefault(component.type)) return@mapNotNull null
 
-        "${component.type}=${component.encode(NbtOps.INSTANCE).orThrow}"
+        "${component.type}=${component.encodeValue(NbtOps.INSTANCE).orThrow}"
     }.joinTo(functionBody, separator = ",")
 
     functionBody.append(
         """
         ] 1
-        tellraw @s {"color": "${item.customName?.style?.color ?: "white"}", "text": " +${item.count} ", "extra": [{"translate": "${item.customName?.string ?: item.item.translationKey}"}]}
+        tellraw @s {"color": "${item.customName?.style?.color ?: "white"}", "text": " +${item.count} ", "extra": [{"translate": "${item.customName?.string ?: item.item.descriptionId}"}]}
         """.trimIndent()
     )
 

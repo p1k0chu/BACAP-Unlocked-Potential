@@ -3,16 +3,16 @@ package com.github.p1k0chu.bacup.language
 import com.github.p1k0chu.bacup.language.generators.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.core.HolderLookup
 import java.util.concurrent.CompletableFuture
 
 class EnglishLanguageProvider(
     dataOutput: FabricDataOutput?,
-    wrapperLookup: CompletableFuture<RegistryWrapper.WrapperLookup>,
+    wrapperLookup: CompletableFuture<HolderLookup.Provider>,
     private val generators: Collection<TranslationGenerator>
 ) : FabricLanguageProvider(dataOutput, "en_us", wrapperLookup) {
     override fun generateTranslations(
-        wrapperLookup: RegistryWrapper.WrapperLookup,
+        wrapperLookup: HolderLookup.Provider,
         translationBuilder: TranslationBuilder
     ) {
         generators.forEach { it.accept(wrapperLookup, translationBuilder) }
@@ -20,7 +20,7 @@ class EnglishLanguageProvider(
 }
 
 fun createTranslationProvider(
-    output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
+    output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>
 ): FabricLanguageProvider {
     return EnglishLanguageProvider(
         output, registriesFuture, listOf(

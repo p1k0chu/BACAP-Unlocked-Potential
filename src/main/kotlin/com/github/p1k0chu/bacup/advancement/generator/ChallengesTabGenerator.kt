@@ -3,37 +3,37 @@ package com.github.p1k0chu.bacup.advancement.generator
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleEntityCriterion
-import net.minecraft.advancement.AdvancementEntry
-import net.minecraft.advancement.AdvancementFrame
-import net.minecraft.data.advancement.AdvancementTabGenerator
-import net.minecraft.data.advancement.AdvancementTabGenerator.reference
-import net.minecraft.entity.EntityType
-import net.minecraft.item.Items
-import net.minecraft.predicate.entity.EntityPredicate
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementType
+import net.minecraft.data.advancements.AdvancementSubProvider
+import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.Items
+import net.minecraft.advancements.critereon.EntityPredicate
+import net.minecraft.core.registries.Registries
+import net.minecraft.core.HolderLookup
 import java.util.*
 import java.util.function.Consumer
 
-object ChallengesTabGenerator : AdvancementTabGenerator {
+object ChallengesTabGenerator : AdvancementSubProvider {
     const val TAB_NAME = "challenges"
     const val MOB_FLATTENER_9000 = "mob_flattener_9000"
 
-    override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
+    override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
         advancement(TAB_NAME, MOB_FLATTENER_9000) {
-            parent(reference("blazeandcave:challenges/biological_warfare"))
+            parent(createPlaceholder("blazeandcave:challenges/biological_warfare"))
             display {
-                icon = Items.ANVIL.defaultStack
-                frame = AdvancementFrame.CHALLENGE
+                icon = Items.ANVIL.defaultInstance
+                frame = AdvancementType.CHALLENGE
             }
 
             KILLABLE_MOBS.forEach { mob ->
-                criterion(mob.registryEntry.idAsString, Criteria.ANVIL_KILL.create(
+                addCriterion(mob.builtInRegistryHolder().registeredName, Criteria.ANVIL_KILL.createCriterion(
                     SingleEntityCriterion.Conditions(
                         Optional.empty(),
                         listOf(
-                            EntityPredicate.Builder.create()
-                                .type(wrapperLookup.getOrThrow(RegistryKeys.ENTITY_TYPE), mob)
+                            EntityPredicate.Builder.entity()
+                                .of(wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE), mob)
                                 .build()
                         )
                     )

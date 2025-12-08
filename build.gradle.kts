@@ -40,7 +40,7 @@ fabricApi {
 
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft_version")
-    mappings("net.fabricmc:yarn:$yarn_mappings:v2")
+    mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc:fabric-loader:$loader_version")
     modImplementation("net.fabricmc:fabric-language-kotlin:$kotlin_adapter_version")
 
