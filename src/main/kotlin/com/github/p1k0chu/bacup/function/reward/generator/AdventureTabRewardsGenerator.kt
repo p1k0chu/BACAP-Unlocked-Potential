@@ -34,6 +34,9 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                 advancement(AdventureTabGenerator.PAINT_IT_RED) {
                     type = AdvancementType.CHALLENGE
                 }
+                advancement(AdventureTabGenerator.SECRET_SUPPLIES) {
+                    type = AdvancementType.GOAL
+                }
             }
         }
     }

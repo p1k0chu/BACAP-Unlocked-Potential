@@ -45,6 +45,10 @@ object Criteria {
         id("entity_dropped_loot"), EntityDroppedLootCriterion()
     )
     @JvmField
+    val WANDERING_TRADER_DROPPED_ITEM: EntityDroppedLootCriterion = Criteria.register(
+        id("wandering_trader_dropped_item"), EntityDroppedLootCriterion()
+    )
+    @JvmField
     val GET_RAID_OF_IT: EmptyCriterion = Criteria.register(
         id("get_raid_of_it"), EmptyCriterion()
     )
