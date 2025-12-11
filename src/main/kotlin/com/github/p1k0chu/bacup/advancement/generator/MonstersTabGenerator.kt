@@ -9,8 +9,8 @@ import net.minecraft.advancements.AdvancementType
 import net.minecraft.data.advancements.AdvancementSubProvider
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.item.Items
-import net.minecraft.advancements.critereon.EntityPredicate
-import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.registries.Registries
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.EntityTypeTags

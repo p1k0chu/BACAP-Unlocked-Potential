@@ -7,7 +7,7 @@ import net.minecraft.core.HolderLookup
 import java.util.concurrent.CompletableFuture
 
 class EnglishLanguageProvider(
-    dataOutput: FabricDataOutput?,
+    dataOutput: FabricDataOutput,
     wrapperLookup: CompletableFuture<HolderLookup.Provider>,
     private val generators: Collection<TranslationGenerator>
 ) : FabricLanguageProvider(dataOutput, "en_us", wrapperLookup) {

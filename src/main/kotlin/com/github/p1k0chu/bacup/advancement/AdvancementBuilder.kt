@@ -9,7 +9,7 @@ import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
 import net.minecraft.world.item.ItemStack
 import net.minecraft.core.ClientAsset
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import java.util.*
 
 class AdvancementBuilder(val tab: String, val name: String) : Advancement.Builder() {
@@ -43,7 +43,7 @@ class AdvancementBuilder(val tab: String, val name: String) : Advancement.Builde
 inline fun advancement(tab: String, name: String, block: AdvancementBuilder.() -> Unit): AdvancementHolder {
     val builder = AdvancementBuilder(tab, name)
     builder.apply(block)
-    builder.rewards(AdvancementRewards.Builder.function(ResourceLocation.parse(id(tab, name))))
-    return builder.build(ResourceLocation.parse(id(tab, name)))
+    builder.rewards(AdvancementRewards.Builder.function(Identifier.parse(id(tab, name))))
+    return builder.build(Identifier.parse(id(tab, name)))
 }
 

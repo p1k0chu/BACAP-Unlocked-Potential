@@ -7,8 +7,8 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.level.saveddata.maps.MapId
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData
-import net.minecraft.advancements.critereon.MinMaxBounds
-import net.minecraft.advancements.critereon.SingleComponentItemPredicate
+import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.criterion.SingleComponentItemPredicate
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.Level
 import java.util.*

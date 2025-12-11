@@ -11,7 +11,7 @@ import net.minecraft.data.advancements.AdvancementSubProvider
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
-import net.minecraft.advancements.critereon.MinMaxBounds
+import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.core.HolderLookup
 import java.util.*
 import java.util.function.Consumer

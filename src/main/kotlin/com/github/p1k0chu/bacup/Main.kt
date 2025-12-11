@@ -25,7 +25,7 @@ object Main : ModInitializer {
     val mapStatePredicate: DataComponentPredicate.Type<MapStatePredicate> = Registry.register(
         BuiltInRegistries.DATA_COMPONENT_PREDICATE_TYPE,
         id("map_state_predicate"),
-        DataComponentPredicate.Type(MapStatePredicate.CODEC)
+        DataComponentPredicate.ConcreteType(MapStatePredicate.CODEC)
     )
 
     var serverInstance: MinecraftServer? = null

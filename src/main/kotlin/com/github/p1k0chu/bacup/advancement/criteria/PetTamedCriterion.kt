@@ -2,11 +2,11 @@ package com.github.p1k0chu.bacup.advancement.criteria
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger
 import net.minecraft.world.entity.TamableAnimal
-import net.minecraft.advancements.critereon.MinMaxBounds
-import net.minecraft.advancements.critereon.EntityPredicate
-import net.minecraft.advancements.critereon.ContextAwarePredicate
+import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.advancements.criterion.ContextAwarePredicate
 import net.minecraft.server.level.ServerPlayer
 import java.util.*
 

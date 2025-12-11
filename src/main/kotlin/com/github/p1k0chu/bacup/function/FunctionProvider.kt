@@ -7,8 +7,8 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.DataProvider
 import net.minecraft.data.CachedOutput
 import net.minecraft.core.HolderLookup
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.Util
+import net.minecraft.resources.Identifier
+import net.minecraft.util.Util
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
@@ -24,7 +24,7 @@ class FunctionProvider(
 
     override fun run(writer: CachedOutput): CompletableFuture<*> {
         return registriesFuture.thenCompose { wrapperLookup: HolderLookup.Provider ->
-            val ids = mutableSetOf<ResourceLocation>()
+            val ids = mutableSetOf<Identifier>()
             val futures = mutableListOf<CompletableFuture<*>>()
 
             val consumer: (MCFunction) -> Unit = { func: MCFunction ->
@@ -51,7 +51,7 @@ class FunctionProvider(
         private fun writeToFile(
             writer: CachedOutput,
             funcBody: String,
-            path: Path?
+            path: Path
         ) = CompletableFuture.runAsync({
             try {
                 val byteArrayOutputStream = ByteArrayOutputStream()

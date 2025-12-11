@@ -2,17 +2,14 @@ package com.github.p1k0chu.bacup.advancement
 
 import com.github.p1k0chu.bacup.Main
 import com.google.common.collect.ImmutableMultimap
-import com.google.common.collect.Multimap
-import com.google.common.collect.Multimaps
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
 import com.mojang.authlib.properties.PropertyMap
-import net.minecraft.Util
 import net.minecraft.core.component.DataComponents
+import net.minecraft.util.Util
 import net.minecraft.world.item.component.ResolvableProfile
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import java.util.*
 
 fun id(tab: String, name: String): String {
     return Main.id("$tab/$name")

@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.server.MinecraftServer
 import net.minecraft.core.UUIDUtil
+import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.level.saveddata.SavedData
 import net.minecraft.world.level.saveddata.SavedDataType
 import net.minecraft.world.level.Level
@@ -32,8 +33,8 @@ class BacupPersistentState(
             return SavedDataType(
                 Main.id("persistent_state"),
                 { BacupPersistentState() },
-                { CODEC },
-                null
+                CODEC,
+                DataFixTypes.LEVEL
             )
         }
 

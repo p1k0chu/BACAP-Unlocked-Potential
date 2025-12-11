@@ -18,7 +18,7 @@ import net.minecraft.nbt.NbtOps
 import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.Component
 import net.minecraft.util.CommonColors
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import java.util.function.Consumer
 
 class RewardsBuilder(
@@ -47,7 +47,7 @@ class RewardsBuilder(
                 // the message function
                 consumer.accept(
                     MCFunction(
-                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "msg/$tab/$name"), messageGen(
+                        Identifier.fromNamespaceAndPath(Main.MOD_ID, "msg/$tab/$name"), messageGen(
                             tab,
                             "${Main.MOD_ID}.advancement.$tab.$name.title",
                             "${Main.MOD_ID}.advancement.$tab.$name.desc",
@@ -59,27 +59,27 @@ class RewardsBuilder(
                 // item reward function
                 consumer.accept(
                     MCFunction(
-                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "reward/$tab/$name"),
+                        Identifier.fromNamespaceAndPath(Main.MOD_ID, "reward/$tab/$name"),
                         itemRewards.joinToString(separator = "\n") { giveGen(it) })
                 )
 
                 // main reward function
                 consumer.accept(
                     MCFunction(
-                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "$tab/$name"),
-                        mainRewardFunctionGen(ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "$tab/$name"))
+                        Identifier.fromNamespaceAndPath(Main.MOD_ID, "$tab/$name"),
+                        mainRewardFunctionGen(Identifier.fromNamespaceAndPath(Main.MOD_ID, "$tab/$name"))
                     )
                 )
 
                 consumer.accept(
                     MCFunction(
-                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "exp/$tab/$name"), expGen(exp)
+                        Identifier.fromNamespaceAndPath(Main.MOD_ID, "exp/$tab/$name"), expGen(exp)
                     )
                 )
 
                 consumer.accept(
                     MCFunction(
-                        ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(tab, name, trophy)
+                        Identifier.fromNamespaceAndPath(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(tab, name, trophy)
                     )
                 )
             }
@@ -115,7 +115,7 @@ fun expGen(amount: Int?): String {
 }
 
 // hell.
-fun mainRewardFunctionGen(advancementId: ResourceLocation): String {
+fun mainRewardFunctionGen(advancementId: Identifier): String {
     val namespace: String = advancementId.namespace
     val path: String = advancementId.path
 

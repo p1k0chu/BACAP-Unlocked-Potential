@@ -5,10 +5,10 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
-import net.minecraft.advancements.critereon.MinMaxBounds
+import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import java.util.function.Predicate
 
 interface MapColorPredicate : Predicate<ByteArray> {
@@ -58,7 +58,7 @@ interface MapColorPredicate : Predicate<ByteArray> {
 class MapColorPredicateType<T : MapColorPredicate>(val codec: MapCodec<T>) {
     companion object {
         val REGISTRY_KEY: ResourceKey<Registry<MapColorPredicateType<*>>> =
-            ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, "map_color_predicate_type"))
+            ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(Main.MOD_ID, "map_color_predicate_type"))
         val REGISTRY: Registry<MapColorPredicateType<*>> =
             FabricRegistryBuilder.createSimple(REGISTRY_KEY)
                 .buildAndRegister()
@@ -70,6 +70,6 @@ object MapColorPredicateTypes {
     val IS_FILLED = register("is_filled", MapColorPredicateType(MapColorPredicate.IsFilled.CODEC))
 
     private fun <T : MapColorPredicate> register(id: String, type: MapColorPredicateType<T>): MapColorPredicateType<T> {
-        return Registry.register(MapColorPredicateType.REGISTRY, ResourceLocation.fromNamespaceAndPath(Main.MOD_ID, id), type)
+        return Registry.register(MapColorPredicateType.REGISTRY, Identifier.fromNamespaceAndPath(Main.MOD_ID, id), type)
     }
 }
