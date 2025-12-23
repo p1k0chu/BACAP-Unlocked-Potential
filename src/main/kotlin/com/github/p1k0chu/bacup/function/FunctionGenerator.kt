@@ -1,8 +1,8 @@
 package com.github.p1k0chu.bacup.function
 
-import net.minecraft.registry.RegistryWrapper.WrapperLookup
+import net.minecraft.core.HolderLookup.Provider
 import java.util.function.Consumer
 
 fun interface FunctionGenerator {
-    fun accept(wrapperLookup: WrapperLookup, consumer: Consumer<MCFunction>)
+    fun accept(wrapperLookup: Provider, consumer: Consumer<MCFunction>)
 }

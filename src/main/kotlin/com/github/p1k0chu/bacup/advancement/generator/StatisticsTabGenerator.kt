@@ -3,20 +3,20 @@ package com.github.p1k0chu.bacup.advancement.generator
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
-import net.minecraft.advancement.AdvancementEntry
-import net.minecraft.advancement.AdvancementFrame
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.PotionContentsComponent
-import net.minecraft.data.advancement.AdvancementTabGenerator
-import net.minecraft.data.advancement.AdvancementTabGenerator.reference
-import net.minecraft.item.Items
-import net.minecraft.potion.Potions
-import net.minecraft.predicate.NumberRange
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementType
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.data.advancements.AdvancementSubProvider
+import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.core.HolderLookup
 import java.util.*
 import java.util.function.Consumer
 
-object StatisticsTabGenerator : AdvancementTabGenerator {
+object StatisticsTabGenerator : AdvancementSubProvider {
     const val TAB_NAME = "statistics"
     const val ROOT = "blazeandcave:statistics/root"
 
@@ -29,16 +29,16 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
     const val GLGLTU_CULT = "glgltu_cult"
     const val GLGLTU_3 = "glgltu_3"
 
-    override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
+    override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
         val emeraldPortfolio = advancement(TAB_NAME, EMERALD_PORTFOLIO) {
-            parent(reference(ROOT))
+            parent(createPlaceholder(ROOT))
             display {
-                icon = Items.EMERALD.defaultStack
+                icon = Items.EMERALD.defaultInstance
             }
-            criterion("200", Criteria.TRADED_FOR_EMERALDS.create(
+            addCriterion("200", Criteria.TRADED_FOR_EMERALDS.createCriterion(
                 SingleIntRangeCriterion.Conditions(
                     Optional.empty(),
-                    Optional.of(NumberRange.IntRange.atLeast(200))
+                    Optional.of(MinMaxBounds.Ints.atLeast(200))
                 )
             ))
         }.also(consumer::accept)
@@ -46,16 +46,16 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
         val stockMarket = advancement(TAB_NAME, THE_STOCK_MARKET) {
             parent(emeraldPortfolio)
             display {
-                icon = Items.EMERALD.defaultStack.apply {
-                    set(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+                icon = Items.EMERALD.defaultInstance.apply {
+                    set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                 }
-                frame = AdvancementFrame.GOAL
+                frame = AdvancementType.GOAL
             }
-            criterion(
-                "576", Criteria.TRADED_FOR_EMERALDS.create(
+            addCriterion(
+                "576", Criteria.TRADED_FOR_EMERALDS.createCriterion(
                     SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
-                        Optional.of(NumberRange.IntRange.atLeast(576)),
+                        Optional.of(MinMaxBounds.Ints.atLeast(576)),
                     )
                 )
             )
@@ -64,14 +64,14 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
         val smallBusiness = advancement(TAB_NAME, SMALL_BUSINESS) {
             parent(stockMarket)
             display {
-                icon = Items.EMERALD_BLOCK.defaultStack
-                frame = AdvancementFrame.CHALLENGE
+                icon = Items.EMERALD_BLOCK.defaultInstance
+                frame = AdvancementType.CHALLENGE
             }
-            criterion(
-                "1000", Criteria.TRADED_FOR_EMERALDS.create(
+            addCriterion(
+                "1000", Criteria.TRADED_FOR_EMERALDS.createCriterion(
                     SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
-                        Optional.of(NumberRange.IntRange.atLeast(1000)),
+                        Optional.of(MinMaxBounds.Ints.atLeast(1000)),
                     )
                 )
             )
@@ -80,32 +80,32 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
         advancement(TAB_NAME, SMALL_INDIE_COMPANY) {
             parent(smallBusiness)
             display {
-                icon = Items.DEEPSLATE_EMERALD_ORE.defaultStack
-                frame =  AdvancementFrame.CHALLENGE
+                icon = Items.DEEPSLATE_EMERALD_ORE.defaultInstance
+                frame =  AdvancementType.CHALLENGE
                 hidden = true
             }
-            criterion(
-                "15552", Criteria.TRADED_FOR_EMERALDS.create(
+            addCriterion(
+                "15552", Criteria.TRADED_FOR_EMERALDS.createCriterion(
                     SingleIntRangeCriterion.Conditions(
                         Optional.empty(),
-                        Optional.of(NumberRange.IntRange.atLeast(15552)),
+                        Optional.of(MinMaxBounds.Ints.atLeast(15552)),
                     )
                 )
             )
         }.also(consumer::accept)
 
         val glgltu = advancement(TAB_NAME, GLGLTU) {
-            parent(reference(ROOT))
+            parent(createPlaceholder(ROOT))
             display {
-                icon = Items.TIPPED_ARROW.defaultStack.apply {
-                    set(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent(Potions.STRENGTH))
+                icon = Items.TIPPED_ARROW.defaultInstance.apply {
+                    set(DataComponents.POTION_CONTENTS, PotionContents(Potions.STRENGTH))
                 }
             }
-            criterion("glgltu", Criteria.GLGLTU.create(
+            addCriterion("glgltu", Criteria.GLGLTU.createCriterion(
                 SingleIntRangeCriterion.Conditions(
                     Optional.empty(),
                     Optional.of(
-                        NumberRange.IntRange.atLeast(1)
+                        MinMaxBounds.Ints.atLeast(1)
                     )
                 )
             ))
@@ -114,14 +114,14 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
         val glgltuCult = advancement(TAB_NAME, GLGLTU_CULT) {
             parent(glgltu)
             display {
-                icon = Items.SPECTRAL_ARROW.defaultStack
-                frame = AdvancementFrame.GOAL
+                icon = Items.SPECTRAL_ARROW.defaultInstance
+                frame = AdvancementType.GOAL
             }
-            criterion("glgltu_cult", Criteria.GLGLTU.create(
+            addCriterion("glgltu_cult", Criteria.GLGLTU.createCriterion(
                 SingleIntRangeCriterion.Conditions(
                     Optional.empty(),
                     Optional.of(
-                        NumberRange.IntRange.atLeast(50)
+                        MinMaxBounds.Ints.atLeast(50)
                     )
                 )
             ))
@@ -130,14 +130,14 @@ object StatisticsTabGenerator : AdvancementTabGenerator {
         advancement(TAB_NAME, GLGLTU_3) {
             parent(glgltuCult)
             display {
-                icon = Items.WRITABLE_BOOK.defaultStack
-                frame = AdvancementFrame.CHALLENGE
+                icon = Items.WRITABLE_BOOK.defaultInstance
+                frame = AdvancementType.CHALLENGE
             }
-            criterion("glgltu_3", Criteria.GLGLTU.create(
+            addCriterion("glgltu_3", Criteria.GLGLTU.createCriterion(
                 SingleIntRangeCriterion.Conditions(
                     Optional.empty(),
                     Optional.of(
-                        NumberRange.IntRange.atLeast(200)
+                        MinMaxBounds.Ints.atLeast(200)
                     )
                 )
             ))

@@ -4,14 +4,14 @@ import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityLastFuel;
 import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityWhoOpened;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -51,8 +51,8 @@ public abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnace
         lastConsumedFuel = fuel;
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;decrement(I)V"))
-    private static void tick(ServerWorld world,
+    @Inject(method = "serverTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"))
+    private static void tick(ServerLevel world,
                              BlockPos pos,
                              BlockState state,
                              AbstractFurnaceBlockEntity blockEntity,
@@ -63,7 +63,7 @@ public abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnace
         UUID whoOpened = ((AbstractFurnaceBlockEntityWhoOpened) blockEntity).bacup$getPlayer();
 
         MinecraftServer server = world.getServer();
-        ServerPlayerEntity player = server.getPlayerManager().getPlayer(whoOpened);
+        ServerPlayer player = server.getPlayerList().getPlayer(whoOpened);
 
         if(player != null) {
             Criteria.FURNACE_FUEL_CONSUMED.trigger(player, fuel);

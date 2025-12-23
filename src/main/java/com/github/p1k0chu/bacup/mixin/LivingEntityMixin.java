@@ -2,15 +2,15 @@ package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.imixin.AnvilBlockWhoPlaced;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.FallingBlockEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,32 +26,34 @@ import java.util.function.Consumer;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
     @Shadow
-    public abstract @Nullable PlayerEntity getAttackingPlayer();
+    public abstract @Nullable Player getLastHurtByPlayer();
 
-    @Inject(method = "damage", at = @At(value = "HEAD"))
-    void damage(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "hurtServer", at = @At(value = "HEAD"))
+    void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
     }
 
-    @ModifyArg(method = "dropLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/loot/LootTable;generateLoot(Lnet/minecraft/loot/context/LootWorldContext;JLjava/util/function/Consumer;)V"), index = 2)
+    @ModifyArg(method = "dropFromLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;ZLnet/minecraft/resources/ResourceKey;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;JLjava/util/function/Consumer;)V"), index = 2)
     Consumer<ItemStack> modifyLootConsumer(Consumer<ItemStack> lootConsumer) {
-        if (getAttackingPlayer() instanceof ServerPlayerEntity serverPlayerEntity) {
+        if (getLastHurtByPlayer() instanceof ServerPlayer serverPlayerEntity) {
             return lootConsumer.andThen(stack -> Criteria.ENTITY_DROPPED_LOOT.trigger(serverPlayerEntity, (LivingEntity) (Object) this, stack));
         }
         return lootConsumer;
     }
 
-    @Inject(method = "onDeath", at = @At("HEAD"))
+    @Inject(method = "die", at = @At("HEAD"))
     void onDeath(DamageSource damageSource, CallbackInfo ci) {
         LivingEntity entity = ((LivingEntity) (Object) this);
 
-        Entity source = damageSource.getSource();
+        Entity source = damageSource.getDirectEntity();
 
         if(source instanceof FallingBlockEntity fallingBlockEntity) {
             if(fallingBlockEntity.getBlockState().getBlock() instanceof AnvilBlock anvil) {
                 UUID placer = ((AnvilBlockWhoPlaced) anvil).bacup$getPlacer();
 
                 if(placer != null) {
-                    if(entity.getWorld().getPlayerByUuid(placer) instanceof ServerPlayerEntity player) {
+                    // no need to close the level 😭
+                    //noinspection resource
+                    if(entity.level().getPlayerByUUID(placer) instanceof ServerPlayer player) {
                         Criteria.ANVIL_KILL.trigger(player, entity);
                     }
                 }

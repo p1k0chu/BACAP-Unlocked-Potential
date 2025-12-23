@@ -2,45 +2,45 @@ package com.github.p1k0chu.bacup.advancement.criteria
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancement.criterion.AbstractCriterion
-import net.minecraft.entity.passive.TameableEntity
-import net.minecraft.predicate.NumberRange
-import net.minecraft.predicate.entity.EntityPredicate
-import net.minecraft.predicate.entity.LootContextPredicate
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger
+import net.minecraft.world.entity.TamableAnimal
+import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.advancements.criterion.ContextAwarePredicate
+import net.minecraft.server.level.ServerPlayer
 import java.util.*
 
-class PetTamedCriterion : AbstractCriterion<PetTamedCriterion.Conditions>() {
-    override fun getConditionsCodec() = Conditions.CODEC
+class PetTamedCriterion : SimpleCriterionTrigger<PetTamedCriterion.Conditions>() {
+    override fun codec() = Conditions.CODEC
 
-    fun trigger(player: ServerPlayerEntity, pet: TameableEntity, total: Int) {
+    fun trigger(player: ServerPlayer, pet: TamableAnimal, total: Int) {
         this.trigger(player) { conditions ->
             conditions.matches(player, pet, total)
         }
     }
 
     class Conditions(
-        private val _player: Optional<LootContextPredicate>,
+        private val _player: Optional<ContextAwarePredicate>,
         private val pet: Optional<EntityPredicate>,
-        private val total: Optional<NumberRange.IntRange>
-    ) : AbstractCriterion.Conditions {
+        private val total: Optional<MinMaxBounds.Ints>
+    ) : SimpleCriterionTrigger.SimpleInstance {
 
         override fun player() = _player
 
-        fun matches(player: ServerPlayerEntity, pet: TameableEntity, total: Int): Boolean {
-            return (this.total.isEmpty || this.total.get().test(total))
-                    && (this.pet.isEmpty || this.pet.get().test(player, pet))
+        fun matches(player: ServerPlayer, pet: TamableAnimal, total: Int): Boolean {
+            return (this.total.isEmpty || this.total.get().matches(total))
+                    && (this.pet.isEmpty || this.pet.get().matches(player, pet))
         }
 
         companion object {
             @JvmStatic
             val CODEC: Codec<Conditions> = RecordCodecBuilder.create { instance ->
                 instance.group(
-                    EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
                         .forGetter(Conditions::player),
                     EntityPredicate.CODEC.optionalFieldOf("pet")
                         .forGetter(Conditions::pet),
-                    NumberRange.IntRange.CODEC.optionalFieldOf("total")
+                    MinMaxBounds.Ints.CODEC.optionalFieldOf("total")
                         .forGetter(Conditions::total)
                 ).apply(instance, PetTamedCriterion::Conditions)
             }

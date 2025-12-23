@@ -1,11 +1,11 @@
 package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
-import net.minecraft.block.entity.BrushableBlockEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.level.block.entity.BrushableBlockEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,14 +17,15 @@ public abstract class BrushableBlockEntityMixin {
     @Shadow
     public abstract ItemStack getItem();
 
-    @Inject(method = "spawnItem",
+    @Inject(method = "dropContent",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/block/entity/BrushableBlockEntity;generateItem(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;)V",
+                    target = "Lnet/minecraft/world/level/block/entity/BrushableBlockEntity;unpackLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V",
                     shift = At.Shift.AFTER))
-    void spawnItem(ServerWorld world, LivingEntity brusher, ItemStack brush, CallbackInfo ci) {
-        if (brusher instanceof ServerPlayerEntity player) {
+    void spawnItem(ServerLevel world, LivingEntity brusher, ItemStack brush, CallbackInfo ci) {
+        if (brusher instanceof ServerPlayer player) {
             ItemStack item = getItem();
-            Criteria.SUS_BLOCK_GOT_ITEM.trigger(player, item);
+            if (!item.isEmpty())
+                Criteria.SUS_BLOCK_GOT_ITEM.trigger(player, item);
         }
     }
 }

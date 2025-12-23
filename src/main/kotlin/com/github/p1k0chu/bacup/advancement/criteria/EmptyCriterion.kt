@@ -2,26 +2,26 @@ package com.github.p1k0chu.bacup.advancement.criteria
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancement.criterion.AbstractCriterion
-import net.minecraft.predicate.entity.EntityPredicate
-import net.minecraft.predicate.entity.LootContextPredicate
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger
+import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.advancements.criterion.ContextAwarePredicate
+import net.minecraft.server.level.ServerPlayer
 import java.util.*
 
 /**
  * 'Empty' criterion trigger.
  * Criteria require a player so it's not really empty.
  */
-class EmptyCriterion : AbstractCriterion<EmptyCriterion.Conditions>() {
-    override fun getConditionsCodec() = Conditions.CODEC
+class EmptyCriterion : SimpleCriterionTrigger<EmptyCriterion.Conditions>() {
+    override fun codec() = Conditions.CODEC
 
-    fun trigger(player: ServerPlayerEntity) {
+    fun trigger(player: ServerPlayer) {
         this.trigger(player) {
             true
         }
     }
 
-    class Conditions(private val _player: Optional<LootContextPredicate>) : AbstractCriterion.Conditions {
+    class Conditions(private val _player: Optional<ContextAwarePredicate>) : SimpleCriterionTrigger.SimpleInstance {
         constructor() : this(Optional.empty())
 
         override fun player() = _player
@@ -30,7 +30,7 @@ class EmptyCriterion : AbstractCriterion<EmptyCriterion.Conditions>() {
             @JvmStatic
             val CODEC: Codec<Conditions> = RecordCodecBuilder.create { instance ->
                 instance.group(
-                    EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
                         .forGetter(Conditions::player),
                 ).apply(instance, EmptyCriterion::Conditions)
             }

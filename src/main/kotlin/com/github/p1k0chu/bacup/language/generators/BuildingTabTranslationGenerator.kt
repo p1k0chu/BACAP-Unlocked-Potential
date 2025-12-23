@@ -4,11 +4,11 @@ import com.github.p1k0chu.bacup.advancement.generator.BuildingTabGenerator
 import com.github.p1k0chu.bacup.language.TranslationGenerator
 import com.github.p1k0chu.bacup.language.advancementTab
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.core.HolderLookup
 
 object BuildingTabTranslationGenerator : TranslationGenerator {
     override fun accept(
-        wrapperLookup: RegistryWrapper.WrapperLookup,
+        wrapperLookup: HolderLookup.Provider,
         translationBuilder: FabricLanguageProvider.TranslationBuilder
     ) {
         translationBuilder.advancementTab(BuildingTabGenerator.TAB_NAME) {

@@ -4,12 +4,12 @@ import com.github.p1k0chu.bacup.BacupPersistentState;
 import com.github.p1k0chu.bacup.PlayerData;
 import com.github.p1k0chu.bacup.imixin.ServerPlayerEntityPetsTamedCounter;
 import com.github.p1k0chu.bacup.imixin.ServerPlayerEntityTradedEmeralds;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(ServerPlayerEntity.class)
+@Mixin(ServerPlayer.class)
 public abstract class ServerPlayerEntityMixin implements ServerPlayerEntityPetsTamedCounter, ServerPlayerEntityTradedEmeralds {
     @Override
     public int bacup$increment(EntityType<?> entityType) {

@@ -3,38 +3,38 @@ package com.github.p1k0chu.bacup.advancement.generator
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleBlockCriterion
-import net.minecraft.advancement.AdvancementEntry
-import net.minecraft.advancement.AdvancementRequirements
-import net.minecraft.data.advancement.AdvancementTabGenerator
-import net.minecraft.data.advancement.AdvancementTabGenerator.reference
-import net.minecraft.item.Items
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.BlockTags
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementRequirements
+import net.minecraft.data.advancements.AdvancementSubProvider
+import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.item.Items
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.BlockTags
 import java.util.function.Consumer
 
-object BuildingTabGenerator : AdvancementTabGenerator {
+object BuildingTabGenerator : AdvancementSubProvider {
     const val TAB_NAME = "building"
 
     const val FIRE_TRICK = "fire_trick"
 
-    override fun accept(wrapperLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
+    override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
         advancement(TAB_NAME, FIRE_TRICK) {
-            parent(reference("blazeandcave:building/happy_birthday"))
+            parent(createPlaceholder("blazeandcave:building/happy_birthday"))
             display {
-                icon = Items.BOW.defaultStack
+                icon = Items.BOW.defaultInstance
             }
-            criterion(
-                "candle", Criteria.PROJECTILE_LIT_BLOCK.create(
+            addCriterion(
+                "candle", Criteria.PROJECTILE_LIT_BLOCK.createCriterion(
                     SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CANDLES)
                 )
             )
-            criterion(
-                "candle_cake", Criteria.PROJECTILE_LIT_BLOCK.create(
+            addCriterion(
+                "candle_cake", Criteria.PROJECTILE_LIT_BLOCK.createCriterion(
                     SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CANDLE_CAKES)
                 )
             )
-            criterion(
-                "campfire", Criteria.PROJECTILE_LIT_BLOCK.create(
+            addCriterion(
+                "campfire", Criteria.PROJECTILE_LIT_BLOCK.createCriterion(
                     SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CAMPFIRES)
                 )
             )

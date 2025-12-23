@@ -9,23 +9,23 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents
-import net.minecraft.network.message.MessageType
-import net.minecraft.network.message.SignedMessage
-import net.minecraft.predicate.component.ComponentPredicate
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
+import net.minecraft.network.chat.ChatType
+import net.minecraft.network.chat.PlayerChatMessage
+import net.minecraft.core.component.predicates.DataComponentPredicate
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.Registry
 import net.minecraft.server.MinecraftServer
-import net.minecraft.server.command.ServerCommandSource
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.commands.CommandSourceStack
+import net.minecraft.server.level.ServerPlayer
 
 
 object Main : ModInitializer {
     const val MOD_ID: String = "bacapup"
 
-    val mapStatePredicate: ComponentPredicate.Type<MapStatePredicate> = Registry.register(
-        Registries.DATA_COMPONENT_PREDICATE_TYPE,
+    val mapStatePredicate: DataComponentPredicate.Type<MapStatePredicate> = Registry.register(
+        BuiltInRegistries.DATA_COMPONENT_PREDICATE_TYPE,
         id("map_state_predicate"),
-        ComponentPredicate.Type(MapStatePredicate.CODEC)
+        DataComponentPredicate.ConcreteType(MapStatePredicate.CODEC)
     )
 
     var serverInstance: MinecraftServer? = null
@@ -43,11 +43,11 @@ object Main : ModInitializer {
         ServerLifecycleEvents.SERVER_STOPPED.register {
             serverInstance = null
         }
-        CommandRegistrationCallback.EVENT.register { dispatcher: CommandDispatcher<ServerCommandSource>, _, _ ->
+        CommandRegistrationCallback.EVENT.register { dispatcher: CommandDispatcher<CommandSourceStack>, _, _ ->
             BacapupCommand.register(dispatcher)
         }
-        ServerMessageEvents.CHAT_MESSAGE.register { msg: SignedMessage, player: ServerPlayerEntity, _ ->
-            if(msg.content.string.contains("глглту")) {
+        ServerMessageEvents.CHAT_MESSAGE.register { msg: PlayerChatMessage, player: ServerPlayer, _ ->
+            if(msg.decoratedContent().string.contains("глглту")) {
                 val state = BacupPersistentState.getPlayerState(player)
 
                 Criteria.GLGLTU.trigger(player, ++state.glgltuCounter)

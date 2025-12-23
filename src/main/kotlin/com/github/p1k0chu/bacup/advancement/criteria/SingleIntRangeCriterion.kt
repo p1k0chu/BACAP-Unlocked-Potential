@@ -2,39 +2,39 @@ package com.github.p1k0chu.bacup.advancement.criteria
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancement.criterion.AbstractCriterion
-import net.minecraft.predicate.NumberRange
-import net.minecraft.predicate.entity.EntityPredicate
-import net.minecraft.predicate.entity.LootContextPredicate
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger
+import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.advancements.criterion.ContextAwarePredicate
+import net.minecraft.server.level.ServerPlayer
 import java.util.*
 
-class SingleIntRangeCriterion : AbstractCriterion<SingleIntRangeCriterion.Conditions>() {
-    override fun getConditionsCodec() = Conditions.CODEC
+class SingleIntRangeCriterion : SimpleCriterionTrigger<SingleIntRangeCriterion.Conditions>() {
+    override fun codec() = Conditions.CODEC
 
-    fun trigger(player: ServerPlayerEntity, amount: Int) {
+    fun trigger(player: ServerPlayer, amount: Int) {
         this.trigger(player) { conditions ->
             conditions.matches(amount)
         }
     }
 
     class Conditions(
-        private val _player: Optional<LootContextPredicate>,
-        private val amount: Optional<NumberRange.IntRange>
-    ) : AbstractCriterion.Conditions {
+        private val _player: Optional<ContextAwarePredicate>,
+        private val amount: Optional<MinMaxBounds.Ints>
+    ) : SimpleCriterionTrigger.SimpleInstance {
         override fun player() = _player
 
         fun matches(total: Int): Boolean {
-            return this.amount.isEmpty || this.amount.get().test(total)
+            return this.amount.isEmpty || this.amount.get().matches(total)
         }
 
         companion object {
             @JvmStatic
             val CODEC: Codec<Conditions> = RecordCodecBuilder.create { instance ->
                 instance.group(
-                    EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
                         .forGetter(Conditions::player),
-                    NumberRange.IntRange.CODEC.optionalFieldOf("amount")
+                    MinMaxBounds.Ints.CODEC.optionalFieldOf("amount")
                         .forGetter(Conditions::amount)
                 ).apply(instance, SingleIntRangeCriterion::Conditions)
             }

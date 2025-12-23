@@ -2,19 +2,19 @@ package com.github.p1k0chu.bacup.advancement.criteria
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancement.criterion.AbstractCriterion
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.predicate.entity.EntityPredicate
-import net.minecraft.predicate.entity.LootContextPredicate
-import net.minecraft.predicate.item.ItemPredicate
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.advancements.criterion.ContextAwarePredicate
+import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.server.level.ServerPlayer
 import java.util.*
 
-class FurnaceCookedWithFuelCriterion : AbstractCriterion<FurnaceCookedWithFuelCriterion.Conditions>() {
-    override fun getConditionsCodec() = Conditions.CODEC
+class FurnaceCookedWithFuelCriterion : SimpleCriterionTrigger<FurnaceCookedWithFuelCriterion.Conditions>() {
+    override fun codec() = Conditions.CODEC
 
-    fun trigger(player: ServerPlayerEntity, fuel: Item, result: ItemStack) {
+    fun trigger(player: ServerPlayer, fuel: Item, result: ItemStack) {
         this.trigger(player) { conditions ->
             conditions.matches(fuel, result)
         }
@@ -28,15 +28,15 @@ class FurnaceCookedWithFuelCriterion : AbstractCriterion<FurnaceCookedWithFuelCr
      * @param result the stack player took out of furnace at once
      */
     class Conditions(
-        private val _player: Optional<LootContextPredicate>,
+        private val _player: Optional<ContextAwarePredicate>,
         private val fuel: Optional<ItemPredicate>,
         private val result: Optional<ItemPredicate>
-    ) : AbstractCriterion.Conditions {
+    ) : SimpleCriterionTrigger.SimpleInstance {
 
         override fun player() = _player
 
         fun matches(fuel: Item, result: ItemStack): Boolean {
-            return (this.fuel.isEmpty || this.fuel.get().test(fuel.defaultStack))
+            return (this.fuel.isEmpty || this.fuel.get().test(fuel.defaultInstance))
                     && (this.result.isEmpty || this.result.get().test(result))
         }
 
@@ -44,7 +44,7 @@ class FurnaceCookedWithFuelCriterion : AbstractCriterion<FurnaceCookedWithFuelCr
             @JvmStatic
             val CODEC: Codec<Conditions> = RecordCodecBuilder.create { instance ->
                 instance.group(
-                    EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player")
+                    EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
                         .forGetter(Conditions::player),
                     ItemPredicate.CODEC.optionalFieldOf("fuel")
                         .forGetter(Conditions::fuel),

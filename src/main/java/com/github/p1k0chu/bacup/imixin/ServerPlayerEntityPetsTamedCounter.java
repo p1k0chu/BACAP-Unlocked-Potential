@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.imixin;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 
 import java.util.Set;
 

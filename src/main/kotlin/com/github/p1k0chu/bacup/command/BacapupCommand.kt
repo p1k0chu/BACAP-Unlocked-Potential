@@ -9,56 +9,56 @@ import com.github.p1k0chu.bacup.language.generators.MessagesTranslationGenerator
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
-import net.minecraft.server.command.ServerCommandSource
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
+import net.minecraft.commands.CommandSourceStack
+import net.minecraft.network.chat.Component
+import net.minecraft.ChatFormatting
 
 object BacapupCommand {
-    fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
+    fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         dispatcher.register(
-            literal<ServerCommandSource>("bacapup")
+            literal<CommandSourceStack>("bacapup")
                 .then(
-                    literal<ServerCommandSource>("stats")
-                        .executes { command: CommandContext<ServerCommandSource> ->
+                    literal<CommandSourceStack>("stats")
+                        .executes { command: CommandContext<CommandSourceStack> ->
                             val player = command.source.player ?: return@executes 0
                             val state = BacupPersistentState.getPlayerState(player)
-                            val text = Text.empty()
+                            val text = Component.empty()
 
                             if (state.petsTamed.isNotEmpty()) {
-                                text.append(Text.translatable(PETS_TAMED))
-                                    .append(Text.literal(":\n"))
+                                text.append(Component.translatable(PETS_TAMED))
+                                    .append(Component.literal(":\n"))
 
                                 state.petsTamed.forEach { (mob, count) ->
-                                    text.append(Text.translatable(mob.translationKey))
+                                    text.append(Component.translatable(mob.descriptionId))
                                         .append(": ")
                                         .append(
-                                            Text.literal("$count\n")
-                                                .withColor(Formatting.GOLD.colorValue!!)
+                                            Component.literal("$count\n")
+                                                .withColor(ChatFormatting.GOLD.color!!)
                                         )
                                 }
                             }
 
                             if (state.emeraldsObtained != 0) {
                                 text.append("\n")
-                                    .append(Text.translatable(BOUGHT_EMERALDS))
+                                    .append(Component.translatable(BOUGHT_EMERALDS))
                                     .append(": ")
                                     .append(
-                                        Text.literal("${state.emeraldsObtained}")
-                                            .withColor(Formatting.GOLD.colorValue!!)
+                                        Component.literal("${state.emeraldsObtained}")
+                                            .withColor(ChatFormatting.GOLD.color!!)
                                     )
                             }
 
                             if (state.glgltuCounter > 0) {
                                 text.append("\n")
-                                    .append(Text.translatable(GLGLTU_COUNTER))
+                                    .append(Component.translatable(GLGLTU_COUNTER))
                                     .append(": ")
                                     .append(
-                                        Text.literal(state.glgltuCounter.toString())
-                                            .withColor(Formatting.GOLD.colorValue!!)
+                                        Component.literal(state.glgltuCounter.toString())
+                                            .withColor(ChatFormatting.GOLD.color!!)
                                     )
                             }
 
-                            player.sendMessage(text)
+                            player.sendSystemMessage(text)
 
                             0
                         }
