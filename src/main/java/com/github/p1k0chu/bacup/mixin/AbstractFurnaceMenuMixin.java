@@ -3,6 +3,7 @@ package com.github.p1k0chu.bacup.mixin;
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityLastFuel;
 import com.github.p1k0chu.bacup.imixin.AbstractFurnaceBlockEntityWhoOpened;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -48,15 +49,20 @@ public class AbstractFurnaceMenuMixin {
 
     @Inject(method = "quickMoveStack", at = @At("RETURN"))
     void quickMove(Player player, int slot, CallbackInfoReturnable<ItemStack> cir) {
-        if (slot != 2) return;
-
         if (player instanceof ServerPlayer serverPlayer) {
             if (this.container instanceof AbstractFurnaceBlockEntity furnace) {
                 ItemStack itemStack = cir.getReturnValue();
-                Item fuel = ((AbstractFurnaceBlockEntityLastFuel) furnace).bacup$getLastFuel();
 
-                if (fuel != null) {
-                    Criteria.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, itemStack);
+                if (slot == AbstractFurnaceMenu.RESULT_SLOT) {
+                    Item fuel = ((AbstractFurnaceBlockEntityLastFuel) furnace).bacup$getLastFuel();
+
+                    if (fuel != null) {
+                        Criteria.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, itemStack);
+                    }
+                } else if (slot == AbstractFurnaceMenu.FUEL_SLOT) {
+                    if (itemStack.is(Items.WATER_BUCKET)) {
+                        Criteria.FURNACE_TOOK_WATER_BUCKET_FUEL.trigger(serverPlayer);
+                    }
                 }
             }
         }
