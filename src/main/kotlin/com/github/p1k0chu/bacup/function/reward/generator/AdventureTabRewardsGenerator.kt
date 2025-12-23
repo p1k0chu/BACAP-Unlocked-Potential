@@ -37,6 +37,7 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                 advancement(AdventureTabGenerator.SECRET_SUPPLIES) {
                     type = AdvancementType.GOAL
                 }
+                advancement(AdventureTabGenerator.DEHYDRATION)
             }
         }
     }

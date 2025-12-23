@@ -17,6 +17,7 @@
     "EnderDragonFightAccessor",
     "EnderDragonSpawnStateAnon4Mixin",
     "EnderPearlEntityMixin",
+    "FurnaceFuelSlotMixin",
     "FurnaceOutputSlotMixin",
     "GrindstoneMenuAccessor",
     "GrindstoneMenuAnon4Mixin",
@@ -26,6 +27,7 @@
     "MobEntityMixin",
     "PigEntityMixin",
     "ServerPlayerEntityMixin",
+    "SlotMixin",
     "TameableEntityMixin",
     "WanderingTraderEntityMixin",
     "WololoGoalMixin"
