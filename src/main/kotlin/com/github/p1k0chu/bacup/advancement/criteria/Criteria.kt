@@ -85,4 +85,8 @@ object Criteria {
     val GLGLTU: SingleIntRangeCriterion = CriteriaTriggers.register(
         id("glgltu"), SingleIntRangeCriterion()
     )
+    @JvmField
+    val FURNACE_TOOK_WATER_BUCKET_FUEL: EmptyCriterion = CriteriaTriggers.register(
+        id("furnace_took_water_bucket_fuel"), EmptyCriterion()
+    )
 }

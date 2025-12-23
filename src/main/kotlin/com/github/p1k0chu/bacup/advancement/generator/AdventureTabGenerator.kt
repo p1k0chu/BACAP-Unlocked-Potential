@@ -39,6 +39,7 @@ object AdventureTabGenerator : AdvancementSubProvider {
     const val MAXIMUM_COVERAGE = "maximum_coverage"
     const val PAINT_IT_RED = "paint_it_red"
     const val SECRET_SUPPLIES = "secret_supplies"
+    const val DEHYDRATION = "dehydration"
 
     override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -238,6 +239,18 @@ object AdventureTabGenerator : AdvancementSubProvider {
                         .of(wrapperLookup.lookupOrThrow(Registries.ITEM), Items.POTION)
                         .build())
                 )
+            ))
+        }.let(consumer::accept)
+
+        advancement(TAB_NAME, DEHYDRATION) {
+            parent(createPlaceholder("blazeandcave:adventure/dry_spell"))
+
+            display {
+                icon = Items.WATER_BUCKET.defaultInstance
+            }
+
+            addCriterion("dehydration", Criteria.FURNACE_TOOK_WATER_BUCKET_FUEL.createCriterion(
+                EmptyCriterion.Conditions()
             ))
         }.let(consumer::accept)
     }

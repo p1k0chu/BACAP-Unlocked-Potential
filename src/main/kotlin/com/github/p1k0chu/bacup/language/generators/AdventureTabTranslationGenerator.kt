@@ -61,6 +61,11 @@ object AdventureTabTranslationGenerator : TranslationGenerator {
                 title("Secret Supplies")
                 description("Acquire a potion of invisibility and milk bucket dropped from wandering traders")
             }
+
+            advancement(AdventureTabGenerator.DEHYDRATION) {
+                title("Dehydration")
+                description("Dry a sponge in a furnace, but not without taking the water back")
+            }
         }
     }
 }
