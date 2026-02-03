@@ -27,6 +27,7 @@
     "MobEntityMixin",
     "PigEntityMixin",
     "ServerPlayerEntityMixin",
+    "ServerPlayerGameModeMixin",
     "SlotMixin",
     "TameableEntityMixin",
     "WanderingTraderEntityMixin",

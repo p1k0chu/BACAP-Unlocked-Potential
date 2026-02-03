@@ -35,6 +35,7 @@ fun createTranslationProvider(
             BuildingTabTranslationGenerator,
             ChallengesTabTranslationGenerator,
             MessagesTranslationGenerator,
+            NetherTabTranslationGenerator,
         )
     )
 }

@@ -20,7 +20,8 @@ fun createAdvancementProvider(
             StatisticsTabGenerator,
             EndTabGenerator,
             BuildingTabGenerator,
-            ChallengesTabGenerator
+            ChallengesTabGenerator,
+            NetherTabGenerator
         )
     )
 }

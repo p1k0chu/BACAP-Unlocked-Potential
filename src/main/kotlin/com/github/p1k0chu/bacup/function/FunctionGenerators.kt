@@ -19,7 +19,8 @@ fun createFunctionProvider(
             StatisticsTabRewardsGenerator,
             EndTabRewardsGenerator,
             BuildingTabRewardsGenerator,
-            ChallengesTabRewardsGenerator
+            ChallengesTabRewardsGenerator,
+            NetherTabRewardsGenerator
         )
     )
 }

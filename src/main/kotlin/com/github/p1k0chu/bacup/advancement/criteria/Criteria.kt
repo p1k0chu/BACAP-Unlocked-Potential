@@ -89,4 +89,8 @@ object Criteria {
     val FURNACE_TOOK_WATER_BUCKET_FUEL: EmptyCriterion = CriteriaTriggers.register(
         id("furnace_took_water_bucket_fuel"), EmptyCriterion()
     )
+    @JvmField
+    val PLAYER_BREAK_NETHERITE_BLOCK_WITH_FIST: EmptyCriterion = CriteriaTriggers.register(
+        id("player_break_netherite_block_with_fist"), EmptyCriterion()
+    )
 }
