@@ -7,7 +7,9 @@ import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicate
 import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
 import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.criterion.InventoryChangeTrigger
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.advancements.AdvancementSubProvider
@@ -19,10 +21,11 @@ import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.advancements.criterion.DataComponentMatchers
 import net.minecraft.advancements.criterion.EntityPredicate
 import net.minecraft.advancements.criterion.EntityTypePredicate
+import net.minecraft.advancements.criterion.ImpossibleTrigger
 import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.resources.ResourceKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.core.HolderLookup
+import net.minecraft.resources.Identifier
 import java.util.*
 import java.util.function.Consumer
 
@@ -40,6 +43,9 @@ object AdventureTabGenerator : AdvancementSubProvider {
     const val PAINT_IT_RED = "paint_it_red"
     const val SECRET_SUPPLIES = "secret_supplies"
     const val DEHYDRATION = "dehydration"
+    const val THIS_IS_NOT_COOKIE_CLICKER = "this_is_not_cookie_clicker"
+
+    const val THIS_IS_NOT_COOKIE_CLICKER_CRITERION = "are_you_looking_for_something"
 
     override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -252,6 +258,22 @@ object AdventureTabGenerator : AdvancementSubProvider {
             addCriterion("dehydration", Criteria.FURNACE_TOOK_WATER_BUCKET_FUEL.createCriterion(
                 EmptyCriterion.Conditions()
             ))
+        }.let(consumer::accept)
+
+        advancement(TAB_NAME, THIS_IS_NOT_COOKIE_CLICKER) {
+            parent(createPlaceholder("blazeandcave:farming/me_love_cookie"))
+
+            display {
+                icon = Items.COOKIE.defaultInstance.apply {
+                    set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                }
+                frame = AdvancementType.CHALLENGE
+            }
+
+            addCriterion(
+                THIS_IS_NOT_COOKIE_CLICKER_CRITERION,
+                CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
+            )
         }.let(consumer::accept)
     }
 

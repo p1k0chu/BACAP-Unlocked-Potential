@@ -66,6 +66,11 @@ object AdventureTabTranslationGenerator : TranslationGenerator {
                 title("Dehydration")
                 description("Dry a sponge in a furnace, but not without taking the water back")
             }
+
+            advancement(AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER) {
+                title("This Is Not Cookie Clicker")
+                description("Why did you double click an empty slot?")
+            }
         }
     }
 }
