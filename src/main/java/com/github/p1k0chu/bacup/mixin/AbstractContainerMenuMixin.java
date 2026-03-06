@@ -3,6 +3,7 @@ package com.github.p1k0chu.bacup.mixin;
 import com.github.p1k0chu.bacup.Main;
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator;
+import com.github.p1k0chu.bacup.utils.AdvancementUtils;
 import com.github.p1k0chu.bacup.utils.ItemStackUtilsKt;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.advancements.AdvancementHolder;
@@ -36,7 +37,7 @@ public abstract class AbstractContainerMenuMixin {
     );
 
     @Unique
-    private static final Identifier THIS_IS_NOT_COOKIE_CLICKER = Identifier.fromNamespaceAndPath(Main.MOD_ID, String.format("%s/%s", AdventureTabGenerator.TAB_NAME, AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER));
+    private static final Identifier THIS_IS_NOT_COOKIE_CLICKER = AdvancementUtils.id(AdventureTabGenerator.TAB_NAME, AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER);
 
     static {
         COOKIE_CLICKER_COOKIE.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
@@ -54,13 +55,9 @@ public abstract class AbstractContainerMenuMixin {
             if (slotItem.isEmpty() && carriedItem.isEmpty()) {
                 long time = System.currentTimeMillis();
                 if (time - lastClick < 300) {
-                    var advHolder = sPlayer.level().getServer().getAdvancements().get(THIS_IS_NOT_COOKIE_CLICKER);
-                    if (advHolder != null) {
-                        var playerAdvancements = sPlayer.getAdvancements();
-                        if (playerAdvancements.award(advHolder, AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER_CRITERION)) {
-                            setCarried(COOKIE_CLICKER_COOKIE.copy());
-                            ci.cancel();
-                        }
+                    if (AdvancementUtils.grant(sPlayer, THIS_IS_NOT_COOKIE_CLICKER, AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER_CRITERION)) {
+                        setCarried(COOKIE_CLICKER_COOKIE.copy());
+                        ci.cancel();
                     }
                 } else {
                     lastClick = time;

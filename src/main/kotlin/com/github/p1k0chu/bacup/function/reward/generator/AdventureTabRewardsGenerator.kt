@@ -41,6 +41,9 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                 advancement(AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER) {
                     type = AdvancementType.HIDDEN
                 }
+                advancement(AdventureTabGenerator.SHORT_CIRCUIT) {
+                    type = AdvancementType.GOAL
+                }
             }
         }
     }

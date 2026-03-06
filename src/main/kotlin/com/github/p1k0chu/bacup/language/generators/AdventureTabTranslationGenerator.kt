@@ -71,6 +71,11 @@ object AdventureTabTranslationGenerator : TranslationGenerator {
                 title("This Is Not Cookie Clicker")
                 description("Why did you double click an empty slot?")
             }
+
+            advancement(AdventureTabGenerator.SHORT_CIRCUIT) {
+                title("Short Circuit")
+                description("Get a breeze to activate 9 redstone components at the same time")
+            }
         }
     }
 }

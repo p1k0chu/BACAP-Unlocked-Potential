@@ -27,10 +27,12 @@
     "MerchantEntityMixin",
     "MobEntityMixin",
     "PigEntityMixin",
+    "ServerExplosionMixin",
     "ServerPlayerEntityMixin",
     "ServerPlayerGameModeMixin",
     "SlotMixin",
     "TameableEntityMixin",
+    "TrapDoorBlockAccessor",
     "WanderingTraderEntityMixin",
     "WololoGoalMixin"
   ],

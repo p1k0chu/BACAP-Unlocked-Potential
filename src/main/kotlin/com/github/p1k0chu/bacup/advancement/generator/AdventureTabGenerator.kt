@@ -44,8 +44,10 @@ object AdventureTabGenerator : AdvancementSubProvider {
     const val SECRET_SUPPLIES = "secret_supplies"
     const val DEHYDRATION = "dehydration"
     const val THIS_IS_NOT_COOKIE_CLICKER = "this_is_not_cookie_clicker"
+    const val SHORT_CIRCUIT = "short_circuit"
 
     const val THIS_IS_NOT_COOKIE_CLICKER_CRITERION = "are_you_looking_for_something"
+    const val SHORT_CIRCUIT_CRITERION = "short_circuit"
 
     override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
         val catGift = advancement(TAB_NAME, CAT_GIFT) {
@@ -275,6 +277,20 @@ object AdventureTabGenerator : AdvancementSubProvider {
                 CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
             )
         }.let(consumer::accept)
+
+        advancement(TAB_NAME, SHORT_CIRCUIT) {
+            parent(createPlaceholder("blazeandcave:adventure/this_will_be_a_breeze"))
+
+            display {
+                icon = Items.COPPER_TRAPDOOR.defaultInstance
+                frame = AdvancementType.GOAL
+            }
+
+            addCriterion(
+                SHORT_CIRCUIT_CRITERION,
+                CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
+            )
+        }.also(consumer::accept)
     }
 
     private val susLoot = listOf(
