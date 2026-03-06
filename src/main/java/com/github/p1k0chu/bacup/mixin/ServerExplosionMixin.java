@@ -43,12 +43,10 @@ public abstract class ServerExplosionMixin {
 
     @Inject(method = "interactWithBlocks", at = @At("HEAD"))
     void interactWithBlocks(List<BlockPos> list, CallbackInfo ci) {
-        if (this.canTriggerBlocks()) {
-            if (countTriggeredRedstoneComponents(list) >= 9) {
-                for (var player : this.getHitPlayers().keySet()) {
-                    if (player instanceof ServerPlayer serverPlayer) {
-                        AdvancementUtils.grant(serverPlayer, SHORT_CIRCUIT, AdventureTabGenerator.SHORT_CIRCUIT_CRITERION);
-                    }
+        if (this.canTriggerBlocks() && countTriggeredRedstoneComponents(list) >= 9) {
+            for (var player : this.getHitPlayers().keySet()) {
+                if (player instanceof ServerPlayer serverPlayer) {
+                    AdvancementUtils.grant(serverPlayer, SHORT_CIRCUIT, AdventureTabGenerator.SHORT_CIRCUIT_CRITERION);
                 }
             }
         }
