@@ -26,6 +26,7 @@ fun createTranslationProvider(
         output, registriesFuture, listOf(
             AdventureTabTranslationGenerator,
             AnimalsTabTranslationGenerator,
+            BiomesTabTranslationGenerator,
             EnchantingTabTranslationGenerator,
             FarmingTabTranslationGenerator,
             MiningTabTranslationGenerator,

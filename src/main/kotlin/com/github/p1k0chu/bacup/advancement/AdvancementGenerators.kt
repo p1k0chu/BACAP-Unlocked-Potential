@@ -13,6 +13,7 @@ fun createAdvancementProvider(
         output, registriesFuture, listOf(
             AdventureTabGenerator,
             AnimalsTabGenerator,
+            BiomesTabGenerator,
             EnchantingTabGenerator,
             FarmingTabGenerator,
             MonstersTabGenerator,

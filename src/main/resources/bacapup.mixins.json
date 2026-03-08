@@ -15,6 +15,7 @@
     "CartographyTableMenuAnon5Mixin",
     "CatRelaxOnOwnerGoalMixin",
     "ClearAllEffectsConsumeEffectMixin",
+    "ConduitBlockEntityMixin",
     "EnderDragonFightAccessor",
     "EnderDragonSpawnStateAnon4Mixin",
     "EnderPearlEntityMixin",

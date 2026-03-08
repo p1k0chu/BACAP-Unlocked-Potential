@@ -12,6 +12,7 @@ fun createFunctionProvider(
         output, registriesFuture, listOf(
             AdventureTabRewardsGenerator,
             AnimalsTabRewardsGenerator,
+            BiomesTabRewardsGenerator,
             EnchantingTabRewardsGenerator,
             FarmingTabRewardsGenerator,
             MonstersTabRewardsGenerator,
