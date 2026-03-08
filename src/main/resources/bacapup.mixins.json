@@ -7,6 +7,7 @@
     "AbstractContainerMenuMixin",
     "AbstractFurnaceBlockEntityMixin",
     "AbstractFurnaceMenuMixin",
+    "AngerManagementMixin",
     "AnvilBlockMixin",
     "BellBlockMixin",
     "BlockMixin",
@@ -19,6 +20,7 @@
     "EnderDragonFightAccessor",
     "EnderDragonSpawnStateAnon4Mixin",
     "EnderPearlEntityMixin",
+    "FishingHookMixin",
     "FurnaceFuelSlotMixin",
     "FurnaceOutputSlotMixin",
     "GrindstoneMenuAccessor",
@@ -32,9 +34,11 @@
     "ServerPlayerEntityMixin",
     "ServerPlayerGameModeMixin",
     "SlotMixin",
+    "SniffingMixin",
     "TameableEntityMixin",
     "TrapDoorBlockAccessor",
     "WanderingTraderEntityMixin",
+    "WardenMixin",
     "WololoGoalMixin"
   ],
   "injectors": {

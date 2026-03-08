@@ -16,6 +16,10 @@ object MiningTabTranslationGenerator : TranslationGenerator {
                 title("Leafterally")
                 description("Smelt leaf litter using leaf litter")
             }
+            advancement(MiningTabGenerator.RAGE_BAITER) {
+                title("Rage Baiter")
+                description("Fish warden several times for its angry value go from 0 to 150")
+            }
         }
     }
 }
