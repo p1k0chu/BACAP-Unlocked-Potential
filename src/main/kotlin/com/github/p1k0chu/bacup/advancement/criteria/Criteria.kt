@@ -93,4 +93,8 @@ object Criteria {
     val PLAYER_BREAK_NETHERITE_BLOCK_WITH_FIST: EmptyCriterion = CriteriaTriggers.register(
         id("player_break_netherite_block_with_fist"), EmptyCriterion()
     )
+    @JvmField
+    val BEACON_CONSUMED_PAYMENT: SingleItemCriterion = CriteriaTriggers.register(
+        id("beacon_consumed_payment"), SingleItemCriterion()
+    )
 }

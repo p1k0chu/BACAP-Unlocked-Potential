@@ -27,6 +27,9 @@ object NetherTabRewardsGenerator : FunctionGenerator {
                         set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                     }
                 }
+                advancement(NetherTabGenerator.BEACON_ALL_ITEMS) {
+                    type = AdvancementType.GOAL
+                }
             }
         }
     }

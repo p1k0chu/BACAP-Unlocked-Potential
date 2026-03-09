@@ -25,6 +25,7 @@ repositories {
 
 loom {
     splitEnvironmentSourceSets()
+    accessWidenerPath = file("src/main/resources/bacapup.classtweaker")
 
     mods {
         register("bac-unlocked-potential") {

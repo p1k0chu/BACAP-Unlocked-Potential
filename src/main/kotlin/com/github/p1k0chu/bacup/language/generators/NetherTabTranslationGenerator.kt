@@ -16,6 +16,10 @@ object NetherTabTranslationGenerator : TranslationGenerator {
                 title("Extreme Break Risk")
                 description("Break a block of netherite with your bare fist.")
             }
+            advancement(NetherTabGenerator.BEACON_ALL_ITEMS) {
+                title("Thanos Beacon")
+                description("Power a beacon with every mineral")
+            }
         }
     }
 }
