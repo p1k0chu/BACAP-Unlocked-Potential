@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Pig.class)
-public abstract class PigEntityMixin extends LivingEntityMixin {
+public abstract class PigMixin extends LivingEntityMixin {
     @Override
     void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if(source.is(DamageTypes.FALL)) {

@@ -13,10 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(targets = "net.minecraft.world.level.dimension.end.DragonRespawnAnimation$4")
-public class EnderDragonSpawnStateAnon4Mixin {
+public class DragonRespawnAnimationAnon4Mixin {
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/dimension/end/EndDragonFight;setRespawnStage(Lnet/minecraft/world/level/dimension/end/DragonRespawnAnimation;)V"))
     void tick(ServerLevel world, EndDragonFight fight, List<EndCrystal> crystals, int tick, BlockPos pos, CallbackInfo ci) {
-        for (var player : ((EnderDragonFightAccessor) fight).getDragonEvent().getPlayers()) {
+        for (var player : ((EndDragonFightAccessor) fight).getDragonEvent().getPlayers()) {
             Criteria.SPAWN_DRAGON_WITH_CRYSTALS.trigger(player, crystals.size());
         }
     }

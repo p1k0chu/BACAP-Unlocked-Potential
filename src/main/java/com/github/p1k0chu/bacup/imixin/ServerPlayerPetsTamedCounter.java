@@ -5,7 +5,7 @@ import net.minecraft.world.entity.EntityType;
 
 import java.util.Set;
 
-public interface ServerPlayerEntityPetsTamedCounter {
+public interface ServerPlayerPetsTamedCounter {
     Set<EntityType<?>> trackedTypes = Set.of(
             EntityType.CAT,
             EntityType.WOLF

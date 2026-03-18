@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(EndDragonFight.class)
-public interface EnderDragonFightAccessor {
+public interface EndDragonFightAccessor {
     @Accessor
     ServerBossEvent getDragonEvent();
 }

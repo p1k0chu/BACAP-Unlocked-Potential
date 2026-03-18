@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
-import com.github.p1k0chu.bacup.imixin.ServerPlayerEntityTradedEmeralds;
+import com.github.p1k0chu.bacup.imixin.ServerPlayerTradedEmeralds;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractVillager.class)
-public abstract class MerchantEntityMixin {
+public abstract class AbstractVillagerMixin {
     @Shadow
     public abstract @Nullable Player getTradingPlayer();
 
@@ -26,7 +26,7 @@ public abstract class MerchantEntityMixin {
             ItemStack item = offer.getResult();
 
             if (item.is(Items.EMERALD)) {
-                int total = ((ServerPlayerEntityTradedEmeralds) player).bacup$incrementEmeraldsObtained(item.getCount());
+                int total = ((ServerPlayerTradedEmeralds) player).bacup$incrementEmeraldsObtained(item.getCount());
                 Criteria.TRADED_FOR_EMERALDS.trigger(player, total);
             }
         }

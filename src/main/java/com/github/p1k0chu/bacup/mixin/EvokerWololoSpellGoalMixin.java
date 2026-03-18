@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(Evoker.EvokerWololoSpellGoal.class)
-public class WololoGoalMixin {
+public class EvokerWololoSpellGoalMixin {
     ///  istance of outer class
     @Shadow(aliases = "field_7268") @Final
     Evoker evoker;
