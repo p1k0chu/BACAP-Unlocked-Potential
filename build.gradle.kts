@@ -49,6 +49,11 @@ dependencies {
 }
 
 tasks.processResources {
+    inputs.property("version", project.version)
+    inputs.property("minecraft_version", minecraft_version)
+    inputs.property("loader_version", loader_version)
+    inputs.property("kotlin_adapter_version", kotlin_adapter_version)
+
     filesMatching("fabric.mod.json") {
         expand(
             "version" to project.version,
