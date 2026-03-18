@@ -21,7 +21,6 @@ object AdventureTabRewardsGenerator : FunctionGenerator {
                     type = AdvancementType.GOAL
                 }
                 advancement(AdventureTabGenerator.LOCK_MAP)
-                advancement(AdventureTabGenerator.GET_RAID_OF_IT)
                 advancement(AdventureTabGenerator.CAN_YOU_HEAR_IT_FROM_HERE) {
                     type = AdvancementType.CHALLENGE
                     exp = 50

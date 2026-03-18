@@ -36,7 +36,6 @@ object AdventureTabGenerator : AdvancementSubProvider {
     const val ALL_CAT_GIFTS = "all_cat_gifts"
     const val LOCK_MAP = "lock_map"
     const val PLETHORA_OF_CATS = "plethora_of_cats"
-    const val GET_RAID_OF_IT = "get_raid_of_it"
     const val CAN_YOU_HEAR_IT_FROM_HERE = "can_you_hear_it_from_here"
     const val MASTER_ARCHEOLOGIST = "master_archaeologist"
     const val MAXIMUM_COVERAGE = "maximum_coverage"
@@ -116,14 +115,6 @@ object AdventureTabGenerator : AdvancementSubProvider {
                 icon = Items.GLASS_PANE.defaultInstance
             }
             addCriterion("lock", Criteria.MAP_LOCKED.createCriterion(EmptyCriterion.Conditions()))
-        }.also(consumer::accept)
-
-        advancement(TAB_NAME, GET_RAID_OF_IT) {
-            parent(createPlaceholder("blazeandcave:adventure/were_being_attacked"))
-            display {
-                icon = Items.MILK_BUCKET.defaultInstance
-            }
-            addCriterion("get_raid_of_it", Criteria.GET_RAID_OF_IT.createCriterion(EmptyCriterion.Conditions()))
         }.also(consumer::accept)
 
         advancement(TAB_NAME, CAN_YOU_HEAR_IT_FROM_HERE) {

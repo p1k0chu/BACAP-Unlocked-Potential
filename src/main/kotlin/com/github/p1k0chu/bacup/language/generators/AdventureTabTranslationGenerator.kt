@@ -32,11 +32,6 @@ object AdventureTabTranslationGenerator : TranslationGenerator {
                 description("Use a glass pane in a cartography table to lock a map, preventing it from updating")
             }
 
-            advancement(AdventureTabGenerator.GET_RAID_OF_IT) {
-                title("Get Raid Of It")
-                description("Drink milk to remove the Bad Omen effect")
-            }
-
             advancement(AdventureTabGenerator.CAN_YOU_HEAR_IT_FROM_HERE) {
                 title("Can you hear it from here?")
                 description("Shoot a bell from more than 50 blocks away")

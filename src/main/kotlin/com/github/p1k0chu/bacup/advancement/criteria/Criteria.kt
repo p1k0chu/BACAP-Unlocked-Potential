@@ -49,10 +49,6 @@ object Criteria {
         id("wandering_trader_dropped_item"), EntityDroppedLootCriterion()
     )
     @JvmField
-    val GET_RAID_OF_IT: EmptyCriterion = CriteriaTriggers.register(
-        id("get_raid_of_it"), EmptyCriterion()
-    )
-    @JvmField
     val CACTUS_DESTROY_ITEM: SingleItemCriterion = CriteriaTriggers.register(
         id("thrown_item_died_to_cactus"), SingleItemCriterion()
     )
