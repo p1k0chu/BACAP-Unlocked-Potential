@@ -1,9 +1,8 @@
 package com.github.p1k0chu.bacup.advancement
 
 import com.github.p1k0chu.bacup.advancement.generator.*
-import net.minecraft.data.PackOutput
-import net.minecraft.data.advancements.AdvancementProvider
 import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import java.util.concurrent.CompletableFuture
 
 fun createAdvancementProvider(

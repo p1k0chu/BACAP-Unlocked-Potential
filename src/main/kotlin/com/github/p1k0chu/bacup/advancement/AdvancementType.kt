@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.function.reward
+package com.github.p1k0chu.bacup.advancement
 
 enum class AdvancementType(val message: String, val titleColor: String, val descriptionColor: String) {
     TASK(
@@ -26,4 +26,16 @@ enum class AdvancementType(val message: String, val titleColor: String, val desc
         "light_purple",
         "#DE4ADC"
     );
+
+    companion object {
+        fun getFrame(type: AdvancementType): net.minecraft.advancements.AdvancementType {
+            return when (type) {
+                TASK -> net.minecraft.advancements.AdvancementType.TASK
+                GOAL -> net.minecraft.advancements.AdvancementType.GOAL
+                CHALLENGE -> net.minecraft.advancements.AdvancementType.CHALLENGE
+                SUPER_CHALLENGE -> net.minecraft.advancements.AdvancementType.CHALLENGE
+                HIDDEN -> net.minecraft.advancements.AdvancementType.CHALLENGE
+            }
+        }
+    }
 }

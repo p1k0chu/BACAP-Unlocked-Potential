@@ -1,41 +1,42 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
+import com.github.p1k0chu.bacup.advancement.AdvancementConsumer
+import com.github.p1k0chu.bacup.advancement.AdvancementGenerator
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleBlockCriterion
-import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementRequirements
-import net.minecraft.data.advancements.AdvancementSubProvider
-import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
-import net.minecraft.world.item.Items
 import net.minecraft.core.HolderLookup
+import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.tags.BlockTags
-import java.util.function.Consumer
+import net.minecraft.world.item.Items
 
-object BuildingTabGenerator : AdvancementSubProvider {
+object BuildingTabGenerator : AdvancementGenerator {
     const val TAB_NAME = "building"
 
     const val FIRE_TRICK = "fire_trick"
 
-    override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
-        advancement(TAB_NAME, FIRE_TRICK) {
+    override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
+        advancement(consumer, TAB_NAME, FIRE_TRICK) {
             parent(createPlaceholder("blazeandcave:building/happy_birthday"))
             display {
+                title = "Fire Trick"
+                description = "Light a campfire and a candle by shooting an arrow at them"
                 icon = Items.BOW.defaultInstance
             }
             addCriterion(
                 "candle", Criteria.PROJECTILE_LIT_BLOCK.createCriterion(
-                    SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CANDLES)
+                    SingleBlockCriterion.Conditions.tags(provider, BlockTags.CANDLES)
                 )
             )
             addCriterion(
                 "candle_cake", Criteria.PROJECTILE_LIT_BLOCK.createCriterion(
-                    SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CANDLE_CAKES)
+                    SingleBlockCriterion.Conditions.tags(provider, BlockTags.CANDLE_CAKES)
                 )
             )
             addCriterion(
                 "campfire", Criteria.PROJECTILE_LIT_BLOCK.createCriterion(
-                    SingleBlockCriterion.Conditions.tags(wrapperLookup, BlockTags.CAMPFIRES)
+                    SingleBlockCriterion.Conditions.tags(provider, BlockTags.CAMPFIRES)
                 )
             )
 
@@ -47,6 +48,6 @@ object BuildingTabGenerator : AdvancementSubProvider {
                     )
                 )
             )
-        }.also(consumer::accept)
+        }
     }
 }

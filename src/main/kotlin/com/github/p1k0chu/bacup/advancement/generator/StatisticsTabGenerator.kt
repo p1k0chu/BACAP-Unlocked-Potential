@@ -1,22 +1,22 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
+import com.github.p1k0chu.bacup.advancement.AdvancementConsumer
+import com.github.p1k0chu.bacup.advancement.AdvancementGenerator
+import com.github.p1k0chu.bacup.advancement.AdvancementType
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
-import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.advancements.AdvancementType
-import net.minecraft.core.component.DataComponents
-import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.data.advancements.AdvancementSubProvider
-import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
+import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.alchemy.Potions
 import java.util.*
-import java.util.function.Consumer
 
-object StatisticsTabGenerator : AdvancementSubProvider {
+object StatisticsTabGenerator : AdvancementGenerator {
     const val TAB_NAME = "statistics"
     const val ROOT = "blazeandcave:statistics/root"
 
@@ -29,27 +29,33 @@ object StatisticsTabGenerator : AdvancementSubProvider {
     const val GLGLTU_CULT = "glgltu_cult"
     const val GLGLTU_3 = "glgltu_3"
 
-    override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
-        val emeraldPortfolio = advancement(TAB_NAME, EMERALD_PORTFOLIO) {
+    override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
+        val emeraldPortfolio = advancement(consumer, TAB_NAME, EMERALD_PORTFOLIO) {
             parent(createPlaceholder(ROOT))
             display {
+                title = "Emerald Portfolio"
+                description = "Obtain 200 emeralds through trade"
                 icon = Items.EMERALD.defaultInstance
             }
-            addCriterion("200", Criteria.TRADED_FOR_EMERALDS.createCriterion(
-                SingleIntRangeCriterion.Conditions(
-                    Optional.empty(),
-                    Optional.of(MinMaxBounds.Ints.atLeast(200))
+            addCriterion(
+                "200", Criteria.TRADED_FOR_EMERALDS.createCriterion(
+                    SingleIntRangeCriterion.Conditions(
+                        Optional.empty(),
+                        Optional.of(MinMaxBounds.Ints.atLeast(200))
+                    )
                 )
-            ))
-        }.also(consumer::accept)
+            )
+        }
 
-        val stockMarket = advancement(TAB_NAME, THE_STOCK_MARKET) {
+        val stockMarket = advancement(consumer, TAB_NAME, THE_STOCK_MARKET) {
             parent(emeraldPortfolio)
             display {
+                title = "The Stock Market"
+                description = "Obtain a stack of emerald blocks through trading"
                 icon = Items.EMERALD.defaultInstance.apply {
                     set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                 }
-                frame = AdvancementType.GOAL
+                type = AdvancementType.GOAL
             }
             addCriterion(
                 "576", Criteria.TRADED_FOR_EMERALDS.createCriterion(
@@ -59,14 +65,19 @@ object StatisticsTabGenerator : AdvancementSubProvider {
                     )
                 )
             )
-        }.also(consumer::accept)
+        }
 
-        val smallBusiness = advancement(TAB_NAME, SMALL_BUSINESS) {
+        val smallBusiness = advancement(consumer, TAB_NAME, SMALL_BUSINESS) {
             parent(stockMarket)
             display {
+                title = "Small Business"
+                description = "Buy 1000 emeralds in total"
                 icon = Items.EMERALD_BLOCK.defaultInstance
-                frame = AdvancementType.CHALLENGE
+                type = AdvancementType.CHALLENGE
             }
+            itemReward(ItemStack(Items.EMERALD, 8))
+            exp = 50
+
             addCriterion(
                 "1000", Criteria.TRADED_FOR_EMERALDS.createCriterion(
                     SingleIntRangeCriterion.Conditions(
@@ -75,15 +86,19 @@ object StatisticsTabGenerator : AdvancementSubProvider {
                     )
                 )
             )
-        }.also(consumer::accept)
+        }
 
-        advancement(TAB_NAME, SMALL_INDIE_COMPANY) {
+        advancement(consumer, TAB_NAME, SMALL_INDIE_COMPANY) {
             parent(smallBusiness)
             display {
+                title = "Small Indie Company"
+                description = "Make 27 stacks of emerald blocks on sales"
                 icon = Items.DEEPSLATE_EMERALD_ORE.defaultInstance
-                frame =  AdvancementType.CHALLENGE
+                type = AdvancementType.HIDDEN
                 hidden = true
             }
+            exp = 200
+
             addCriterion(
                 "15552", Criteria.TRADED_FOR_EMERALDS.createCriterion(
                     SingleIntRangeCriterion.Conditions(
@@ -92,55 +107,67 @@ object StatisticsTabGenerator : AdvancementSubProvider {
                     )
                 )
             )
-        }.also(consumer::accept)
+        }
 
-        val glgltu = advancement(TAB_NAME, GLGLTU) {
+        val glgltu = advancement(consumer, TAB_NAME, GLGLTU) {
             parent(createPlaceholder(ROOT))
             display {
+                title = "глглту"
+                description = "Send your first глглту in chat"
                 icon = Items.TIPPED_ARROW.defaultInstance.apply {
                     set(DataComponents.POTION_CONTENTS, PotionContents(Potions.STRENGTH))
                 }
             }
-            addCriterion("glgltu", Criteria.GLGLTU.createCriterion(
-                SingleIntRangeCriterion.Conditions(
-                    Optional.empty(),
-                    Optional.of(
-                        MinMaxBounds.Ints.atLeast(1)
+            addCriterion(
+                "glgltu", Criteria.GLGLTU.createCriterion(
+                    SingleIntRangeCriterion.Conditions(
+                        Optional.empty(),
+                        Optional.of(
+                            MinMaxBounds.Ints.atLeast(1)
+                        )
                     )
                 )
-            ))
-        }.also(consumer::accept)
+            )
+        }
 
-        val glgltuCult = advancement(TAB_NAME, GLGLTU_CULT) {
+        val glgltuCult = advancement(consumer, TAB_NAME, GLGLTU_CULT) {
             parent(glgltu)
             display {
+                title = "глглту cult"
+                description = "Send 50 глглту in chat"
                 icon = Items.SPECTRAL_ARROW.defaultInstance
-                frame = AdvancementType.GOAL
+                type = AdvancementType.GOAL
             }
-            addCriterion("glgltu_cult", Criteria.GLGLTU.createCriterion(
-                SingleIntRangeCriterion.Conditions(
-                    Optional.empty(),
-                    Optional.of(
-                        MinMaxBounds.Ints.atLeast(50)
+            addCriterion(
+                "glgltu_cult", Criteria.GLGLTU.createCriterion(
+                    SingleIntRangeCriterion.Conditions(
+                        Optional.empty(),
+                        Optional.of(
+                            MinMaxBounds.Ints.atLeast(50)
+                        )
                     )
                 )
-            ))
-        }.also(consumer::accept)
+            )
+        }
 
-        advancement(TAB_NAME, GLGLTU_3) {
+        advancement(consumer, TAB_NAME, GLGLTU_3) {
             parent(glgltuCult)
             display {
+                title = "You Can Mute Me, But You Can't Mute глглту"
+                description = "Send 200 глглту in chat"
                 icon = Items.WRITABLE_BOOK.defaultInstance
-                frame = AdvancementType.CHALLENGE
+                type = AdvancementType.CHALLENGE
             }
-            addCriterion("glgltu_3", Criteria.GLGLTU.createCriterion(
-                SingleIntRangeCriterion.Conditions(
-                    Optional.empty(),
-                    Optional.of(
-                        MinMaxBounds.Ints.atLeast(200)
+            addCriterion(
+                "glgltu_3", Criteria.GLGLTU.createCriterion(
+                    SingleIntRangeCriterion.Conditions(
+                        Optional.empty(),
+                        Optional.of(
+                            MinMaxBounds.Ints.atLeast(200)
+                        )
                     )
                 )
-            ))
-        }.also(consumer::accept)
+            )
+        }
     }
 }

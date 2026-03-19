@@ -1,31 +1,33 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
+import com.github.p1k0chu.bacup.advancement.AdvancementConsumer
+import com.github.p1k0chu.bacup.advancement.AdvancementGenerator
+import com.github.p1k0chu.bacup.advancement.AdvancementType
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleEntityCriterion
-import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.advancements.AdvancementType
-import net.minecraft.data.advancements.AdvancementSubProvider
+import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.core.registries.Registries
-import net.minecraft.core.HolderLookup
 import java.util.*
-import java.util.function.Consumer
 
-object ChallengesTabGenerator : AdvancementSubProvider {
+object ChallengesTabGenerator : AdvancementGenerator {
     const val TAB_NAME = "challenges"
     const val MOB_FLATTENER_9000 = "mob_flattener_9000"
 
-    override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
-        advancement(TAB_NAME, MOB_FLATTENER_9000) {
+    override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
+        advancement(consumer, TAB_NAME, MOB_FLATTENER_9000) {
             parent(createPlaceholder("blazeandcave:challenges/biological_warfare"))
             display {
+                title = "Mob Flattener 9000"
+                description = "Crush all mobs with an anvil"
                 icon = Items.ANVIL.defaultInstance
-                frame = AdvancementType.CHALLENGE
+                type = AdvancementType.SUPER_CHALLENGE
             }
+            exp = 200
 
             KILLABLE_MOBS.forEach { mob ->
                 addCriterion(mob.builtInRegistryHolder().registeredName, Criteria.ANVIL_KILL.createCriterion(
@@ -33,13 +35,13 @@ object ChallengesTabGenerator : AdvancementSubProvider {
                         Optional.empty(),
                         listOf(
                             EntityPredicate.Builder.entity()
-                                .of(wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE), mob)
+                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), mob)
                                 .build()
                         )
                     )
                 ))
             }
-        }.also(consumer::accept)
+        }
     }
 
     private val KILLABLE_MOBS = listOf(

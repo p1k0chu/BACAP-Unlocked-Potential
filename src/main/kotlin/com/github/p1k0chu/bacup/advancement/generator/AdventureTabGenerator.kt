@@ -1,26 +1,21 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.advancement.advancement
+import com.github.p1k0chu.bacup.advancement.*
 import com.github.p1k0chu.bacup.advancement.criteria.*
-import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicate
 import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
-import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.criterion.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.advancements.AdvancementSubProvider
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData
 import java.util.*
-import java.util.function.Consumer
 
-object AdventureTabGenerator : AdvancementSubProvider {
+object AdventureTabGenerator : AdvancementGenerator {
     const val TAB_NAME = "adventure"
 
     const val CAT_GIFT = "cat_gift"
@@ -39,23 +34,28 @@ object AdventureTabGenerator : AdvancementSubProvider {
     const val THIS_IS_NOT_COOKIE_CLICKER_CRITERION = "are_you_looking_for_something"
     const val SHORT_CIRCUIT_CRITERION = "short_circuit"
 
-    override fun generate(wrapperLookup: HolderLookup.Provider, consumer: Consumer<AdvancementHolder>) {
-        val catGift = advancement(TAB_NAME, CAT_GIFT) {
+    override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
+        val catGift = advancement(consumer, TAB_NAME, CAT_GIFT) {
             parent(createPlaceholder("blazeandcave:adventure/crazy_cat_lady"))
             display {
+                title = "Where have you been?"
+                description = "Receive a gift from a tamed cat in the morning."
                 // cat head; https://minecraft-heads.com/custom-heads/head/66218-cat-plushie-siamese
                 icon =
                     getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmU5MTFlMjRjODU1M2ZlYWQ1YTJmMGEwZWM1OWM0YWY2MmYxMjZhZTcwZDZiZWQyNjFhZWQ0Zjk5YzE0YjQ5MiJ9fX0=")
             }
             addCriterion("gift", Criteria.CAT_GIFT_RECEIVED.createCriterion(SingleItemCriterion.Conditions()))
-        }.also(consumer::accept)
+        }
 
-        val plethoraOfCats = advancement(TAB_NAME, PLETHORA_OF_CATS) {
+        val plethoraOfCats = advancement(consumer, TAB_NAME, PLETHORA_OF_CATS) {
             parent(catGift)
             display {
-                frame = AdvancementType.GOAL
+                title = "Plethora of Cats"
+                description = "Befriend twenty stray cats"
+                type = AdvancementType.GOAL
                 icon = Items.COD.defaultInstance
             }
+            exp = 50
             addCriterion(
                 "20", Criteria.PET_TAMED.createCriterion(
                     PetTamedCriterion.Conditions(
@@ -63,7 +63,7 @@ object AdventureTabGenerator : AdvancementSubProvider {
                         Optional.of(
                             EntityPredicate.Builder.entity().entityType(
                                 EntityTypePredicate.of(
-                                    wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE),
+                                    provider.lookupOrThrow(Registries.ENTITY_TYPE),
                                     EntityType.CAT
                                 )
                             ).build()
@@ -72,12 +72,14 @@ object AdventureTabGenerator : AdvancementSubProvider {
                     )
                 )
             )
-        }.also(consumer::accept)
+        }
 
-        advancement(TAB_NAME, ALL_CAT_GIFTS) {
+        advancement(consumer, TAB_NAME, ALL_CAT_GIFTS) {
             parent(plethoraOfCats)
             display {
-                frame = AdvancementType.GOAL
+                title = "A Meow Massages The Heart"
+                description = "Receive every kind of gifts from your cat"
+                type = AdvancementType.GOAL
                 // cat king; https://minecraft-heads.com/custom-heads/head/104289-cat-king
                 icon =
                     getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRiZTYzOTRjOTE1Y2FjMzY0Y2YwMTFkM2Y4Y2EzNmU2YjBlOTk4NjA4ZWJmNGJiZDMxMmUzMjQ3MWQwODZkIn19fQ==")
@@ -94,26 +96,31 @@ object AdventureTabGenerator : AdvancementSubProvider {
             ).forEach {
                 addCriterion(
                     it.builtInRegistryHolder().registeredName, Criteria.CAT_GIFT_RECEIVED.createCriterion(
-                        SingleItemCriterion.Conditions.items(wrapperLookup, it)
+                        SingleItemCriterion.Conditions.items(provider, it)
                     )
                 )
             }
-        }.also(consumer::accept)
+        }
 
-        advancement(TAB_NAME, LOCK_MAP) {
+        advancement(consumer, TAB_NAME, LOCK_MAP) {
             parent(createPlaceholder("blazeandcave:adventure/mapmakers_table"))
             display {
+                title = "Do It For The Frame"
+                description = "Use a glass pane in a cartography table to lock a map, preventing it from updating"
                 icon = Items.GLASS_PANE.defaultInstance
             }
             addCriterion("lock", Criteria.MAP_LOCKED.createCriterion(EmptyCriterion.Conditions()))
-        }.also(consumer::accept)
+        }
 
-        advancement(TAB_NAME, CAN_YOU_HEAR_IT_FROM_HERE) {
+        advancement(consumer, TAB_NAME, CAN_YOU_HEAR_IT_FROM_HERE) {
             parent(createPlaceholder("blazeandcave:adventure/oh_look_it_dings"))
             display {
+                title = "Can you hear it from here?"
+                description = "Shoot a bell from more than 50 blocks away"
                 icon = Items.ARROW.defaultInstance
-                frame = AdvancementType.CHALLENGE
+                type = AdvancementType.CHALLENGE
             }
+            exp = 50
             addCriterion(
                 "50", Criteria.BELL_SHOT_FROM_DISTANCE.createCriterion(
                     SingleIntRangeCriterion.Conditions(
@@ -122,30 +129,35 @@ object AdventureTabGenerator : AdvancementSubProvider {
                     )
                 )
             )
-        }.also(consumer::accept)
+        }
 
-        advancement(TAB_NAME, MASTER_ARCHEOLOGIST) {
+        advancement(consumer, TAB_NAME, MASTER_ARCHEOLOGIST) {
             parent(createPlaceholder("blazeandcave:adventure/a_suspicious_advancement"))
             display {
+                title = "Master Archeologist"
+                description = "Get every item possible from sus sand or gravel"
                 icon = Items.BRUSH.defaultInstance.apply {
                     set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                 }
-                frame = AdvancementType.CHALLENGE
+                type = AdvancementType.HIDDEN
                 hidden = true
             }
+            exp = 200
 
             susLoot.forEach { item ->
                 addCriterion(
                     item.builtInRegistryHolder().registeredName, Criteria.SUS_BLOCK_GOT_ITEM.createCriterion(
-                        SingleItemCriterion.Conditions.items(wrapperLookup, item)
+                        SingleItemCriterion.Conditions.items(provider, item)
                     )
                 )
             }
-        }.also(consumer::accept)
+        }
 
-        advancement(TAB_NAME, MAXIMUM_COVERAGE) {
+        advancement(consumer, TAB_NAME, MAXIMUM_COVERAGE) {
             parent(createPlaceholder("blazeandcave:adventure/mapmakers_table"))
             display {
+                title = "Maximum Coverage"
+                description = "Fully expand a map"
                 icon = Items.FILLED_MAP.defaultInstance
             }
             addCriterion(
@@ -156,14 +168,16 @@ object AdventureTabGenerator : AdvancementSubProvider {
                     )
                 )
             )
-        }.also(consumer::accept)
+        }
 
-        advancement(TAB_NAME, PAINT_IT_RED) {
+        advancement(consumer, TAB_NAME, PAINT_IT_RED) {
             parent(createPlaceholder("blazeandcave:adventure/mapmaker"))
             display {
+                title = "Paint it, red"
+                description = "Fill a map with red color"
                 icon =
                     getPlayerHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQ4NjM2MmQwZjY4OTVkOWMyMmNlN2JmNjRkODU3Mjc2MDFiNWQ5ODNmZmM1YTUzZmE1YmYzYjQ3OTRkMWZkMSJ9fX0=")
-                frame = AdvancementType.CHALLENGE
+                type = AdvancementType.CHALLENGE
             }
             addCriterion(
                 "paint_it_red", Criteria.MAP_STATE.createCriterion(
@@ -186,87 +200,105 @@ object AdventureTabGenerator : AdvancementSubProvider {
                     )
                 )
             )
-        }.also(consumer::accept)
+        }
 
-        advancement(TAB_NAME, SECRET_SUPPLIES) {
+        advancement(consumer, TAB_NAME, SECRET_SUPPLIES) {
             parent(createPlaceholder("blazeandcave:adventure/shady_deals"))
 
             display {
+                title = "Secret Supplies"
+                description = "Acquire a potion of invisibility and milk bucket dropped from wandering traders"
                 icon = Items.DEAD_BUSH.defaultInstance
-                frame = AdvancementType.GOAL
+                type = AdvancementType.GOAL
             }
 
-            addCriterion("milk_bucket", Criteria.WANDERING_TRADER_DROPPED_ITEM.createCriterion(
-                EntityDroppedLootCriterion.Conditions(
-                    Optional.empty(),
-                    Optional.of(
-                        EntityPredicate.Builder.entity()
-                        .of(wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WANDERING_TRADER)
-                        .build()),
-                    Optional.of(
-                        ItemPredicate.Builder.item()
-                        .of(wrapperLookup.lookupOrThrow(Registries.ITEM), Items.MILK_BUCKET)
-                        .build())
+            addCriterion(
+                "milk_bucket", Criteria.WANDERING_TRADER_DROPPED_ITEM.createCriterion(
+                    EntityDroppedLootCriterion.Conditions(
+                        Optional.empty(),
+                        Optional.of(
+                            EntityPredicate.Builder.entity()
+                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WANDERING_TRADER)
+                                .build()
+                        ),
+                        Optional.of(
+                            ItemPredicate.Builder.item()
+                                .of(provider.lookupOrThrow(Registries.ITEM), Items.MILK_BUCKET)
+                                .build()
+                        )
+                    )
                 )
-            ))
+            )
 
             // don't check if it's invisibility cuz pointless
-            addCriterion("potion", Criteria.WANDERING_TRADER_DROPPED_ITEM.createCriterion(
-                EntityDroppedLootCriterion.Conditions(
-                    Optional.empty(),
-                    Optional.of(
-                        EntityPredicate.Builder.entity()
-                        .of(wrapperLookup.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WANDERING_TRADER)
-                        .build()),
-                    Optional.of(
-                        ItemPredicate.Builder.item()
-                        .of(wrapperLookup.lookupOrThrow(Registries.ITEM), Items.POTION)
-                        .build())
+            addCriterion(
+                "potion", Criteria.WANDERING_TRADER_DROPPED_ITEM.createCriterion(
+                    EntityDroppedLootCriterion.Conditions(
+                        Optional.empty(),
+                        Optional.of(
+                            EntityPredicate.Builder.entity()
+                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WANDERING_TRADER)
+                                .build()
+                        ),
+                        Optional.of(
+                            ItemPredicate.Builder.item()
+                                .of(provider.lookupOrThrow(Registries.ITEM), Items.POTION)
+                                .build()
+                        )
+                    )
                 )
-            ))
-        }.let(consumer::accept)
+            )
+        }
 
-        advancement(TAB_NAME, DEHYDRATION) {
+        advancement(consumer, TAB_NAME, DEHYDRATION) {
             parent(createPlaceholder("blazeandcave:adventure/dry_spell"))
 
             display {
+                title = "Dehydration"
+                description = "Dry a sponge in a furnace, but not without taking the water back"
                 icon = Items.WATER_BUCKET.defaultInstance
             }
 
-            addCriterion("dehydration", Criteria.FURNACE_TOOK_WATER_BUCKET_FUEL.createCriterion(
-                EmptyCriterion.Conditions()
-            ))
-        }.let(consumer::accept)
+            addCriterion(
+                "dehydration", Criteria.FURNACE_TOOK_WATER_BUCKET_FUEL.createCriterion(
+                    EmptyCriterion.Conditions()
+                )
+            )
+        }
 
-        advancement(TAB_NAME, THIS_IS_NOT_COOKIE_CLICKER) {
+        advancement(consumer, TAB_NAME, THIS_IS_NOT_COOKIE_CLICKER) {
             parent(createPlaceholder("blazeandcave:farming/me_love_cookie"))
 
             display {
+                title = "This Is Not Cookie Clicker"
+                description = "Why did you double click an empty slot?"
                 icon = Items.COOKIE.defaultInstance.apply {
                     set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
                 }
-                frame = AdvancementType.CHALLENGE
+                type = AdvancementType.HIDDEN
             }
 
             addCriterion(
                 THIS_IS_NOT_COOKIE_CLICKER_CRITERION,
                 CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
             )
-        }.let(consumer::accept)
+        }
 
-        advancement(TAB_NAME, SHORT_CIRCUIT) {
+        advancement(consumer, TAB_NAME, SHORT_CIRCUIT) {
             parent(createPlaceholder("blazeandcave:adventure/this_will_be_a_breeze"))
 
             display {
+                title = "Short Circuit"
+                description = "Get a breeze to activate 9 redstone components at the same time"
                 icon = Items.COPPER_TRAPDOOR.defaultInstance
-                frame = AdvancementType.GOAL
+                type = AdvancementType.GOAL
             }
 
             addCriterion(
                 SHORT_CIRCUIT_CRITERION,
                 CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
             )
-        }.also(consumer::accept)
+        }
     }
 
     private val susLoot = listOf(

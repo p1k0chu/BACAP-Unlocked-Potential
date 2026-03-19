@@ -1,0 +1,21 @@
+package com.github.p1k0chu.bacup.advancement
+
+import net.minecraft.advancements.Advancement
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.core.HolderLookup
+import net.minecraft.resources.Identifier
+
+interface AdvancementGenerator {
+    fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer)
+
+    companion object {
+        fun createPlaceholder(id: String): AdvancementHolder {
+            return Advancement.Builder.advancement().build(Identifier.parse(id))
+        }
+    }
+}
+
+interface AdvancementConsumer {
+    fun advancement(advancementHolder: AdvancementHolder)
+    fun function(function: MCFunction)
+}

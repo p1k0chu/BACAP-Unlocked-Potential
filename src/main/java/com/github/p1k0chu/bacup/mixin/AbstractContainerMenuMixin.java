@@ -1,12 +1,9 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.Main;
-import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator;
 import com.github.p1k0chu.bacup.utils.AdvancementUtils;
 import com.github.p1k0chu.bacup.utils.ItemStackUtilsKt;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
@@ -29,8 +26,7 @@ public abstract class AbstractContainerMenuMixin {
     @Unique
     private static final ItemStack COOKIE_CLICKER_COOKIE = ItemStackUtilsKt.makeTrophyItemStack(
             Items.COOKIE,
-            AdventureTabGenerator.TAB_NAME,
-            AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER,
+            "This Is Not Cookie Clicker",
             "Cookie Clicker Cookie",
             "Where did this cookie come from???",
             TextColor.fromRgb(CommonColors.COSMOS_PINK)
