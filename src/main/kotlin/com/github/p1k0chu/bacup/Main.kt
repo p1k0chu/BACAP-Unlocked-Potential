@@ -22,12 +22,6 @@ import net.minecraft.server.level.ServerPlayer
 object Main : ModInitializer {
     const val MOD_ID: String = "bacapup"
 
-    val mapStatePredicate: DataComponentPredicate.Type<MapStatePredicate> = Registry.register(
-        BuiltInRegistries.DATA_COMPONENT_PREDICATE_TYPE,
-        id("map_state_predicate"),
-        DataComponentPredicate.ConcreteType(MapStatePredicate.CODEC)
-    )
-
     var serverInstance: MinecraftServer? = null
 
     init {

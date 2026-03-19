@@ -26,6 +26,7 @@
     "FurnaceResultSlotMixin",
     "GrindstoneMenuAccessor",
     "GrindstoneMenuAnon4Mixin",
+    "InventoryChangeTriggerMixin",
     "ItemEntityMixin",
     "LivingEntityMixin",
     "MobMixin",

@@ -97,4 +97,8 @@ object Criteria {
     val PARROT_IMITATES: EntityTypeCriterion = CriteriaTriggers.register(
         id("parrot_imitates"), EntityTypeCriterion()
     )
+    @JvmField
+    val MAP_STATE: MapCriterion = CriteriaTriggers.register(
+        id("map_state"), MapCriterion()
+    )
 }

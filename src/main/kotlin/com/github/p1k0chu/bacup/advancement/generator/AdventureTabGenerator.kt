@@ -1,31 +1,22 @@
 package com.github.p1k0chu.bacup.advancement.generator
 
-import com.github.p1k0chu.bacup.Main
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.*
 import com.github.p1k0chu.bacup.advancement.getPlayerHead
 import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicate
 import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
 import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.advancements.criterion.InventoryChangeTrigger
+import net.minecraft.advancements.criterion.*
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData
-import net.minecraft.advancements.criterion.MinMaxBounds
-import net.minecraft.advancements.criterion.DataComponentMatchers
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.advancements.criterion.EntityTypePredicate
-import net.minecraft.advancements.criterion.ImpossibleTrigger
-import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.core.registries.Registries
-import net.minecraft.core.HolderLookup
-import net.minecraft.resources.Identifier
 import java.util.*
 import java.util.function.Consumer
 
@@ -158,14 +149,11 @@ object AdventureTabGenerator : AdvancementSubProvider {
                 icon = Items.FILLED_MAP.defaultInstance
             }
             addCriterion(
-                "max_coverage", InventoryChangeTrigger.TriggerInstance.hasItems(
-                    ItemPredicate.Builder.item().withComponents(
-                        DataComponentMatchers.Builder.components().partial(
-                            Main.mapStatePredicate,
-                            MapStatePredicate(scale = MinMaxBounds.Ints.exactly(MapItemSavedData.MAX_SCALE))
-                        )
-                            .build()
-                    ).build()
+                "max_coverage", Criteria.MAP_STATE.createCriterion(
+                    MapCriterion.Instance(
+                        Optional.empty(),
+                        Optional.of(MapStatePredicate(scale = MinMaxBounds.Ints.exactly(MapItemSavedData.MAX_SCALE)))
+                    )
                 )
             )
         }.also(consumer::accept)
@@ -178,27 +166,24 @@ object AdventureTabGenerator : AdvancementSubProvider {
                 frame = AdvancementType.CHALLENGE
             }
             addCriterion(
-                "paint_it_red", InventoryChangeTrigger.TriggerInstance.hasItems(
-                    ItemPredicate.Builder.item()
-                        .withComponents(
-                            DataComponentMatchers.Builder.components()
-                                .partial(
-                                    Main.mapStatePredicate,
-                                    MapStatePredicate(
-                                        colors = Optional.of(
-                                            MapColorPredicate.AllSame(
-                                                listOf(
-                                                    // FIRE: tnt, lava, fire, redstone block
-                                                    MinMaxBounds.Ints.between(16, 19),
-                                                    // COLOR_RED
-                                                    MinMaxBounds.Ints.between(112, 115)
-                                                )
-                                            )
+                "paint_it_red", Criteria.MAP_STATE.createCriterion(
+                    MapCriterion.Instance(
+                        Optional.empty(),
+                        Optional.of(
+                            MapStatePredicate(
+                                colors = Optional.of(
+                                    MapColorPredicate.AllSame(
+                                        listOf(
+                                            // FIRE: tnt, lava, fire, redstone block
+                                            MinMaxBounds.Ints.between(16, 19),
+                                            // COLOR_RED
+                                            MinMaxBounds.Ints.between(112, 115)
                                         )
                                     )
                                 )
-                                .build()
+                            )
                         )
+                    )
                 )
             )
         }.also(consumer::accept)
