@@ -93,4 +93,8 @@ object Criteria {
     val BEACON_CONSUMED_PAYMENT: SingleItemCriterion = CriteriaTriggers.register(
         id("beacon_consumed_payment"), SingleItemCriterion()
     )
+    @JvmField
+    val PARROT_IMITATES: EntityTypeCriterion = CriteriaTriggers.register(
+        id("parrot_imitates"), EntityTypeCriterion()
+    )
 }

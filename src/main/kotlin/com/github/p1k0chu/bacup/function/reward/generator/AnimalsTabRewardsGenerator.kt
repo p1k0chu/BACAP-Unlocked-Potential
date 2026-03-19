@@ -21,6 +21,9 @@ object AnimalsTabRewardsGenerator : FunctionGenerator {
                     type = AdvancementType.GOAL
                     exp = 1
                 }
+                advancement(AnimalsTabGenerator.POLYGLOT) {
+                    type = AdvancementType.CHALLENGE
+                }
             }
         }
     }

@@ -1,0 +1,50 @@
+package com.github.p1k0chu.bacup.constants
+
+import net.minecraft.world.entity.EntityType
+
+object ParrotConstants {
+    val IMITATING_TYPES: List<EntityType<*>> = listOf(
+ 		EntityType.BLAZE,
+		EntityType.BOGGED,
+		EntityType.BREEZE,
+		EntityType.CAMEL_HUSK,
+		EntityType.CAVE_SPIDER,
+		EntityType.CREAKING,
+		EntityType.CREEPER,
+		EntityType.DROWNED,
+		EntityType.ELDER_GUARDIAN,
+		EntityType.ENDER_DRAGON,
+		EntityType.ENDERMITE,
+		EntityType.EVOKER,
+		EntityType.GHAST,
+		EntityType.HAPPY_GHAST,
+		EntityType.GUARDIAN,
+		EntityType.HOGLIN,
+		EntityType.HUSK,
+		EntityType.ILLUSIONER,
+		EntityType.MAGMA_CUBE,
+		EntityType.PARCHED,
+		EntityType.PHANTOM,
+		EntityType.PIGLIN,
+		EntityType.PIGLIN_BRUTE,
+		EntityType.PILLAGER,
+		EntityType.RAVAGER,
+		EntityType.SHULKER,
+		EntityType.SILVERFISH,
+		EntityType.SKELETON,
+		EntityType.SLIME,
+		EntityType.SPIDER,
+		EntityType.STRAY,
+		EntityType.VEX,
+		EntityType.VINDICATOR,
+		EntityType.WARDEN,
+		EntityType.WITCH,
+		EntityType.WITHER,
+		EntityType.WITHER_SKELETON,
+		EntityType.ZOGLIN,
+		EntityType.ZOMBIE,
+		EntityType.ZOMBIE_HORSE,
+		EntityType.ZOMBIE_NAUTILUS,
+		EntityType.ZOMBIE_VILLAGER
+	)
+}

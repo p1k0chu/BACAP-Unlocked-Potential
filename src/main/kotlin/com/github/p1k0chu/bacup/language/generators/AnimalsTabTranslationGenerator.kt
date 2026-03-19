@@ -24,6 +24,10 @@ object AnimalsTabTranslationGenerator : TranslationGenerator {
                 title("Wololo")
                 description("Watch evoker recolor blue sheep in red")
             }
+            advancement(AnimalsTabGenerator.POLYGLOT) {
+                title("Polyglot")
+                description("Hear your parrots speak like every mob")
+            }
         }
     }
 }
