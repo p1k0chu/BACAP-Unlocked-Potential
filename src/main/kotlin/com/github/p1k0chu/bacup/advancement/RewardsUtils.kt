@@ -23,8 +23,10 @@ fun giveGen(item: ItemStack): String {
 }
 
 fun messageGen(tab: String, title: String, description: String, type: AdvancementType): String {
+    val sanitizedTitle = sanitizeStringForFunction(title)
+    val sanitizedDescription = sanitizeStringForFunction(description)
     return """
-        tellraw @a {"translate":"${type.message}","with":[{"selector":"@s"},{"color":"${type.titleColor}","text":"["},{"color":"${type.titleColor}","translate":"$title","hover_event":{"action":"show_text","value":{"color":"${type.titleColor}","translate":"$title","extra":[{"text":"\n"},{"color":"${type.descriptionColor}","translate":"$description"},{"text":"\n\n"},{"color":"${BacConstants.TAB_COLOR}","italic":true,"translate":"%1${'$'}s tab","with":[{"translate":"${BacConstants.tab_titles[tab]}"}]}]}}},{"color":"${type.titleColor}","text":"]"}]}
+        tellraw @a {"translate":"${type.message}","with":[{"selector":"@s"},{"color":"${type.titleColor}","text":"["},{"color":"${type.titleColor}","translate":"$sanitizedTitle","hover_event":{"action":"show_text","value":{"color":"${type.titleColor}","translate":"$sanitizedTitle","extra":[{"text":"\n"},{"color":"${type.descriptionColor}","translate":"$sanitizedDescription"},{"text":"\n\n"},{"color":"${BacConstants.TAB_COLOR}","italic":true,"translate":"%1${'$'}s tab","with":[{"translate":"${BacConstants.tab_titles[tab]}"}]}]}}},{"color":"${type.titleColor}","text":"]"}]}
     """.trimIndent()
 }
 
@@ -150,9 +152,13 @@ fun trophyGen(advName: String?, item: ItemStack?): String {
     functionBody.append(
         """
         ] 1
-        tellraw @s {"color": "${item.customName?.style?.color ?: "white"}", "text": " +${item.count} ", "extra": [{"translate": "${item.customName?.string ?: item.item.descriptionId}"}]}
+        tellraw @s {"color": "${item.customName?.style?.color ?: "white"}", "text": " +${item.count} ", "extra": [{"translate": "${item.customName?.string?.let(::sanitizeStringForFunction) ?: item.item.descriptionId}"}]}
         """.trimIndent()
     )
 
     return functionBody.toString()
+}
+
+fun sanitizeStringForFunction(s: String): String {
+    return s.replace("\"", "\\\"")
 }
