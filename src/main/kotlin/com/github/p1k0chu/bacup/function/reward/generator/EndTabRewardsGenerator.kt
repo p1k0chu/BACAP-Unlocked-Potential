@@ -19,6 +19,7 @@ object EndTabRewardsGenerator : FunctionGenerator {
                     exp = 50
                     item(ItemStack(Items.END_CRYSTAL, 2))
                 }
+                advancement(EndTabGenerator.INTENTIONAL_ADVANCEMENT_DESIGN)
             }
         }
     }

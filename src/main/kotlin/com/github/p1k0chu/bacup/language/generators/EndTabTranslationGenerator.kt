@@ -16,6 +16,10 @@ object EndTabTranslationGenerator : TranslationGenerator {
                 title("Dragon 2.0")
                 description("Summon a \"stronger\" dragon using 10 ender crystals")
             }
+            advancement(EndTabGenerator.INTENTIONAL_ADVANCEMENT_DESIGN) {
+                title("Intentional Advancement Design")
+                description("Try to sleep outside of overworld") // and explode :3
+            }
         }
     }
 }
