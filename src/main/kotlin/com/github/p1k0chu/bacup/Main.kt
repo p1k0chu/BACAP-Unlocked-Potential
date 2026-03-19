@@ -23,6 +23,7 @@ object Main : ModInitializer {
     const val MOD_ID: String = "bacapup"
 
     var serverInstance: MinecraftServer? = null
+        private set
 
     init {
         // touch these so java loads the classes
