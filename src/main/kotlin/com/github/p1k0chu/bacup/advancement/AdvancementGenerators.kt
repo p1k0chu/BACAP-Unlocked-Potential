@@ -21,7 +21,8 @@ fun createAdvancementProvider(
             EndTabGenerator,
             BuildingTabGenerator,
             ChallengesTabGenerator,
-            NetherTabGenerator
+            NetherTabGenerator,
+            RedstoneTabGenerator,
         )
     )
 }

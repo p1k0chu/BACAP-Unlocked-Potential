@@ -22,6 +22,7 @@
     "EndDragonFightAccessor",
     "EvokerWololoSpellGoalMixin",
     "FishingHookMixin",
+    "FurnaceBlockMixin",
     "FurnaceFuelSlotMixin",
     "FurnaceResultSlotMixin",
     "GrindstoneMenuAccessor",
