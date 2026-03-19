@@ -7,12 +7,6 @@ import net.minecraft.resources.Identifier
 
 interface AdvancementGenerator {
     fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer)
-
-    companion object {
-        fun createPlaceholder(id: String): AdvancementHolder {
-            return Advancement.Builder.advancement().build(Identifier.parse(id))
-        }
-    }
 }
 
 interface AdvancementConsumer {

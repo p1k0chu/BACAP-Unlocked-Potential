@@ -41,7 +41,8 @@ object NetherTabGenerator : AdvancementGenerator {
             addCriterion(
                 "netherite_block", Criteria.PLAYER_BREAK_NETHERITE_BLOCK_WITH_FIST.createCriterion(
                     EmptyCriterion.Conditions()
-                ))
+                )
+            )
         }
 
         advancement(consumer, TAB_NAME, BEACON_ALL_ITEMS) {
