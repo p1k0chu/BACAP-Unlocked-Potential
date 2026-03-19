@@ -31,7 +31,7 @@ class BacupPersistentState(
         @JvmStatic
         fun getType(): SavedDataType<BacupPersistentState> {
             return SavedDataType(
-                Main.id("persistent_state"),
+                "bacapup_persistent_state",
                 { BacupPersistentState() },
                 CODEC,
                 DataFixTypes.LEVEL
