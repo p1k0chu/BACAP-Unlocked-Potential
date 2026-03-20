@@ -49,7 +49,7 @@ public abstract class AbstractContainerMenuMixin {
             if (slotItem.isEmpty() && carriedItem.isEmpty()) {
                 long time = System.currentTimeMillis();
                 if (time - lastClick < 300) {
-                    if (AdvancementUtils.grant(sPlayer, THIS_IS_NOT_COOKIE_CLICKER, AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER_CRITERION)) {
+                    if (AdvancementUtils.grant(sPlayer, THIS_IS_NOT_COOKIE_CLICKER)) {
                         setCarried(COOKIE_CLICKER_COOKIE.copy());
                         ci.cancel();
                     }

@@ -31,9 +31,6 @@ object AdventureTabGenerator : AdvancementGenerator {
     const val THIS_IS_NOT_COOKIE_CLICKER = "this_is_not_cookie_clicker"
     const val SHORT_CIRCUIT = "short_circuit"
 
-    const val THIS_IS_NOT_COOKIE_CLICKER_CRITERION = "are_you_looking_for_something"
-    const val SHORT_CIRCUIT_CRITERION = "short_circuit"
-
     override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
         val catGift = advancement(consumer, TAB_NAME, CAT_GIFT) {
             parent(createPlaceholder("blazeandcave:adventure/crazy_cat_lady"))
@@ -279,7 +276,7 @@ object AdventureTabGenerator : AdvancementGenerator {
             }
 
             addCriterion(
-                THIS_IS_NOT_COOKIE_CLICKER_CRITERION,
+                "are_you_looking_for_something",
                 CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
             )
         }
@@ -295,7 +292,7 @@ object AdventureTabGenerator : AdvancementGenerator {
             }
 
             addCriterion(
-                SHORT_CIRCUIT_CRITERION,
+                "short_circuit",
                 CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
             )
         }

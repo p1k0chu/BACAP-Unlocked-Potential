@@ -42,7 +42,7 @@ public abstract class ServerExplosionMixin {
         if (this.canTriggerBlocks() && countTriggeredRedstoneComponents(list) >= 9) {
             for (var player : this.getHitPlayers().keySet()) {
                 if (player instanceof ServerPlayer serverPlayer) {
-                    AdvancementUtils.grant(serverPlayer, SHORT_CIRCUIT, AdventureTabGenerator.SHORT_CIRCUIT_CRITERION);
+                    AdvancementUtils.grant(serverPlayer, SHORT_CIRCUIT);
                 }
             }
         }
