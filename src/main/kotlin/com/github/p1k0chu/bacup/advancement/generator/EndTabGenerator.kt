@@ -16,6 +16,7 @@ object EndTabGenerator : AdvancementGenerator {
 
     const val DRAGON2_0 = "dragon_2_0"
     const val INTENTIONAL_ADVANCEMENT_DESIGN = "intentional_advancement_design"
+    const val POST_TREE_TREE_FARM = "post_tree_tree_farm"
 
     override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
         advancement(consumer, TAB_NAME, DRAGON2_0) {
@@ -45,6 +46,16 @@ object EndTabGenerator : AdvancementGenerator {
                 icon = Items.RED_BED.defaultInstance
             }
             addCriterion("die", impossibleTrigger())
+        }
+
+        advancement(consumer, TAB_NAME, POST_TREE_TREE_FARM) {
+            parent(createPlaceholder("blazeandcave:end/in_your_face_neil_armstrong"))
+            display {
+                title = "POST TREE TREE FARM"
+                description = "POST TREE TREE FARM"
+                icon = Items.OAK_SAPLING.defaultInstance
+            }
+            addCriterion("post_tree_tree_farm", impossibleTrigger())
         }
     }
 }
