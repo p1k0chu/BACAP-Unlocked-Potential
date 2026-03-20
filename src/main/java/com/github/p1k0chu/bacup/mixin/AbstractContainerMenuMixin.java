@@ -6,7 +6,6 @@ import com.github.p1k0chu.bacup.utils.ItemStackUtilsKt;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +20,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.THIS_IS_NOT_COOKIE_CLICKER;
+
 @Mixin(AbstractContainerMenu.class)
 public abstract class AbstractContainerMenuMixin {
     @Unique
@@ -31,9 +32,6 @@ public abstract class AbstractContainerMenuMixin {
             "Where did this cookie come from???",
             TextColor.fromRgb(CommonColors.COSMOS_PINK)
     );
-
-    @Unique
-    private static final Identifier THIS_IS_NOT_COOKIE_CLICKER = AdvancementUtils.id(AdventureTabGenerator.TAB_NAME, AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER);
 
     static {
         COOKIE_CLICKER_COOKIE.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);

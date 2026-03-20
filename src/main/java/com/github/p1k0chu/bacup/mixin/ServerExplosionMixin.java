@@ -3,14 +3,12 @@ package com.github.p1k0chu.bacup.mixin;
 import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator;
 import com.github.p1k0chu.bacup.utils.AdvancementUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ServerExplosion;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,14 +21,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 import java.util.Map;
 
+import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.SHORT_CIRCUIT;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.DOUBLE_BLOCK_HALF;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED;
 
 @Mixin(ServerExplosion.class)
 public abstract class ServerExplosionMixin {
-    @Unique
-    private static final Identifier SHORT_CIRCUIT = AdvancementUtils.id(AdventureTabGenerator.TAB_NAME, AdventureTabGenerator.SHORT_CIRCUIT);
-
     @Shadow
     public abstract boolean canTriggerBlocks();
 
