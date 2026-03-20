@@ -65,6 +65,8 @@ class AdvancementProvider(
                 it.generate(wrapperLookup, consumer)
             }
 
+            makeAllCoopSyncFunctions(consumer::function, advIds)
+
             CompletableFuture.allOf(*futures.toTypedArray())
         }
     }
