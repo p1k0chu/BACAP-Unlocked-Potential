@@ -3,14 +3,14 @@ package com.github.p1k0chu.bacup.advancement.predicate
 import com.github.p1k0chu.bacup.Main
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.component.DataComponents
-import net.minecraft.world.level.saveddata.maps.MapId
-import net.minecraft.world.level.saveddata.maps.MapItemSavedData
 import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.advancements.criterion.SingleComponentItemPredicate
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.saveddata.maps.MapId
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData
 import java.util.*
 
 class MapStatePredicate(

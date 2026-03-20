@@ -12,8 +12,8 @@ import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
-import net.minecraft.world.item.ItemStack
 import net.minecraft.tags.EntityTypeTags
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import java.util.*
 

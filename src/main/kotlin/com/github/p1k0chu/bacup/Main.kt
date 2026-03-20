@@ -2,20 +2,15 @@ package com.github.p1k0chu.bacup
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.predicate.MapColorPredicateTypes
-import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
 import com.github.p1k0chu.bacup.command.BacapupCommand
 import com.mojang.brigadier.CommandDispatcher
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents
-import net.minecraft.network.chat.ChatType
-import net.minecraft.network.chat.PlayerChatMessage
-import net.minecraft.core.component.predicates.DataComponentPredicate
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.Registry
-import net.minecraft.server.MinecraftServer
 import net.minecraft.commands.CommandSourceStack
+import net.minecraft.network.chat.PlayerChatMessage
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 
 

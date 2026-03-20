@@ -1,14 +1,14 @@
 package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
+import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.GrindstoneMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.Holder;
-import net.minecraft.tags.EnchantmentTags;
-import net.minecraft.world.inventory.GrindstoneMenu;
-import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

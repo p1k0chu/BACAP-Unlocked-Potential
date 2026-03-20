@@ -1,6 +1,5 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.advancement.generator.BiomesTabGenerator;
 import com.github.p1k0chu.bacup.imixin.ConduitPowerGetter;
 import com.github.p1k0chu.bacup.utils.AdvancementUtils;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -8,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ConduitBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;

@@ -2,8 +2,8 @@ package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;

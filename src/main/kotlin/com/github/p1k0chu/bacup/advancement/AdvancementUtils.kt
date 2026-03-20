@@ -9,9 +9,9 @@ import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.criterion.ImpossibleTrigger
 import net.minecraft.core.component.DataComponents
 import net.minecraft.util.Util
-import net.minecraft.world.item.component.ResolvableProfile
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.component.ResolvableProfile
 
 fun id(tab: String, name: String): String {
     return Main.id("$tab/$name")

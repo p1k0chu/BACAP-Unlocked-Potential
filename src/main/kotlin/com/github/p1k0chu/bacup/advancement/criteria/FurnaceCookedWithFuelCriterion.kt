@@ -2,13 +2,13 @@ package com.github.p1k0chu.bacup.advancement.criteria
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.advancements.criterion.ContextAwarePredicate
+import net.minecraft.advancements.criterion.EntityPredicate
+import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.advancements.criterion.SimpleCriterionTrigger
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.advancements.criterion.ContextAwarePredicate
-import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.server.level.ServerPlayer
 import java.util.*
 
 class FurnaceCookedWithFuelCriterion : SimpleCriterionTrigger<FurnaceCookedWithFuelCriterion.Conditions>() {

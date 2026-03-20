@@ -6,11 +6,9 @@ import net.minecraft.advancements.criterion.ContextAwarePredicate
 import net.minecraft.advancements.criterion.EntityPredicate
 import net.minecraft.advancements.criterion.EntityTypePredicate
 import net.minecraft.advancements.criterion.SimpleCriterionTrigger
-import net.minecraft.core.HolderGetter
-import net.minecraft.core.HolderLookup
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.EntityType
-import java.util.Optional
+import java.util.*
 
 class EntityTypeCriterion : SimpleCriterionTrigger<EntityTypeCriterion.Instance>() {
     override fun codec() = Instance.CODEC

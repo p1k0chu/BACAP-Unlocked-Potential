@@ -2,14 +2,14 @@ package com.github.p1k0chu.bacup
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.core.UUIDUtil
+import net.minecraft.server.MinecraftServer
+import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.server.MinecraftServer
-import net.minecraft.core.UUIDUtil
-import net.minecraft.util.datafix.DataFixTypes
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.saveddata.SavedData
 import net.minecraft.world.level.saveddata.SavedDataType
-import net.minecraft.world.level.Level
 import java.util.*
 
 class BacupPersistentState(

@@ -4,12 +4,9 @@ import com.github.p1k0chu.bacup.advancement.AdvancementConsumer
 import com.github.p1k0chu.bacup.advancement.AdvancementGenerator
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.impossibleTrigger
-import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
-import net.minecraft.data.advancements.AdvancementSubProvider
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.item.Items
-import java.util.function.Consumer
 
 object RedstoneTabGenerator : AdvancementGenerator {
     const val TAB_NAME = "redstone"

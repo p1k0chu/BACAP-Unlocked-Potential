@@ -2,15 +2,15 @@ package com.github.p1k0chu.bacup.advancement.criteria
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger
-import net.minecraft.world.level.ItemLike
-import net.minecraft.world.item.ItemStack
-import net.minecraft.advancements.criterion.EntityPredicate
 import net.minecraft.advancements.criterion.ContextAwarePredicate
+import net.minecraft.advancements.criterion.EntityPredicate
 import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.core.registries.Registries
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger
 import net.minecraft.core.HolderLookup.Provider
+import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ItemLike
 import java.util.*
 
 class SingleItemCriterion : SimpleCriterionTrigger<SingleItemCriterion.Conditions>() {

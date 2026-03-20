@@ -1,6 +1,5 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.advancement.generator.AdventureTabGenerator;
 import com.github.p1k0chu.bacup.utils.AdvancementUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

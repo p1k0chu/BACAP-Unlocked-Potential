@@ -2,10 +2,10 @@ package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.world.entity.monster.illager.Evoker;
-import net.minecraft.world.entity.animal.sheep.Sheep;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.entity.monster.illager.Evoker;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
