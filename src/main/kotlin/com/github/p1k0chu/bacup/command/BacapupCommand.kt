@@ -59,10 +59,10 @@ object BacapupCommand {
                             }
 
                             if (text.siblings.isEmpty()) {
-                                command.source.sendFailure(Component.literal("No stats yet :("))
+                                command.source.sendSystemMessage(Component.literal("No stats yet :("))
                                 1
                             } else {
-                                command.source.sendSuccess({ text }, false)
+                                command.source.sendSystemMessage(text)
                                 0
                             }
                         }
