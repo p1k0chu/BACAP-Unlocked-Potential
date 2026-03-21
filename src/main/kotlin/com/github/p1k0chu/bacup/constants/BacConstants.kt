@@ -5,7 +5,7 @@ object BacConstants {
     val bac_teams = listOf(
         "white",
         "yellow",
-        "purple",
+        "light_purple",
         "red",
         "aqua",
         "green",
