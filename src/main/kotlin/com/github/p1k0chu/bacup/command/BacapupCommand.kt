@@ -18,22 +18,29 @@ object BacapupCommand {
                             val player = command.source.player ?: return@executes 0
                             val state = BacupPersistentState.getPlayerState(player)
                             val text = Component.empty()
+                            var nl = 0
 
                             if (state.petsTamed.isNotEmpty()) {
-                                text.append(Component.literal("Pets tamed:\n"))
+                                nl = 2
+                                text.append(Component.literal("Pets tamed:"))
 
                                 state.petsTamed.forEach { (mob, count) ->
-                                    text.append(Component.translatable(mob.descriptionId))
+                                    text.append(Component.literal("\n"))
+                                        .append(Component.translatable(mob.descriptionId))
                                         .append(": ")
                                         .append(
-                                            Component.literal("$count\n")
+                                            Component.literal("$count")
                                                 .withColor(ChatFormatting.GOLD.color!!)
                                         )
                                 }
                             }
 
                             if (state.emeraldsObtained != 0) {
-                                text.append(Component.literal("\nBought emeralds: "))
+                                if (nl > 0) {
+                                    text.append(Component.literal("\n".repeat(nl)))
+                                }
+                                nl = 1
+                                text.append(Component.literal("Bought emeralds: "))
                                     .append(
                                         Component.literal("${state.emeraldsObtained}")
                                             .withColor(ChatFormatting.GOLD.color!!)
@@ -41,16 +48,23 @@ object BacapupCommand {
                             }
 
                             if (state.glgltuCounter > 0) {
-                                text.append(Component.literal("\nглглту sent: "))
+                                if (nl > 0) {
+                                    text.append(Component.literal("\n".repeat(nl)))
+                                }
+                                text.append(Component.literal("глглту sent: "))
                                     .append(
                                         Component.literal(state.glgltuCounter.toString())
                                             .withColor(ChatFormatting.GOLD.color!!)
                                     )
                             }
 
-                            player.sendSystemMessage(text)
-
-                            0
+                            if (text.siblings.isEmpty()) {
+                                command.source.sendSystemMessage(Component.literal("No stats yet :("))
+                                1
+                            } else {
+                                command.source.sendSystemMessage(text)
+                                0
+                            }
                         }
                 ))
     }
