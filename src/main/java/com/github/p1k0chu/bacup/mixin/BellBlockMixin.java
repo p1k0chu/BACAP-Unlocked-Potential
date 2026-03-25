@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BellBlock.class)
 public class BellBlockMixin {
     @Inject(method = "onProjectileHit", at = @At(value = "RETURN"))
-    void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile, CallbackInfo ci, @Local(ordinal = 0) Player player) {
+    void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile, CallbackInfo ci, @Local(name = "playerOwner") Player player) {
         if (!(player instanceof ServerPlayer)) return;
 
         double distance = hit.getLocation().distanceTo(player.position());

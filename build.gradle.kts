@@ -1,12 +1,14 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    id("fabric-loom") version "1.14-SNAPSHOT"
-    kotlin("jvm") version "2.2.21"
+    id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT"
+    kotlin("jvm") version "2.3.20"
 }
 
 val minecraft_version: String by project
 val loader_version: String by project
 val maven_group: String by project
-val yarn_mappings: String by project
 val kotlin_adapter_version: String by project
 val archives_base_name: String by project
 val fabric_api_version: String by project
@@ -41,11 +43,10 @@ fabricApi {
 
 dependencies {
     minecraft("com.mojang:minecraft:$minecraft_version")
-    mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:$loader_version")
-    modImplementation("net.fabricmc:fabric-language-kotlin:$kotlin_adapter_version")
+    implementation("net.fabricmc:fabric-loader:$loader_version")
+    implementation("net.fabricmc:fabric-language-kotlin:$kotlin_adapter_version")
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
 }
 
 tasks.processResources {
@@ -65,7 +66,14 @@ tasks.processResources {
 }
 
 tasks.withType<JavaCompile>().configureEach {
-    options.release = 21
+    options.release = 25
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_25)
+    }
+
 }
 
 java {
@@ -74,8 +82,8 @@ java {
     // If you remove this line, sources will not be generated.
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 tasks.jar {

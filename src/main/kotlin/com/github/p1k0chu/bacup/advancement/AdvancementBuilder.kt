@@ -8,19 +8,19 @@ import net.minecraft.advancements.DisplayInfo
 import net.minecraft.core.ClientAsset
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import java.util.*
 import java.util.function.Consumer
 
 class AdvancementBuilder(val tab: String, val name: String) : Advancement.Builder() {
-    private val itemRewards: MutableList<ItemStack> = mutableListOf()
-    var trophy: ItemStack? = null
+    private val itemRewards: MutableList<ItemStackTemplate> = mutableListOf()
+    var trophy: ItemStackTemplate? = null
     var title: String? = null
     var description: String? = null
     var type: AdvancementType = AdvancementType.TASK
     var exp: Int? = null
 
-    fun itemReward(itemStack: ItemStack) {
+    fun itemReward(itemStack: ItemStackTemplate) {
         itemRewards.add(itemStack)
     }
 
@@ -29,7 +29,7 @@ class AdvancementBuilder(val tab: String, val name: String) : Advancement.Builde
     }
 
     inner class AdvancementDisplayBuilder {
-        lateinit var icon: ItemStack
+        lateinit var icon: ItemStackTemplate
         var background: ClientAsset? = null
         var showToast: Boolean = true
         var announceToChat: Boolean = true
@@ -85,7 +85,7 @@ class AdvancementBuilder(val tab: String, val name: String) : Advancement.Builde
 
         consumer.accept(
             MCFunction(
-                Identifier.fromNamespaceAndPath(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(title, trophy)
+                Identifier.fromNamespaceAndPath(Main.MOD_ID, "trophy/$tab/$name"), trophyGen(title, trophy?.create())
             )
         )
     }

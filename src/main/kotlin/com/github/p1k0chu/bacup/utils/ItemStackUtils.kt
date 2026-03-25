@@ -14,28 +14,6 @@ import net.minecraft.world.item.component.CustomModelData
 import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.item.component.TooltipDisplay
 
-fun ItemStack.setCustomName(name: String, color: Int? = null) {
-    var customName = Component.nullToEmpty(name)
-
-    if (color != null) {
-        customName = customName.toFlatList(
-                Style.EMPTY.withColor(color)
-            ).first()
-    }
-
-    set(DataComponents.CUSTOM_NAME, customName)
-}
-
-fun ItemStack.setLore(lore: String) {
-    set(
-        DataComponents.LORE, ItemLore(
-            listOf(
-                Component.nullToEmpty(lore)
-            )
-        )
-    )
-}
-
 fun makeTrophyItemStack(
     item: Item,
     advName: String,

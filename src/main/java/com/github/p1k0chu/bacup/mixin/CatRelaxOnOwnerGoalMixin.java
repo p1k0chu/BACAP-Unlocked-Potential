@@ -19,8 +19,7 @@ public abstract class CatRelaxOnOwnerGoalMixin {
     @Final
     private Cat cat;
 
-    // giveMorningGift -> dropFromGiftLootTable() -> lambda
-    @Inject(method = "method_64176", at = @At("HEAD"))
+    @Inject(method = "lambda$giveMorningGift$0", at = @At("HEAD"))
     void awardCriteria(BlockPos.MutableBlockPos mutable, ServerLevel world, ItemStack stack, CallbackInfo ci) {
         if(cat.getOwner() instanceof ServerPlayer player) {
             Criteria.CAT_GIFT_RECEIVED.trigger(player, stack);

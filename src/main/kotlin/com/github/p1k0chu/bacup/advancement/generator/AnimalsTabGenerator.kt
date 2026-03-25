@@ -16,6 +16,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import java.util.*
 
@@ -33,7 +34,7 @@ object AnimalsTabGenerator : AdvancementGenerator {
             display {
                 title = "When Pigs Fly"
                 description = "Ride a pig off a cliff"
-                icon = Items.SADDLE.defaultInstance
+                icon = ItemStackTemplate(Items.SADDLE)
             }
             addCriterion("when_pigs_fly", Criteria.WHEN_PIGS_FLY.createCriterion(EmptyCriterion.Conditions()))
         }
@@ -43,7 +44,7 @@ object AnimalsTabGenerator : AdvancementGenerator {
             display {
                 title = "Dog Army"
                 description = "Befriend twenty wolves"
-                icon = Items.BONE.defaultInstance
+                icon = ItemStackTemplate(Items.BONE)
                 type = AdvancementType.GOAL
             }
             exp = 50
@@ -69,7 +70,7 @@ object AnimalsTabGenerator : AdvancementGenerator {
             display {
                 title = "Wololo"
                 description = "Watch evoker recolor blue sheep in red"
-                icon = Items.TOTEM_OF_UNDYING.defaultInstance
+                icon = ItemStackTemplate(Items.TOTEM_OF_UNDYING)
                 type = AdvancementType.GOAL
             }
             exp = 1
@@ -81,7 +82,7 @@ object AnimalsTabGenerator : AdvancementGenerator {
             display {
                 title = "Polyglot"
                 description = "Hear your parrots speak like every mob"
-                icon = Items.WRITABLE_BOOK.defaultInstance
+                icon = ItemStackTemplate(Items.WRITABLE_BOOK)
                 type = AdvancementType.CHALLENGE
             }
 

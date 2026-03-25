@@ -6,6 +6,7 @@ import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.impossibleTrigger
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 
 object RedstoneTabGenerator : AdvancementGenerator {
@@ -22,7 +23,7 @@ object RedstoneTabGenerator : AdvancementGenerator {
             display {
                 title = "Smelt Everything"
                 description = "Connect 3 Chests to a single Furnace using 3 Hoppers."
-                icon = Items.FURNACE.defaultInstance
+                icon = ItemStackTemplate(Items.FURNACE)
             }
             addCriterion("open_it", impossibleTrigger())
         }

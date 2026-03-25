@@ -19,7 +19,7 @@ public class ServerGamePacketListenerImplMixin {
     public ServerPlayer player;
 
     @Inject(method = "handleSetBeaconPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/BeaconMenu;updateEffects(Ljava/util/Optional;Ljava/util/Optional;)V"))
-    void updateBeaconEffects(ServerboundSetBeaconPacket serverboundSetBeaconPacket, CallbackInfo ci, @Local BeaconMenu menu) {
+    void updateBeaconEffects(ServerboundSetBeaconPacket serverboundSetBeaconPacket, CallbackInfo ci, @Local(name = "menu") BeaconMenu menu) {
         ItemStack stack = ((BeaconMenuAccessor) menu).getPaymentSlot().getItem();
 
         if (!stack.isEmpty()) {

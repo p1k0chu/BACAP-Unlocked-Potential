@@ -33,7 +33,7 @@ class EntityTypeCriterion : SimpleCriterionTrigger<EntityTypeCriterion.Instance>
         override fun player() = _player
 
         fun matches(entityType: EntityType<*>): Boolean {
-            return (this.entityType.isEmpty || this.entityType.get().matches(entityType))
+            return (this.entityType.isEmpty || this.entityType.get().matches(entityType.builtInRegistryHolder()))
         }
 
         companion object {

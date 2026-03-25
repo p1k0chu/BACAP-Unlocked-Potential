@@ -6,45 +6,37 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.parrot.Parrot;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @Mixin(Parrot.class)
 public class ParrotMixin {
-    @Shadow
-    @Final
-    static Map<EntityType<?>, SoundEvent> MOB_SOUND_MAP;
-
     @Unique
-    private final static Map<SoundEvent, EntityType<?>> MOB_SOUND_MAP_INVERSE = MOB_SOUND_MAP.entrySet()
-            .stream()
-            .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey, (l, r) -> l));
+    private static final ScopedValue<Parrot> parrotScopedValue = ScopedValue.newInstance();
 
-    @Inject(method = "getAmbientSound", at = @At("HEAD"))
-    void getAmbientSound(CallbackInfoReturnable<SoundEvent> cir) {
-        var sound = cir.getReturnValue();
+    @WrapOperation(method = "getAmbientSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/parrot/Parrot;getAmbient(Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/sounds/SoundEvent;"))
+    SoundEvent getAmbientSound(Level keys, RandomSource level, Operation<SoundEvent> original) {
+        return ScopedValue.where(parrotScopedValue, (Parrot) (Object) this).call(() -> original.call(keys, level));
+    }
 
-        if (((Parrot) (Object) this).getOwner() instanceof ServerPlayer player) {
-            var mobType = MOB_SOUND_MAP_INVERSE.get(sound);
-            if (mobType != null) {
-                Criteria.PARROT_IMITATES.trigger(player, mobType);
-            }
+    @Inject(method = "getImitatedSound", at = @At("HEAD"))
+    private static void getImitatedSound(EntityType<?> id, CallbackInfoReturnable<SoundEvent> cir) {
+        Parrot parrot = parrotScopedValue.get();
+        if (parrot != null && parrot.getOwner() instanceof ServerPlayer player) {
+            Criteria.PARROT_IMITATES.trigger(player, id);
         }
     }
 
     @WrapOperation(method = "imitateNearbyMobs", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/parrot/Parrot;getImitatedSound(Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/sounds/SoundEvent;"))
-    private static SoundEvent parrotImitatesType(EntityType<?> entityType, Operation<SoundEvent> original, @Local Entity entity) {
+    private static SoundEvent parrotImitatesType(EntityType<?> entityType, Operation<SoundEvent> original, @Local(argsOnly = true) Entity entity) {
         // entity is either a ServerPlayer or a parrot
 
         if (entity instanceof ServerPlayer player) {

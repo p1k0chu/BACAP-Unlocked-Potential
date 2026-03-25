@@ -11,6 +11,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import java.util.*
 
@@ -24,7 +25,7 @@ object ChallengesTabGenerator : AdvancementGenerator {
             display {
                 title = "Mob Flattener 9000"
                 description = "Crush all mobs with an anvil"
-                icon = Items.ANVIL.defaultInstance
+                icon = ItemStackTemplate(Items.ANVIL)
                 type = AdvancementType.SUPER_CHALLENGE
             }
             exp = 200

@@ -7,6 +7,7 @@ import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import java.util.*
 
@@ -22,7 +23,7 @@ object MiningTabGenerator : AdvancementGenerator {
             display {
                 title = "Leafterally"
                 description = "Smelt leaf litter using leaf litter"
-                icon = Items.LEAF_LITTER.defaultInstance
+                icon = ItemStackTemplate(Items.LEAF_LITTER)
             }
             addCriterion(
                 "fuel", Criteria.COOKED_WITH_FUEL.createCriterion(
@@ -46,7 +47,7 @@ object MiningTabGenerator : AdvancementGenerator {
             display {
                 title = "Rage Baiter"
                 description = "Fish warden several times for its angry value go from 0 to 150"
-                icon = Items.FISHING_ROD.defaultInstance
+                icon = ItemStackTemplate(Items.FISHING_ROD)
                 type = AdvancementType.GOAL
             }
             addCriterion("rage_bait", impossibleTrigger())

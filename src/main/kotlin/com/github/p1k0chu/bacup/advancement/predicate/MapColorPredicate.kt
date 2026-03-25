@@ -60,7 +60,7 @@ class MapColorPredicateType<T : MapColorPredicate>(val codec: MapCodec<T>) {
         val REGISTRY_KEY: ResourceKey<Registry<MapColorPredicateType<*>>> =
             ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(Main.MOD_ID, "map_color_predicate_type"))
         val REGISTRY: Registry<MapColorPredicateType<*>> =
-            FabricRegistryBuilder.createSimple(REGISTRY_KEY)
+            FabricRegistryBuilder.create(REGISTRY_KEY)
                 .buildAndRegister()
     }
 }

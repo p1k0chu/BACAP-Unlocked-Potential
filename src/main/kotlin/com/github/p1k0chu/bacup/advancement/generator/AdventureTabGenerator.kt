@@ -7,10 +7,12 @@ import com.github.p1k0chu.bacup.advancement.predicate.MapStatePredicate
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.criterion.*
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData
 import java.util.*
@@ -50,7 +52,7 @@ object AdventureTabGenerator : AdvancementGenerator {
                 title = "Plethora of Cats"
                 description = "Befriend twenty stray cats"
                 type = AdvancementType.GOAL
-                icon = Items.COD.defaultInstance
+                icon = ItemStackTemplate(Items.COD)
             }
             exp = 50
             addCriterion(
@@ -104,7 +106,7 @@ object AdventureTabGenerator : AdvancementGenerator {
             display {
                 title = "Do It For The Frame"
                 description = "Use a glass pane in a cartography table to lock a map, preventing it from updating"
-                icon = Items.GLASS_PANE.defaultInstance
+                icon = ItemStackTemplate(Items.GLASS_PANE)
             }
             addCriterion("lock", Criteria.MAP_LOCKED.createCriterion(EmptyCriterion.Conditions()))
         }
@@ -114,7 +116,7 @@ object AdventureTabGenerator : AdvancementGenerator {
             display {
                 title = "Can you hear it from here?"
                 description = "Shoot a bell from more than 50 blocks away"
-                icon = Items.ARROW.defaultInstance
+                icon = ItemStackTemplate(Items.ARROW)
                 type = AdvancementType.CHALLENGE
             }
             exp = 50
@@ -133,9 +135,12 @@ object AdventureTabGenerator : AdvancementGenerator {
             display {
                 title = "Master Archeologist"
                 description = "Get every item possible from sus sand or gravel"
-                icon = Items.BRUSH.defaultInstance.apply {
-                    set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                }
+                icon = ItemStackTemplate(
+                    Items.BRUSH,
+                    DataComponentPatch.builder()
+                        .set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                        .build()
+                )
                 type = AdvancementType.HIDDEN
                 hidden = true
             }
@@ -155,7 +160,7 @@ object AdventureTabGenerator : AdvancementGenerator {
             display {
                 title = "Maximum Coverage"
                 description = "Fully expand a map"
-                icon = Items.FILLED_MAP.defaultInstance
+                icon = ItemStackTemplate(Items.FILLED_MAP)
             }
             addCriterion(
                 "max_coverage", Criteria.MAP_STATE.createCriterion(
@@ -205,7 +210,7 @@ object AdventureTabGenerator : AdvancementGenerator {
             display {
                 title = "Secret Supplies"
                 description = "Acquire a potion of invisibility and milk bucket dropped from wandering traders"
-                icon = Items.DEAD_BUSH.defaultInstance
+                icon = ItemStackTemplate(Items.DEAD_BUSH)
                 type = AdvancementType.GOAL
             }
 
@@ -253,7 +258,7 @@ object AdventureTabGenerator : AdvancementGenerator {
             display {
                 title = "Dehydration"
                 description = "Dry a sponge in a furnace, but not without taking the water back"
-                icon = Items.WATER_BUCKET.defaultInstance
+                icon = ItemStackTemplate(Items.WATER_BUCKET)
             }
 
             addCriterion(
@@ -269,9 +274,12 @@ object AdventureTabGenerator : AdvancementGenerator {
             display {
                 title = "This Is Not Cookie Clicker"
                 description = "Why did you double click an empty slot?"
-                icon = Items.COOKIE.defaultInstance.apply {
-                    set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                }
+                icon = ItemStackTemplate(
+                    Items.COOKIE,
+                    DataComponentPatch.builder()
+                        .set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                        .build()
+                )
                 type = AdvancementType.HIDDEN
             }
 
@@ -287,7 +295,7 @@ object AdventureTabGenerator : AdvancementGenerator {
             display {
                 title = "Short Circuit"
                 description = "Get a breeze to activate 9 redstone components at the same time"
-                icon = Items.COPPER_TRAPDOOR.defaultInstance
+                icon = ItemStackTemplate(Items.COPPER_TRAPDOOR)
                 type = AdvancementType.GOAL
             }
 

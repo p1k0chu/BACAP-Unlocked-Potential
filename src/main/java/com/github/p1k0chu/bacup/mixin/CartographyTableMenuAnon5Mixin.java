@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(targets = "net.minecraft.world.inventory.CartographyTableMenu$5")
 public abstract class CartographyTableMenuAnon5Mixin {
     ///  instance of outer class
-    @Shadow(aliases = "field_17303")
+    @Shadow
     @Final
     CartographyTableMenu this$0;
 

@@ -25,7 +25,7 @@ public abstract class ServerPlayerMixin implements ServerPlayerPetsTamedCounter,
     public int bacup$increment(EntityType<?> entityType) {
         PlayerData state = BacupPersistentState.getPlayerState((LivingEntity) (Object) this);
 
-        return state.getPetsTamed().compute(entityType, (key, value) -> value == null ? 1 : value + 1);
+        return state.getPetsTamed().compute(entityType, (_, value) -> value == null ? 1 : value + 1);
     }
 
     @Override

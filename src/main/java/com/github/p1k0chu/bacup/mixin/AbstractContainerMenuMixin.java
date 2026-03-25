@@ -9,7 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
@@ -42,15 +42,14 @@ public abstract class AbstractContainerMenuMixin {
     @Unique
     private long lastClick = 0;
 
-    @Inject(method = "doClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;updateTutorialInventoryAction(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/inventory/ClickAction;)V"), cancellable = true)
-    void doClick(int i, int j, ClickType clickType, Player player, CallbackInfo ci, @Local(ordinal = 0) ItemStack slotItem, @Local(ordinal = 1) ItemStack carriedItem) {
+    @Inject(method = "doClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;updateTutorialInventoryAction(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/inventory/ClickAction;)V"))
+    void doClick(int slotIndex, int buttonNum, ContainerInput containerInput, Player player, CallbackInfo ci, @Local(name = "clicked") ItemStack slotItem, @Local(name = "carried") ItemStack carriedItem) {
         if (player instanceof ServerPlayer sPlayer) {
             if (slotItem.isEmpty() && carriedItem.isEmpty()) {
                 long time = System.currentTimeMillis();
                 if (time - lastClick < 300) {
                     if (AdvancementUtils.grant(sPlayer, THIS_IS_NOT_COOKIE_CLICKER)) {
                         setCarried(COOKIE_CLICKER_COOKIE.copy());
-                        ci.cancel();
                     }
                 } else {
                     lastClick = time;

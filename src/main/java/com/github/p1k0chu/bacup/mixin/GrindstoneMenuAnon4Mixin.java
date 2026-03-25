@@ -20,9 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(targets = "net.minecraft.world.inventory.GrindstoneMenu$4")
 public abstract class GrindstoneMenuAnon4Mixin {
     ///  instance of outer class
-    @Shadow(aliases = "field_16780")
+    @Shadow
     @Final
-    GrindstoneMenu outerThis;
+    GrindstoneMenu this$0;
 
     @Unique
     private boolean noExperience(ItemStack stack) {
@@ -43,7 +43,7 @@ public abstract class GrindstoneMenuAnon4Mixin {
     void onTakeItem(Player player, ItemStack stack, CallbackInfo ci) {
         if (!(player instanceof ServerPlayer)) return;
 
-        GrindstoneMenuAccessor accessor = (GrindstoneMenuAccessor) outerThis;
+        GrindstoneMenuAccessor accessor = (GrindstoneMenuAccessor) this$0;
 
         if (noExperience(accessor.getRepairSlots().getItem(0))) {
             if (noExperience(accessor.getRepairSlots().getItem(1))) {

@@ -30,7 +30,7 @@ public class ConduitBlockEntityMixin implements ConduitPowerGetter {
     private List<BlockPos> effectBlocks;
 
     @Inject(method = "updateAndAttackTarget", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.AFTER))
-    private static void hurtTarget(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, ConduitBlockEntity conduitBlockEntity, boolean bl, CallbackInfo ci, @Local LivingEntity target) {
+    private static void hurtTarget(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState, ConduitBlockEntity conduitBlockEntity, boolean bl, CallbackInfo ci, @Local(name = "targetEntity") LivingEntity target) {
         if (target.isDeadOrDying()) {
             int power = ((ConduitPowerGetter) conduitBlockEntity).bacup$getPower();
             var players = getPlayersAffected(serverLevel, blockPos, power);

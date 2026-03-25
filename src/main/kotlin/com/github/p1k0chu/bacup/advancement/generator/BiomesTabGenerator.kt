@@ -2,8 +2,10 @@ package com.github.p1k0chu.bacup.advancement.generator
 
 import com.github.p1k0chu.bacup.advancement.*
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 
 object BiomesTabGenerator : AdvancementGenerator {
@@ -20,9 +22,12 @@ object BiomesTabGenerator : AdvancementGenerator {
             display {
                 title = "Conduel"
                 description = "Make conduit kill a mob"
-                icon = Items.CONDUIT.defaultInstance.apply {
-                    set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                }
+                icon = ItemStackTemplate(
+                    Items.CONDUIT,
+                    DataComponentPatch.builder()
+                        .set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                        .build()
+                )
                 type = AdvancementType.GOAL
             }
 

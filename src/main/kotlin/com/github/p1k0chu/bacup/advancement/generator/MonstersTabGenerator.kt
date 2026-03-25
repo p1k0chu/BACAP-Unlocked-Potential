@@ -13,7 +13,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.tags.EntityTypeTags
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import java.util.*
 
@@ -29,11 +29,11 @@ object MonstersTabGenerator : AdvancementGenerator {
             display {
                 title = "Beam Me Up"
                 description = "Teleport over 100 meters from a single throw of an Ender Pearl"
-                icon = Items.ENDER_PEARL.defaultInstance
+                icon = ItemStackTemplate(Items.ENDER_PEARL)
                 type = AdvancementType.GOAL
             }
             exp = 50
-            itemReward(ItemStack(Items.ENDER_PEARL, 1))
+            itemReward(ItemStackTemplate(Items.ENDER_PEARL, 1))
 
             addCriterion("beam_me_up", Criteria.BEAM_ME_UP.createCriterion(EmptyCriterion.Conditions()))
         }
@@ -43,11 +43,11 @@ object MonstersTabGenerator : AdvancementGenerator {
             display {
                 title = "Forged by Flesh"
                 description = "Retrieve an iron ingot from a defeated zombie"
-                icon = Items.IRON_INGOT.defaultInstance
+                icon = ItemStackTemplate(Items.IRON_INGOT)
                 type = AdvancementType.GOAL
             }
             exp = 50
-            itemReward(ItemStack(Items.IRON_INGOT, 1))
+            itemReward(ItemStackTemplate(Items.IRON_INGOT, 1))
 
             addCriterion("iron_ingot", Criteria.ENTITY_DROPPED_LOOT.createCriterion(
                 EntityDroppedLootCriterion.Conditions(

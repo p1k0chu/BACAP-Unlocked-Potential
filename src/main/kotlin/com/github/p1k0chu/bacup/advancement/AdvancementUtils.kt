@@ -7,9 +7,11 @@ import com.mojang.authlib.properties.Property
 import com.mojang.authlib.properties.PropertyMap
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.criterion.ImpossibleTrigger
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.util.Util
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.ResolvableProfile
 
@@ -22,13 +24,14 @@ fun id(tab: String, name: String): String {
  * @param texture a string to be put inside of head's properties, in 'textures' field
  * @return a player head
  */
-fun getPlayerHead(texture: String): ItemStack {
+fun getPlayerHead(texture: String): ItemStackTemplate {
     val propertyMap = PropertyMap(ImmutableMultimap.of("textures", Property("textures", texture)))
 
-    val playerHead = Items.PLAYER_HEAD.defaultInstance
-    playerHead.set(DataComponents.PROFILE, ResolvableProfile.createResolved(GameProfile(Util.NIL_UUID, "", propertyMap)))
+    val components = DataComponentPatch.builder()
+        .set(DataComponents.PROFILE, ResolvableProfile.createResolved(GameProfile(Util.NIL_UUID, "", propertyMap)))
+        .build()
 
-    return playerHead
+    return ItemStackTemplate(Items.PLAYER_HEAD, components)
 }
 
 fun impossibleTrigger() = CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())

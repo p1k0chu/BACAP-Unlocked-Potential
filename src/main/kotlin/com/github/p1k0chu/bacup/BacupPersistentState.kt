@@ -3,6 +3,7 @@ package com.github.p1k0chu.bacup
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.UUIDUtil
+import net.minecraft.resources.Identifier
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.entity.EntityType
@@ -31,7 +32,7 @@ class BacupPersistentState(
         @JvmStatic
         fun getType(): SavedDataType<BacupPersistentState> {
             return SavedDataType(
-                "bacapup_persistent_state",
+                Identifier.fromNamespaceAndPath(Main.MOD_ID, "persistent_state"),
                 { BacupPersistentState() },
                 CODEC,
                 DataFixTypes.LEVEL

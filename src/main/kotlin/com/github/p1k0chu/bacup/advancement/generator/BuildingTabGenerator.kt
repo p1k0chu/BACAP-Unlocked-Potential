@@ -9,6 +9,7 @@ import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 
 object BuildingTabGenerator : AdvancementGenerator {
@@ -22,7 +23,7 @@ object BuildingTabGenerator : AdvancementGenerator {
             display {
                 title = "Fire Trick"
                 description = "Light a campfire and a candle by shooting an arrow at them"
-                icon = Items.BOW.defaultInstance
+                icon = ItemStackTemplate(Items.BOW)
             }
             addCriterion(
                 "candle", Criteria.PROJECTILE_LIT_BLOCK.createCriterion(

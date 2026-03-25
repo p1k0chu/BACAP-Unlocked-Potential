@@ -10,15 +10,16 @@ import net.minecraft.network.chat.Style
 import net.minecraft.resources.Identifier
 import net.minecraft.util.CommonColors
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.item.component.CustomModelData
 import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.item.component.TooltipDisplay
 
-fun giveGen(item: ItemStack): String {
+fun giveGen(item: ItemStackTemplate): String {
     return """
-        give @s ${item.itemHolder.registeredName} ${item.count}
-        tellraw @s {"color":"green","text":" +${item.count} ","extra":[{"translate":"${item.item.descriptionId}"}]}
+        give @s ${item.item.registeredName} ${item.count}
+        tellraw @s {"color":"green","text":" +${item.count} ","extra":[{"translate":"${item.item.value().descriptionId}"}]}
     """.trimIndent()
 }
 
@@ -103,7 +104,7 @@ fun trophyGen(advName: String?, item: ItemStack?): String {
     if (item == null || advName == null) return ""
 
     // setup useful trophy data
-    item.set(DataComponents.CUSTOM_MODEL_DATA, CustomModelData(listOf(131f), listOf(), listOf(), listOf()))
+    //item.set(DataComponents.CUSTOM_MODEL_DATA, CustomModelData(listOf(131f), listOf(), listOf(), listOf()))
     item.set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay(false, ReferenceSortedSets.emptySet()))
 
     CompoundTag().let { customData ->
@@ -141,7 +142,7 @@ fun trophyGen(advName: String?, item: ItemStack?): String {
     )
 
     val functionBody = StringBuilder()
-    functionBody.append("give @s ${item.itemHolder.registeredName}[")
+    functionBody.append("give @s ${item.typeHolder().registeredName}[")
 
     item.components.mapNotNull { component ->
         if (!item.hasNonDefault(component.type)) return@mapNotNull null

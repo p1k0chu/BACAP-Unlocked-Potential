@@ -10,8 +10,10 @@ import com.github.p1k0chu.bacup.advancement.criteria.SingleItemCriterion
 import com.github.p1k0chu.bacup.utils.setCustomName
 import com.github.p1k0chu.bacup.utils.setLore
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 
 object NetherTabGenerator : AdvancementGenerator {
@@ -29,14 +31,17 @@ object NetherTabGenerator : AdvancementGenerator {
             display {
                 title = "Extreme Break Risk"
                 description = "Break a block of netherite with your bare fist."
-                icon = Items.NETHERITE_BLOCK.defaultInstance
+                icon = ItemStackTemplate(Items.NETHERITE_BLOCK)
                 type = AdvancementType.CHALLENGE
             }
-            trophy = Items.POLISHED_BLACKSTONE.defaultInstance.apply {
-                setCustomName("Catharsis")
-                setLore("The Last Straw Was: Ate Without Table")
-                set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-            }
+            trophy = ItemStackTemplate(
+                Items.POLISHED_BLACKSTONE,
+                DataComponentPatch.builder()
+                    .setCustomName("Catharsis")
+                    .setLore("The Last Straw Was: Ate Without Table")
+                    .set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                    .build()
+            )
 
             addCriterion(
                 "netherite_block", Criteria.PLAYER_BREAK_NETHERITE_BLOCK_WITH_FIST.createCriterion(
@@ -50,7 +55,7 @@ object NetherTabGenerator : AdvancementGenerator {
             display {
                 title = "Thanos Beacon"
                 description = "Power a beacon with every mineral"
-                icon = Items.IRON_INGOT.defaultInstance
+                icon = ItemStackTemplate(Items.IRON_INGOT)
                 type = AdvancementType.GOAL
             }
             listOf(

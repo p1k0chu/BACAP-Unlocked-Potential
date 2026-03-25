@@ -19,7 +19,7 @@ public abstract class BrushableBlockEntityMixin {
 
     @Inject(method = "dropContent",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/block/entity/BrushableBlockEntity;unpackLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;)V",
+                    target = "Lnet/minecraft/world/level/block/entity/BrushableBlockEntity;unpackLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemInstance;)V",
                     shift = At.Shift.AFTER))
     void spawnItem(ServerLevel world, LivingEntity brusher, ItemStack brush, CallbackInfo ci) {
         if (brusher instanceof ServerPlayer player) {

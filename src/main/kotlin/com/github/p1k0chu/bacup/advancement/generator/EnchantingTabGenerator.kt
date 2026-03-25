@@ -7,6 +7,7 @@ import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.EmptyCriterion
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 
 object EnchantingTabGenerator : AdvancementGenerator {
@@ -20,7 +21,7 @@ object EnchantingTabGenerator : AdvancementGenerator {
             display {
                 title = "Disenchanted"
                 description = "Use a Grindstone to get experience from an enchanted item."
-                icon = Items.GRINDSTONE.defaultInstance
+                icon = ItemStackTemplate(Items.GRINDSTONE)
             }
             addCriterion("disenchanted", Criteria.DISENCHANT_GRINDSTONE.createCriterion(EmptyCriterion.Conditions()))
         }

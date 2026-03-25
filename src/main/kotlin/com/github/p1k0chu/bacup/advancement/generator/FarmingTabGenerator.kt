@@ -9,7 +9,7 @@ import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import java.util.*
 
@@ -26,9 +26,9 @@ object FarmingTabGenerator : AdvancementGenerator {
             display {
                 title = "Alternative Fuel"
                 description = "Power a furnace with a kelp block"
-                icon = Items.DRIED_KELP_BLOCK.defaultInstance
+                icon = ItemStackTemplate(Items.DRIED_KELP_BLOCK)
             }
-            itemReward(ItemStack(Items.DRIED_KELP_BLOCK, 1))
+            itemReward(ItemStackTemplate(Items.DRIED_KELP_BLOCK, 1))
 
             addCriterion(
                 "fuel", Criteria.FURNACE_FUEL_CONSUMED.createCriterion(
@@ -44,7 +44,7 @@ object FarmingTabGenerator : AdvancementGenerator {
             display {
                 title = "Super Fuel"
                 description = "Power a furnace with lava"
-                icon = Items.LAVA_BUCKET.defaultInstance
+                icon = ItemStackTemplate(Items.LAVA_BUCKET)
             }
             addCriterion(
                 "fuel", Criteria.FURNACE_FUEL_CONSUMED.createCriterion(
@@ -60,7 +60,7 @@ object FarmingTabGenerator : AdvancementGenerator {
             display {
                 title = "Trash Bin"
                 description = "Throw an item into a cactus"
-                icon = Items.COMPOSTER.defaultInstance
+                icon = ItemStackTemplate(Items.COMPOSTER)
             }
             addCriterion("trash_bin", Criteria.CACTUS_DESTROY_ITEM.createCriterion(SingleItemCriterion.Conditions()))
         }

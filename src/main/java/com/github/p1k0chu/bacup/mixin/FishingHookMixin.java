@@ -17,7 +17,7 @@ import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.
 @Mixin(FishingHook.class)
 public class FishingHookMixin {
     @Inject(method = "pullEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V"))
-    void checkRagebaiter(Entity pulledEntity, CallbackInfo ci, @Local(ordinal = 1) Entity owner) {
+    void checkRagebaiter(Entity pulledEntity, CallbackInfo ci, @Local(name = "owner") Entity owner) {
         if (pulledEntity instanceof Warden warden && owner instanceof ServerPlayer player) {
             var anger = warden.getAngerManagement();
             if (anger.getActiveAnger(player) >= 150 && ((RagebaiterStatus) anger).bacup$isRagebaiter(player)) {

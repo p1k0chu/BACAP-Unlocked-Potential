@@ -8,9 +8,11 @@ import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
@@ -35,7 +37,7 @@ object StatisticsTabGenerator : AdvancementGenerator {
             display {
                 title = "Emerald Portfolio"
                 description = "Obtain 200 emeralds through trade"
-                icon = Items.EMERALD.defaultInstance
+                icon = ItemStackTemplate(Items.EMERALD)
             }
             addCriterion(
                 "200", Criteria.TRADED_FOR_EMERALDS.createCriterion(
@@ -52,9 +54,12 @@ object StatisticsTabGenerator : AdvancementGenerator {
             display {
                 title = "The Stock Market"
                 description = "Obtain a stack of emerald blocks through trading"
-                icon = Items.EMERALD.defaultInstance.apply {
-                    set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                }
+                icon = ItemStackTemplate(
+                    Items.EMERALD,
+                    DataComponentPatch.builder()
+                        .set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                        .build()
+                )
                 type = AdvancementType.GOAL
             }
             addCriterion(
@@ -72,10 +77,10 @@ object StatisticsTabGenerator : AdvancementGenerator {
             display {
                 title = "Small Business"
                 description = "Buy 1000 emeralds in total"
-                icon = Items.EMERALD_BLOCK.defaultInstance
+                icon = ItemStackTemplate(Items.EMERALD_BLOCK)
                 type = AdvancementType.CHALLENGE
             }
-            itemReward(ItemStack(Items.EMERALD, 8))
+            itemReward(ItemStackTemplate(Items.EMERALD, 8))
             exp = 50
 
             addCriterion(
@@ -93,7 +98,7 @@ object StatisticsTabGenerator : AdvancementGenerator {
             display {
                 title = "Small Indie Company"
                 description = "Make 27 stacks of emerald blocks on sales"
-                icon = Items.DEEPSLATE_EMERALD_ORE.defaultInstance
+                icon = ItemStackTemplate(Items.DEEPSLATE_EMERALD_ORE)
                 type = AdvancementType.HIDDEN
                 hidden = true
             }
@@ -114,9 +119,12 @@ object StatisticsTabGenerator : AdvancementGenerator {
             display {
                 title = "глглту"
                 description = "Send your first глглту in chat"
-                icon = Items.TIPPED_ARROW.defaultInstance.apply {
-                    set(DataComponents.POTION_CONTENTS, PotionContents(Potions.STRENGTH))
-                }
+                icon = ItemStackTemplate(
+                    Items.TIPPED_ARROW,
+                    DataComponentPatch.builder()
+                        .set(DataComponents.POTION_CONTENTS, PotionContents(Potions.STRENGTH))
+                        .build()
+                )
             }
             addCriterion(
                 "glgltu", Criteria.GLGLTU.createCriterion(
@@ -135,7 +143,7 @@ object StatisticsTabGenerator : AdvancementGenerator {
             display {
                 title = "глглту cult"
                 description = "Send 50 глглту in chat"
-                icon = Items.SPECTRAL_ARROW.defaultInstance
+                icon = ItemStackTemplate(Items.SPECTRAL_ARROW)
                 type = AdvancementType.GOAL
             }
             addCriterion(
@@ -155,7 +163,7 @@ object StatisticsTabGenerator : AdvancementGenerator {
             display {
                 title = "You Can Mute Me, But You Can't Mute глглту"
                 description = "Send 200 глглту in chat"
-                icon = Items.WRITABLE_BOOK.defaultInstance
+                icon = ItemStackTemplate(Items.WRITABLE_BOOK)
                 type = AdvancementType.CHALLENGE
             }
             addCriterion(

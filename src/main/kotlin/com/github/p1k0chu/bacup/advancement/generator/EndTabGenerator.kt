@@ -5,10 +5,11 @@ import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleIntRangeCriterion
 import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponents
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.Enchantments
 import java.util.*
 
 object EndTabGenerator : AdvancementGenerator {
@@ -23,13 +24,16 @@ object EndTabGenerator : AdvancementGenerator {
             display {
                 title = "Dragon 2.0"
                 description = "Summon a \"stronger\" dragon using 10 ender crystals"
-                icon = Items.END_CRYSTAL.defaultInstance.apply {
-                    enchant(provider.getOrThrow(Enchantments.BLAST_PROTECTION), 1)
-                }
+                icon = ItemStackTemplate(
+                    Items.END_CRYSTAL,
+                    DataComponentPatch.builder()
+                        .set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                        .build()
+                )
                 type = AdvancementType.GOAL
             }
             exp = 50
-            itemReward(ItemStack(Items.END_CRYSTAL, 2))
+            itemReward(ItemStackTemplate(Items.END_CRYSTAL, 2))
 
             addCriterion("10", Criteria.SPAWN_DRAGON_WITH_CRYSTALS.createCriterion(
                 SingleIntRangeCriterion.Conditions(
@@ -42,7 +46,7 @@ object EndTabGenerator : AdvancementGenerator {
             display {
                 title = "Intentional Advancement Design"
                 description = "Try to sleep outside of overworld" // and explode :3
-                icon = Items.RED_BED.defaultInstance
+                icon = ItemStackTemplate(Items.RED_BED)
             }
             addCriterion("die", impossibleTrigger())
         }
