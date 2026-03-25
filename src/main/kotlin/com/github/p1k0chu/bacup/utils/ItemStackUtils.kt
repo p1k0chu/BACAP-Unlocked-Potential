@@ -1,6 +1,7 @@
 package com.github.p1k0chu.bacup.utils
 
 import it.unimi.dsi.fastutil.objects.ReferenceSortedSets
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
@@ -8,7 +9,7 @@ import net.minecraft.network.chat.Style
 import net.minecraft.network.chat.TextColor
 import net.minecraft.util.CommonColors
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.item.component.CustomModelData
 import net.minecraft.world.item.component.ItemLore
@@ -19,20 +20,16 @@ fun makeTrophyItemStack(
     advName: String,
     name: String,
     lore: String,
-    loreColor: TextColor?
-): ItemStack =
-    item.defaultInstance.apply {
-        set(
-            DataComponents.CUSTOM_NAME,
-            Component.literal(name).withStyle(Style.EMPTY.withBold(true).withItalic(true))
-        )
-        set(DataComponents.CUSTOM_MODEL_DATA, CustomModelData(listOf(131f), listOf(), listOf(), listOf()))
-        set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay(false, ReferenceSortedSets.emptySet()))
-        CompoundTag().let { customData ->
-            customData.putInt("Trophy", 1)
-            set(DataComponents.CUSTOM_DATA, CustomData.of(customData))
-        }
-        set(
+    loreColor: TextColor?,
+    components: DataComponentPatch.Builder = DataComponentPatch.builder()
+): ItemStackTemplate = ItemStackTemplate(
+    item, components.set(
+        DataComponents.CUSTOM_NAME, Component.literal(name).withStyle(Style.EMPTY.withBold(true).withItalic(true))
+    ).set(DataComponents.CUSTOM_MODEL_DATA, CustomModelData(listOf(131f), listOf(), listOf(), listOf()))
+        .set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay(false, ReferenceSortedSets.emptySet()))
+        .set(DataComponents.CUSTOM_DATA, CustomData.of(CompoundTag().apply {
+            putInt("Trophy", 1)
+        })).set(
             DataComponents.LORE, ItemLore(
                 listOf(
                     Component.literal(lore)
@@ -42,6 +39,6 @@ fun makeTrophyItemStack(
                     Component.translatable(advName)
                 )
             )
-        )
-    }
+        ).build()
+)
 

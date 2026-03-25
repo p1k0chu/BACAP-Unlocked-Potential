@@ -2,6 +2,9 @@ package com.github.p1k0chu.bacup.advancement
 
 import com.github.p1k0chu.bacup.constants.BacConstants
 import it.unimi.dsi.fastutil.objects.ReferenceSortedSets
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
+import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
@@ -9,12 +12,11 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
 import net.minecraft.resources.Identifier
 import net.minecraft.util.CommonColors
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.component.CustomData
-import net.minecraft.world.item.component.CustomModelData
 import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.item.component.TooltipDisplay
+import java.util.Optional
 
 fun giveGen(item: ItemStackTemplate): String {
     return """
@@ -26,8 +28,8 @@ fun giveGen(item: ItemStackTemplate): String {
 fun messageGen(tab: String, title: String, description: String, type: AdvancementType): String {
     val sanitizedTitle = sanitizeStringForFunction(title)
     val sanitizedDescription = sanitizeStringForFunction(description)
-    return """
-        tellraw @a {"translate":"${type.message}","with":[{"selector":"@s"},{"color":"${type.titleColor}","text":"["},{"color":"${type.titleColor}","translate":"$sanitizedTitle","hover_event":{"action":"show_text","value":{"color":"${type.titleColor}","translate":"$sanitizedTitle","extra":[{"text":"\n"},{"color":"${type.descriptionColor}","translate":"$sanitizedDescription"},{"text":"\n\n"},{"color":"${BacConstants.TAB_COLOR}","italic":true,"translate":"%1${'$'}s tab","with":[{"translate":"${BacConstants.tab_titles[tab]}"}]}]}}},{"color":"${type.titleColor}","text":"]"}]}
+    return $$"""
+        tellraw @a {"translate":"$${type.message}","with":[{"selector":"@s"},{"color":"$${type.titleColor}","text":"["},{"color":"$${type.titleColor}","translate":"$$sanitizedTitle","hover_event":{"action":"show_text","value":{"color":"$${type.titleColor}","translate":"$$sanitizedTitle","extra":[{"text":"\n"},{"color":"$${type.descriptionColor}","translate":"$$sanitizedDescription"},{"text":"\n\n"},{"color":"$${BacConstants.TAB_COLOR}","italic":true,"translate":"%1$s tab","with":[{"translate":"$${BacConstants.tab_titles[tab]}"}]}]}}},{"color":"$${type.titleColor}","text":"]"}]}
     """.trimIndent()
 }
 
@@ -100,38 +102,44 @@ fun mainRewardFunctionGen(advancementId: Identifier): String {
 /**
  * Returns a minecraft function for a trophy
  */
-fun trophyGen(advName: String?, item: ItemStack?): String {
+fun trophyGen(advName: String?, item: ItemStackTemplate?): String {
     if (item == null || advName == null) return ""
+
+    val componentsBuilder = DataComponentMap.builder()
+    item.components.entrySet().forEach { (type, value) ->
+        @Suppress("UNCHECKED_CAST")
+        componentsBuilder.set(type as DataComponentType<Any>, (value as Optional<Any>).get())
+    }
 
     // setup useful trophy data
     //item.set(DataComponents.CUSTOM_MODEL_DATA, CustomModelData(listOf(131f), listOf(), listOf(), listOf()))
-    item.set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay(false, ReferenceSortedSets.emptySet()))
+    componentsBuilder.set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay(false, ReferenceSortedSets.emptySet()))
 
     CompoundTag().let { customData ->
         customData.putInt("Trophy", 1)
-        item.set(DataComponents.CUSTOM_DATA, CustomData.of(customData))
+        componentsBuilder.set(DataComponents.CUSTOM_DATA, CustomData.of(customData))
     }
 
-    item.customName?.toFlatList(
+    item.components.get(DataComponentMap.EMPTY, DataComponents.CUSTOM_NAME)?.toFlatList(
         Style.EMPTY
             .withBold(true)
             .withItalic(false)
     )
         ?.firstOrNull()
         ?.let { customName ->
-            item.set(DataComponents.CUSTOM_NAME, customName)
+            componentsBuilder.set(DataComponents.CUSTOM_NAME, customName)
         }
 
     // change lore formatting and
     // add extra lines to lore
-    val lore = item.get(DataComponents.LORE)
+    val lore = item.components.get(DataComponentMap.EMPTY, DataComponents.LORE)
     val lines: List<Component>? = lore?.lines?.flatMap { line ->
         line.toFlatList(
-            Style.EMPTY.withBold(false).withItalic(true).withColor(item.customName?.style?.color)
+            Style.EMPTY.withBold(false).withItalic(true).withColor(item.components.get(DataComponentMap.EMPTY, DataComponents.CUSTOM_NAME)?.style?.color)
         )
     }
 
-    item.set(
+    componentsBuilder.set(
         DataComponents.LORE, ItemLore(lines ?: listOf()).withLineAdded(Component.empty()).withLineAdded(
             Component.nullToEmpty("Awarded for achieving").toFlatList(
                 Style.EMPTY.withColor(CommonColors.GRAY)
@@ -144,16 +152,17 @@ fun trophyGen(advName: String?, item: ItemStack?): String {
     val functionBody = StringBuilder()
     functionBody.append("give @s ${item.typeHolder().registeredName}[")
 
-    item.components.mapNotNull { component ->
-        if (!item.hasNonDefault(component.type)) return@mapNotNull null
+    val components = componentsBuilder.build()
+    val customName = components.get(DataComponents.CUSTOM_NAME)
 
+    components.mapNotNull { component ->
         "${component.type}=${component.encodeValue(NbtOps.INSTANCE).orThrow}"
     }.joinTo(functionBody, separator = ",")
 
     functionBody.append(
         """
         ] 1
-        tellraw @s {"color": "${item.customName?.style?.color ?: "white"}", "text": " +${item.count} ", "extra": [{"translate": "${item.customName?.string?.let(::sanitizeStringForFunction) ?: item.item.descriptionId}"}]}
+        tellraw @s {"color": "${customName?.style?.color ?: "white"}", "text": " +1 ", "extra": [{"translate": "${customName?.string?.let(::sanitizeStringForFunction) ?: item.item.value().descriptionId}"}]}
         """.trimIndent()
     )
 
