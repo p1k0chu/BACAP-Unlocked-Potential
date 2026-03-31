@@ -32,6 +32,7 @@ object AdventureTabGenerator : AdvancementGenerator {
     const val DEHYDRATION = "dehydration"
     const val THIS_IS_NOT_COOKIE_CLICKER = "this_is_not_cookie_clicker"
     const val SHORT_CIRCUIT = "short_circuit"
+    const val R_I_P = "rip"
 
     override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
         val catGift = advancement(consumer, TAB_NAME, CAT_GIFT) {
@@ -301,6 +302,22 @@ object AdventureTabGenerator : AdvancementGenerator {
 
             addCriterion(
                 "short_circuit",
+                CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
+            )
+        }
+
+        advancement(consumer, TAB_NAME, R_I_P) {
+            parent(createPlaceholder("blazeandcave:nether/decaying_beauty"))
+
+            display {
+                title = "R.I.P"
+                description = "Place a wither rose to your last death location."
+                icon = ItemStackTemplate(Items.SKELETON_SKULL)
+                type = AdvancementType.GOAL
+            }
+
+            addCriterion(
+                "rip",
                 CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance())
             )
         }

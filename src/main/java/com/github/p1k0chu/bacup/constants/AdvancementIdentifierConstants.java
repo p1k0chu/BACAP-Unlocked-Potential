@@ -14,4 +14,5 @@ public final class AdvancementIdentifierConstants {
     public static final Identifier RAGE_BAITER = AdvancementUtils.id(MiningTabGenerator.TAB_NAME, MiningTabGenerator.RAGE_BAITER);
     public static final Identifier INTENTIONAL_ADVANCEMENT_DESIGN = AdvancementUtils.id(EndTabGenerator.TAB_NAME, EndTabGenerator.INTENTIONAL_ADVANCEMENT_DESIGN);
     public static final Identifier THIS_IS_NOT_COOKIE_CLICKER = AdvancementUtils.id(AdventureTabGenerator.TAB_NAME, AdventureTabGenerator.THIS_IS_NOT_COOKIE_CLICKER);
+    public static final Identifier R_I_P = AdvancementUtils.id(AdventureTabGenerator.TAB_NAME, AdventureTabGenerator.R_I_P);
 }

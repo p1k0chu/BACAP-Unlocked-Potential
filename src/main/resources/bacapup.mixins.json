@@ -12,6 +12,7 @@
     "AnvilBlockMixin",
     "BeaconMenuAccessor",
     "BellBlockMixin",
+    "BlockItemMixin",
     "BlockMixin",
     "BrushableBlockEntityMixin",
     "CampfireBlockMixin",
