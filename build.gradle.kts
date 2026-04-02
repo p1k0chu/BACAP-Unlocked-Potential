@@ -1,20 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id("fabric-loom") version "1.14-SNAPSHOT"
-    kotlin("jvm") version "2.2.21"
+    id("net.fabricmc.fabric-loom-remap")
+    kotlin("jvm")
 }
 
-val minecraft_version: String by project
-val loader_version: String by project
-val maven_group: String by project
-val yarn_mappings: String by project
-val kotlin_adapter_version: String by project
-val archives_base_name: String by project
-val fabric_api_version: String by project
-
 base {
-    archivesName = archives_base_name
+    archivesName = providers.gradleProperty("archives_base_name")
 }
 
 repositories {
@@ -42,26 +34,20 @@ fabricApi {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:$minecraft_version")
+    minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
     mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:$loader_version")
-    modImplementation("net.fabricmc:fabric-language-kotlin:$kotlin_adapter_version")
+    modImplementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
+    modImplementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("kotlin_adapter_version").get()}")
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
 }
 
 tasks.processResources {
     inputs.property("version", project.version)
-    inputs.property("minecraft_version", minecraft_version)
-    inputs.property("loader_version", loader_version)
-    inputs.property("kotlin_adapter_version", kotlin_adapter_version)
 
     filesMatching("fabric.mod.json") {
         expand(
             "version" to project.version,
-            "minecraft_version" to minecraft_version,
-            "loader_version" to loader_version,
-            "kotlin_adapter_version" to kotlin_adapter_version
         )
     }
 }
@@ -88,6 +74,6 @@ kotlin {
 
 tasks.jar {
     from("LICENSE") {
-        rename { "${it}_$archives_base_name" }
+        rename { "${it}_${providers.gradleProperty("archives_base_name").get()}" }
     }
 }
