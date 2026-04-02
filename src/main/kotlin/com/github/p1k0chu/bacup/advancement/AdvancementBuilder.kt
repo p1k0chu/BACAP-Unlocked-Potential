@@ -39,7 +39,7 @@ class AdvancementBuilder(val tab: String, val name: String) : Advancement.Builde
             return DisplayInfo(
                 icon,
                 Component.translatable(title!!),
-                Component.translatable(description!!),
+                Component.translatable(description!!).withColor(type.descriptionColor.value),
                 Optional.ofNullable(background?.id()?.let(ClientAsset::ResourceTexture)),
                 AdvancementType.getFrame(type),
                 showToast,
