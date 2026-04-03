@@ -31,6 +31,13 @@ loom {
 
 fabricApi {
     configureDataGeneration()
+
+    configureTests {
+		createSourceSet = true
+		modId = "test-bacapup"
+        // Agree to Minecraft EULA
+		eula = true
+	}
 }
 
 dependencies {
@@ -39,6 +46,8 @@ dependencies {
     implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("kotlin_adapter_version").get()}")
 
     implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+
+    testImplementation("net.fabricmc:fabric-loader-junit:${providers.gradleProperty("loader_version").get()}")
 }
 
 tasks.processResources {
@@ -76,4 +85,8 @@ tasks.jar {
     from("LICENSE") {
         rename { "${it}_${providers.gradleProperty("archives_base_name").get()}" }
     }
+}
+
+tasks.test {
+	useJUnitPlatform()
 }

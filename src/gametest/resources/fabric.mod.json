@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "test-bacapup",
+  "version": "1.0.0",
+  "name": "Test BACAPUP",
+  "description": "Evil clone of bacapup for testing",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": [
+      "com.github.p1k0chu.bacup.gametest.advancement.AnimalsTabGameTest",
+      "com.github.p1k0chu.bacup.gametest.advancement.FarmingTabGameTest",
+      "com.github.p1k0chu.bacup.gametest.advancement.MonstersTabGameTest"
+    ],
+    "fabric-client-gametest": [
+    ]
+  }
+}
