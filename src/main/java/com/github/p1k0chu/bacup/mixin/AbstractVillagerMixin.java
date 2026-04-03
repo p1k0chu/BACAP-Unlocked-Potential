@@ -16,12 +16,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractVillager.class)
-public abstract class AbstractVillagerMixin {
+abstract class AbstractVillagerMixin {
     @Shadow
     public abstract @Nullable Player getTradingPlayer();
 
     @Inject(method = "notifyTrade", at = @At("HEAD"))
-    void trade(MerchantOffer offer, CallbackInfo ci) {
+    private void trade(MerchantOffer offer, CallbackInfo ci) {
         if (getTradingPlayer() instanceof ServerPlayer player) {
             ItemStack item = offer.getResult();
 

@@ -18,12 +18,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Parrot.class)
-public class ParrotMixin {
+class ParrotMixin {
     @Unique
     private static final ScopedValue<Parrot> parrotScopedValue = ScopedValue.newInstance();
 
     @WrapOperation(method = "getAmbientSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/parrot/Parrot;getAmbient(Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/sounds/SoundEvent;"))
-    SoundEvent getAmbientSound(Level keys, RandomSource level, Operation<SoundEvent> original) {
+    private SoundEvent getAmbientSound(Level keys, RandomSource level, Operation<SoundEvent> original) {
         return ScopedValue.where(parrotScopedValue, (Parrot) (Object) this).call(() -> original.call(keys, level));
     }
 

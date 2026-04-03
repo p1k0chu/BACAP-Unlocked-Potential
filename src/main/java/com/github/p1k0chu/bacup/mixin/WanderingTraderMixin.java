@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WanderingTrader.class)
-public class WanderingTraderMixin extends MobMixin {
+class WanderingTraderMixin extends MobMixin {
     @Override
-    void dropEquipmentDropStack(ServerLevel world, DamageSource source, boolean causedByPlayer, CallbackInfo ci, ItemStack itemStack) {
+    protected void dropEquipmentDropStack(ServerLevel world, DamageSource source, boolean causedByPlayer, CallbackInfo ci, ItemStack itemStack) {
         super.dropEquipmentDropStack(world, source, causedByPlayer, ci, itemStack);
 
         if (source.getEntity() instanceof ServerPlayer player) {

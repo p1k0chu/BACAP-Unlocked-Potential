@@ -14,13 +14,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net.minecraft.world.entity.animal.feline.Cat$CatRelaxOnOwnerGoal")
-public abstract class CatRelaxOnOwnerGoalMixin {
+abstract class CatRelaxOnOwnerGoalMixin {
     @Shadow
     @Final
     private Cat cat;
 
     @Inject(method = "lambda$giveMorningGift$0", at = @At("HEAD"))
-    void awardCriteria(BlockPos.MutableBlockPos mutable, ServerLevel world, ItemStack stack, CallbackInfo ci) {
+    private void awardCriteria(BlockPos.MutableBlockPos mutable, ServerLevel world, ItemStack stack, CallbackInfo ci) {
         if(cat.getOwner() instanceof ServerPlayer player) {
             Criteria.CAT_GIFT_RECEIVED.trigger(player, stack);
         }

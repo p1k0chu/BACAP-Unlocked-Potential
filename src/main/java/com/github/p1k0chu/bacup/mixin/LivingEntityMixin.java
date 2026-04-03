@@ -24,16 +24,16 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
+abstract class LivingEntityMixin {
     @Shadow
     public abstract @Nullable Player getLastHurtByPlayer();
 
     @Inject(method = "hurtServer", at = @At(value = "HEAD"))
-    void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    protected void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
     }
 
     @ModifyArg(method = "dropFromLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;ZLnet/minecraft/resources/ResourceKey;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;JLjava/util/function/Consumer;)V"), index = 2)
-    Consumer<ItemStack> modifyLootConsumer(Consumer<ItemStack> lootConsumer) {
+    private Consumer<ItemStack> modifyLootConsumer(Consumer<ItemStack> lootConsumer) {
         if (getLastHurtByPlayer() instanceof ServerPlayer serverPlayerEntity) {
             return lootConsumer.andThen(stack -> Criteria.ENTITY_DROPPED_LOOT.trigger(serverPlayerEntity, (LivingEntity) (Object) this, stack));
         }
@@ -41,7 +41,7 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "die", at = @At("HEAD"))
-    void onDeath(DamageSource damageSource, CallbackInfo ci) {
+    private void onDeath(DamageSource damageSource, CallbackInfo ci) {
         LivingEntity entity = ((LivingEntity) (Object) this);
 
         Entity source = damageSource.getDirectEntity();

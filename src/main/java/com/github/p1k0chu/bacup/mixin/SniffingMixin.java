@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Sniffing.class)
-public class SniffingMixin {
+class SniffingMixin {
     @Inject(method = "lambda$stop$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/warden/Warden;increaseAngerAt(Lnet/minecraft/world/entity/Entity;)V"))
     private static void invalidateRagebaiter(Warden warden, LivingEntity livingEntity, CallbackInfo ci) {
         if (livingEntity instanceof Player player) {

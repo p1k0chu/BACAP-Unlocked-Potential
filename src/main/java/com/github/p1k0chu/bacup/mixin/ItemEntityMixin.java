@@ -16,14 +16,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemEntity.class)
-public abstract class ItemEntityMixin {
+abstract class ItemEntityMixin {
     @Shadow
     public abstract @Nullable Entity getOwner();
 
     @Shadow public abstract ItemStack getItem();
 
     @Inject(method = "hurtServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/item/ItemEntity;discard()V"))
-    void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if(!source.is(DamageTypes.CACTUS)) return;
 
         if(getOwner() instanceof ServerPlayer player) {

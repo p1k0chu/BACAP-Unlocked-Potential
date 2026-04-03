@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Mob.class)
-public class MobMixin {
+class MobMixin {
     @Inject(method = "dropCustomDeathLoot", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Mob;spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;"))
-    void dropEquipmentDropStack(ServerLevel world, DamageSource source, boolean causedByPlayer, CallbackInfo ci, @Local ItemStack itemStack) {
+    protected void dropEquipmentDropStack(ServerLevel world, DamageSource source, boolean causedByPlayer, CallbackInfo ci, @Local ItemStack itemStack) {
     }
 }

@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractCandleBlock.class)
-public abstract class AbstractCandleBlockMixin {
+abstract class AbstractCandleBlockMixin {
     @Inject(method = "onProjectileHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/AbstractCandleBlock;setLit(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Z)V", shift = At.Shift.AFTER))
-    void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile, CallbackInfo ci) {
+    private void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile, CallbackInfo ci) {
         if (projectile.getOwner() instanceof ServerPlayer player) {
             Criteria.PROJECTILE_LIT_BLOCK.trigger(player, (ServerLevel) world, hit.getBlockPos());
         }

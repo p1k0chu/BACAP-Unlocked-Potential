@@ -14,12 +14,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerGamePacketListenerImpl.class)
-public class ServerGamePacketListenerImplMixin {
+class ServerGamePacketListenerImplMixin {
     @Shadow
     public ServerPlayer player;
 
     @Inject(method = "handleSetBeaconPacket", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/BeaconMenu;updateEffects(Ljava/util/Optional;Ljava/util/Optional;)V"))
-    void updateBeaconEffects(ServerboundSetBeaconPacket serverboundSetBeaconPacket, CallbackInfo ci, @Local(name = "menu") BeaconMenu menu) {
+    private void updateBeaconEffects(ServerboundSetBeaconPacket serverboundSetBeaconPacket, CallbackInfo ci, @Local(name = "menu") BeaconMenu menu) {
         ItemStack stack = ((BeaconMenuAccessor) menu).getPaymentSlot().getItem();
 
         if (!stack.isEmpty()) {

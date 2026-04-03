@@ -26,13 +26,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractFurnaceMenu.class)
-public class AbstractFurnaceMenuMixin {
+class AbstractFurnaceMenuMixin {
     @Shadow
     @Final
     private Container container;
 
     @Inject(method = "<init>(Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/inventory/RecipeBookType;ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/Container;Lnet/minecraft/world/inventory/ContainerData;)V", at = @At("RETURN"))
-    void init(MenuType<?> type,
+    private void init(MenuType<?> type,
               RecipeType<?> recipeType,
               ResourceKey<?> recipePropertySetKey,
               RecipeBookType category,
@@ -48,7 +48,7 @@ public class AbstractFurnaceMenuMixin {
     }
 
     @Inject(method = "quickMoveStack", at = @At("RETURN"))
-    void quickMove(Player player, int slot, CallbackInfoReturnable<ItemStack> cir) {
+    private void quickMove(Player player, int slot, CallbackInfoReturnable<ItemStack> cir) {
         if (player instanceof ServerPlayer serverPlayer) {
             if (this.container instanceof AbstractFurnaceBlockEntity furnace) {
                 ItemStack itemStack = cir.getReturnValue();

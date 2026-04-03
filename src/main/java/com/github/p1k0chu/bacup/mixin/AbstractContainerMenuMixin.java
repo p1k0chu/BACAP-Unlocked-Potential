@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.THIS_IS_NOT_COOKIE_CLICKER;
 
 @Mixin(AbstractContainerMenu.class)
-public abstract class AbstractContainerMenuMixin {
+abstract class AbstractContainerMenuMixin {
     @Unique
     private static final ItemStackTemplate COOKIE_CLICKER_COOKIE = ItemStackUtilsKt.makeTrophyItemStack(
             Items.COOKIE,
@@ -43,7 +43,7 @@ public abstract class AbstractContainerMenuMixin {
     private long lastClick = 0;
 
     @Inject(method = "doClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;updateTutorialInventoryAction(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/inventory/ClickAction;)V"))
-    void doClick(int slotIndex, int buttonNum, ContainerInput containerInput, Player player, CallbackInfo ci, @Local(name = "clicked") ItemStack slotItem, @Local(name = "carried") ItemStack carriedItem) {
+    private void doClick(int slotIndex, int buttonNum, ContainerInput containerInput, Player player, CallbackInfo ci, @Local(name = "clicked") ItemStack slotItem, @Local(name = "carried") ItemStack carriedItem) {
         if (player instanceof ServerPlayer sPlayer) {
             if (slotItem.isEmpty() && carriedItem.isEmpty()) {
                 long time = System.currentTimeMillis();

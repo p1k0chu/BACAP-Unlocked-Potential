@@ -17,14 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(Evoker.EvokerWololoSpellGoal.class)
-public class EvokerWololoSpellGoalMixin {
+class EvokerWololoSpellGoalMixin {
     ///  instance of outer class
     @Shadow
     @Final
     Evoker this$0;
 
     @Inject(method = "performSpellCasting", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/sheep/Sheep;setColor(Lnet/minecraft/world/item/DyeColor;)V"))
-    void castSpell(CallbackInfo ci, @Local(name = "wololoTarget") Sheep sheep) {
+    private void castSpell(CallbackInfo ci, @Local(name = "wololoTarget") Sheep sheep) {
         AABB box = AABB.ofSize(sheep.position(), 16, 16, 16);
         //noinspection resource
         List<Player> players = this$0.level().getEntitiesOfClass(Player.class, box);

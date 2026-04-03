@@ -20,9 +20,9 @@ import java.util.Objects;
 import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.SMELT_EVERYTHING;
 
 @Mixin(FurnaceBlock.class)
-public class FurnaceBlockMixin {
+class FurnaceBlockMixin {
     @Inject(method = "openContainer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;openMenu(Lnet/minecraft/world/MenuProvider;)Ljava/util/OptionalInt;"))
-    void checkSmeltEverything(Level level, BlockPos blockPos, Player player, CallbackInfo ci) {
+    private void checkSmeltEverything(Level level, BlockPos blockPos, Player player, CallbackInfo ci) {
         if (player instanceof ServerPlayer serverPlayer) {
             if (countConnectedChests(level, blockPos) >= 3) {
                 AdvancementUtils.grant(serverPlayer, SMELT_EVERYTHING);

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(AngerManagement.class)
-public class AngerManagementMixin implements RagebaiterStatus {
+class AngerManagementMixin implements RagebaiterStatus {
     @Unique
     private final Object2BooleanMap<Player> ragebaiters = new Object2BooleanOpenHashMap<>();
 

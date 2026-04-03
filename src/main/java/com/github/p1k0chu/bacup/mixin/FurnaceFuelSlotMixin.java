@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FurnaceFuelSlot.class)
-public class FurnaceFuelSlotMixin extends SlotMixin {
+class FurnaceFuelSlotMixin extends SlotMixin {
     @Override
-    void onTake(Player player, ItemStack itemStack, CallbackInfo ci) {
+    protected void onTake(Player player, ItemStack itemStack, CallbackInfo ci) {
         super.onTake(player, itemStack, ci);
 
         if (player instanceof ServerPlayer serverPlayer && itemStack.is(Items.WATER_BUCKET)) {

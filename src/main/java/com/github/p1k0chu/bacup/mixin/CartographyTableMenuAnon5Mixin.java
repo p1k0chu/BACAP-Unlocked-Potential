@@ -14,14 +14,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net.minecraft.world.inventory.CartographyTableMenu$5")
-public abstract class CartographyTableMenuAnon5Mixin {
+abstract class CartographyTableMenuAnon5Mixin {
     ///  instance of outer class
     @Shadow
     @Final
     CartographyTableMenu this$0;
 
     @Inject(method = "onTake", at = @At("HEAD"))
-    void onTakeItem(Player player, ItemStack stack, CallbackInfo ci) {
+    private void onTakeItem(Player player, ItemStack stack, CallbackInfo ci) {
         if(!(player instanceof ServerPlayer)) {
             return;
         }

@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Pig.class)
-public abstract class PigMixin extends LivingEntityMixin {
+abstract class PigMixin extends LivingEntityMixin {
     @Override
-    void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    protected void damage(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if(source.is(DamageTypes.FALL)) {
             Entity passenger = ((Pig)(Object)this).getFirstPassenger();
 

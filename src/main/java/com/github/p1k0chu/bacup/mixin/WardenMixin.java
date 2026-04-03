@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Warden.class)
-public abstract class WardenMixin {
+abstract class WardenMixin {
     @Shadow
     public abstract AngerManagement getAngerManagement();
 
     @Inject(method = "doPush", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/warden/Warden;increaseAngerAt(Lnet/minecraft/world/entity/Entity;)V"))
-    void pushedInvalidateRagebaiter(Entity entity, CallbackInfo ci) {
+    private void pushedInvalidateRagebaiter(Entity entity, CallbackInfo ci) {
         if (entity instanceof Player player) {
             var anger = getAngerManagement();
             ((RagebaiterStatus) anger).bacup$setRagebaiter(player, false);
@@ -28,7 +28,7 @@ public abstract class WardenMixin {
     }
 
     @Inject(method = "hurtServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/monster/warden/Warden;increaseAngerAt(Lnet/minecraft/world/entity/Entity;IZ)V"))
-    void hurtServerInvalidateRagebaiter(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
+    private void hurtServerInvalidateRagebaiter(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
         if (damageSource.getEntity() instanceof Player player) {
             var anger = getAngerManagement();
             ((RagebaiterStatus) anger).bacup$setRagebaiter(player, false);

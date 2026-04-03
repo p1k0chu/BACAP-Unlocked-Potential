@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net.minecraft.world.inventory.GrindstoneMenu$4")
-public abstract class GrindstoneMenuAnon4Mixin {
+abstract class GrindstoneMenuAnon4Mixin {
     ///  instance of outer class
     @Shadow
     @Final
@@ -40,7 +40,7 @@ public abstract class GrindstoneMenuAnon4Mixin {
     }
 
     @Inject(method = "onTake", at = @At("HEAD"))
-    void onTakeItem(Player player, ItemStack stack, CallbackInfo ci) {
+    private void onTakeItem(Player player, ItemStack stack, CallbackInfo ci) {
         if (!(player instanceof ServerPlayer)) return;
 
         GrindstoneMenuAccessor accessor = (GrindstoneMenuAccessor) this$0;

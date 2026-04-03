@@ -12,9 +12,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ThrownEnderpearl.class)
-public class ThrownEnderPearlMixin {
+class ThrownEnderPearlMixin {
     @Inject(method = "onHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;teleport(Lnet/minecraft/world/level/portal/TeleportTransition;)Lnet/minecraft/server/level/ServerPlayer;"))
-    void onCollision(HitResult hitResult, CallbackInfo ci, @Local ServerPlayer player) {
+    private void onCollision(HitResult hitResult, CallbackInfo ci, @Local ServerPlayer player) {
         Vec3 pearlPos = ((ThrownEnderpearl)(Object)this).position();
 
         if(pearlPos.distanceTo(player.position()) >= 100) {

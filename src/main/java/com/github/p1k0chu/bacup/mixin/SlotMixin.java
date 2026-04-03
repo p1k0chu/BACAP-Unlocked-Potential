@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Slot.class)
-public abstract class SlotMixin {
+abstract class SlotMixin {
     @Inject(method = "onTake", at = @At("HEAD"))
-    void onTake(Player player, ItemStack itemStack, CallbackInfo ci) {
+    protected void onTake(Player player, ItemStack itemStack, CallbackInfo ci) {
     }
 }

@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.RAGE_BAITER;
 
 @Mixin(FishingHook.class)
-public class FishingHookMixin {
+class FishingHookMixin {
     @Inject(method = "pullEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V"))
-    void checkRagebaiter(Entity pulledEntity, CallbackInfo ci, @Local(name = "owner") Entity owner) {
+    private void checkRagebaiter(Entity pulledEntity, CallbackInfo ci, @Local(name = "owner") Entity owner) {
         if (pulledEntity instanceof Warden warden && owner instanceof ServerPlayer player) {
             var anger = warden.getAngerManagement();
             if (anger.getActiveAnger(player) >= 150 && ((RagebaiterStatus) anger).bacup$isRagebaiter(player)) {

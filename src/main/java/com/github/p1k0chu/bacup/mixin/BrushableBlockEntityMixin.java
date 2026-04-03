@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BrushableBlockEntity.class)
-public abstract class BrushableBlockEntityMixin {
+abstract class BrushableBlockEntityMixin {
     @Shadow
     public abstract ItemStack getItem();
 
@@ -21,7 +21,7 @@ public abstract class BrushableBlockEntityMixin {
             at = @At(value = "INVOKE",
                     target = "Lnet/minecraft/world/level/block/entity/BrushableBlockEntity;unpackLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemInstance;)V",
                     shift = At.Shift.AFTER))
-    void spawnItem(ServerLevel world, LivingEntity brusher, ItemStack brush, CallbackInfo ci) {
+    private void spawnItem(ServerLevel world, LivingEntity brusher, ItemStack brush, CallbackInfo ci) {
         if (brusher instanceof ServerPlayer player) {
             ItemStack item = getItem();
             if (!item.isEmpty())

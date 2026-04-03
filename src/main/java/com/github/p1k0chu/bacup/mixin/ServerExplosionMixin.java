@@ -25,7 +25,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED;
 
 @Mixin(ServerExplosion.class)
-public abstract class ServerExplosionMixin {
+abstract class ServerExplosionMixin {
     @Shadow
     public abstract boolean canTriggerBlocks();
 
@@ -37,7 +37,7 @@ public abstract class ServerExplosionMixin {
     public abstract Map<Player, Vec3> getHitPlayers();
 
     @Inject(method = "interactWithBlocks", at = @At("HEAD"))
-    void interactWithBlocks(List<BlockPos> list, CallbackInfo ci) {
+    private void interactWithBlocks(List<BlockPos> list, CallbackInfo ci) {
         if (this.canTriggerBlocks() && countTriggeredRedstoneComponents(list) >= 9) {
             for (var player : this.getHitPlayers().keySet()) {
                 if (player instanceof ServerPlayer serverPlayer) {

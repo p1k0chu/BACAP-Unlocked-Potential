@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.UUID;
 
 @Mixin(AnvilBlock.class)
-public abstract class AnvilBlockMixin extends BlockMixin implements AnvilBlockWhoPlaced {
+abstract class AnvilBlockMixin extends BlockMixin implements AnvilBlockWhoPlaced {
     @Unique
     private UUID placer;
 
@@ -25,7 +25,7 @@ public abstract class AnvilBlockMixin extends BlockMixin implements AnvilBlockWh
     }
 
     @Override
-    void onPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack, CallbackInfo ci) {
+    protected void onPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack, CallbackInfo ci) {
         this.placer = placer.getUUID();
 
         super.onPlaced(world, pos, state, placer, itemStack, ci);

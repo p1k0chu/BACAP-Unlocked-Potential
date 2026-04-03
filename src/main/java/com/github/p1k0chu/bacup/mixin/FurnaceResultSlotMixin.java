@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(FurnaceResultSlot.class)
-public class FurnaceResultSlotMixin {
+class FurnaceResultSlotMixin {
     @Inject(method = "onTake", at = @At("RETURN"))
-    void onTakeItem(Player player, ItemStack stack, CallbackInfo ci) {
+    private void onTakeItem(Player player, ItemStack stack, CallbackInfo ci) {
         if(stack.isEmpty()) return;
 
         if (player instanceof ServerPlayer serverPlayer) {

@@ -24,7 +24,7 @@ import java.util.List;
 import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.CONDUEL;
 
 @Mixin(ConduitBlockEntity.class)
-public class ConduitBlockEntityMixin implements ConduitPowerGetter {
+class ConduitBlockEntityMixin implements ConduitPowerGetter {
     @Shadow
     @Final
     private List<BlockPos> effectBlocks;

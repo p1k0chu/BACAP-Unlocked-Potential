@@ -13,9 +13,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TamableAnimal.class)
-public class TamableAnimalMixin {
+class TamableAnimalMixin {
     @Inject(method = "tame", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/criterion/TameAnimalTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/animal/Animal;)V"))
-    void setTamedBy(Player player, CallbackInfo ci, @Local ServerPlayer serverPlayerEntity) {
+    private void setTamedBy(Player player, CallbackInfo ci, @Local ServerPlayer serverPlayerEntity) {
         TamableAnimal tamed = (TamableAnimal) (Object) this;
         EntityType<?> type = (tamed).getType();
 

@@ -15,13 +15,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ServerPlayerGameMode.class)
-public class ServerPlayerGameModeMixin {
+class ServerPlayerGameModeMixin {
     @Shadow
     @Final
     protected ServerPlayer player;
 
     @Inject(method = "destroyBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;destroy(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V"))
-    void destroyBlock(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir, @Local(name = "adjustedState") BlockState brokenBlock) {
+    private void destroyBlock(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir, @Local(name = "adjustedState") BlockState brokenBlock) {
         var handItem = player.getMainHandItem();
         if (handItem.isEmpty() && brokenBlock.is(Blocks.NETHERITE_BLOCK)) {
             Criteria.PLAYER_BREAK_NETHERITE_BLOCK_WITH_FIST.trigger(player);

@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.INTENTIONAL_ADVANCEMENT_DESIGN;
 
 @Mixin(ServerPlayer.class)
-public abstract class ServerPlayerMixin implements ServerPlayerPetsTamedCounter, ServerPlayerTradedEmeralds {
+abstract class ServerPlayerMixin implements ServerPlayerPetsTamedCounter, ServerPlayerTradedEmeralds {
     @Override
     public int bacup$increment(EntityType<?> entityType) {
         PlayerData state = BacupPersistentState.getPlayerState((LivingEntity) (Object) this);
@@ -38,14 +38,14 @@ public abstract class ServerPlayerMixin implements ServerPlayerPetsTamedCounter,
     }
 
     @Inject(method = "die", at = @At("HEAD"))
-    void intentionalAdvancementDesignDeath(DamageSource damageSource, CallbackInfo ci) {
+    private void intentionalAdvancementDesignDeath(DamageSource damageSource, CallbackInfo ci) {
         if (damageSource.is(DamageTypes.BAD_RESPAWN_POINT)) {
             AdvancementUtils.grant((ServerPlayer) (Object) this, INTENTIONAL_ADVANCEMENT_DESIGN);
         }
     }
 
     @Inject(method = "hurtServer", at = @At("RETURN"))
-    void intentionalAdvancementDesignHardcore(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
+    private void intentionalAdvancementDesignHardcore(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
         if (serverLevel.getLevelData().isHardcore() && cir.getReturnValue() && damageSource.is(DamageTypes.BAD_RESPAWN_POINT)) {
             AdvancementUtils.grant((ServerPlayer) (Object) this, INTENTIONAL_ADVANCEMENT_DESIGN);
         }

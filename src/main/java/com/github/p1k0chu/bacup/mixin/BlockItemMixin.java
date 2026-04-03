@@ -23,7 +23,7 @@ import java.util.Optional;
 import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.R_I_P;
 
 @Mixin(BlockItem.class)
-public abstract class BlockItemMixin {
+abstract class BlockItemMixin {
 
     @Shadow
     @Final
@@ -31,7 +31,7 @@ public abstract class BlockItemMixin {
     private Block block;
 
     @Inject(method = "place", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/criterion/ItemUsedOnLocationTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemInstance;)V"))
-    void onBlockPlaced(BlockPlaceContext placeContext, CallbackInfoReturnable<InteractionResult> cir, @Local(name = "player") Player player, @Local BlockPos pos) {
+    private void onBlockPlaced(BlockPlaceContext placeContext, CallbackInfoReturnable<InteractionResult> cir, @Local(name = "player") Player player, @Local BlockPos pos) {
         if (block == Blocks.WITHER_ROSE) {
             final Optional<GlobalPos> lastDeathPos = player.getLastDeathLocation();
             if (lastDeathPos.isEmpty()) return;
