@@ -6,7 +6,7 @@ import com.github.p1k0chu.bacup.advancement.AdvancementType
 import com.github.p1k0chu.bacup.advancement.advancement
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria
 import com.github.p1k0chu.bacup.advancement.criteria.SingleEntityCriterion
-import com.github.p1k0chu.bacup.constants.MobConstants
+import com.github.p1k0chu.bacup.constants.KillMobConstants
 import net.minecraft.advancements.criterion.EntityPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -29,7 +29,7 @@ object ChallengesTabGenerator : AdvancementGenerator {
             }
             exp = 200
 
-            MobConstants.ANVIL_KILLABLE_MOBS.forEach { mob ->
+            KillMobConstants.getAnvilMobsToKill(provider.lookupOrThrow(Registries.ENTITY_TYPE)).forEach { mob ->
                 addCriterion(mob.builtInRegistryHolder().registeredName, Criteria.ANVIL_KILL.createCriterion(
                     SingleEntityCriterion.Conditions(
                         Optional.empty(),
