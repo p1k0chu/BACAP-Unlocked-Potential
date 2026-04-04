@@ -9,7 +9,8 @@
     "fabric-gametest": [
       "com.github.p1k0chu.bacup.gametest.advancement.AnimalsTabGameTest",
       "com.github.p1k0chu.bacup.gametest.advancement.FarmingTabGameTest",
-      "com.github.p1k0chu.bacup.gametest.advancement.MonstersTabGameTest"
+      "com.github.p1k0chu.bacup.gametest.advancement.MonstersTabGameTest",
+      "com.github.p1k0chu.bacup.gametest.VerifyConstantListsGameTest"
     ],
     "fabric-client-gametest": [
     ]

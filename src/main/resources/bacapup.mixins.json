@@ -31,6 +31,7 @@
     "InventoryChangeTriggerMixin",
     "ItemEntityMixin",
     "LivingEntityMixin",
+    "LootItemAccessor",
     "MobMixin",
     "ParrotMixin",
     "PigMixin",
