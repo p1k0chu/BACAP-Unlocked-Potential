@@ -33,6 +33,7 @@
     "LivingEntityMixin",
     "LootItemAccessor",
     "MobMixin",
+    "ParrotAccessor",
     "ParrotMixin",
     "PigMixin",
     "ServerExplosionMixin",
