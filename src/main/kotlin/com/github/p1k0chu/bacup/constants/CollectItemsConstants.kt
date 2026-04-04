@@ -59,6 +59,12 @@ object CollectItemsConstants {
         Items.WHEAT,
         Items.WOODEN_HOE,
         Items.COAL,
-        Items.GOLD_NUGGET
+        Items.GOLD_NUGGET,
+        Items.ARCHER_POTTERY_SHERD,
+        Items.MINER_POTTERY_SHERD,
+        Items.PRIZE_POTTERY_SHERD,
+        Items.SKULL_POTTERY_SHERD,
+        Items.DIAMOND,
+        Items.TNT,
     )
 }
