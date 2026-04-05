@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.gametest;
 
 import com.github.p1k0chu.bacup.constants.CollectItemsConstants;
-import com.github.p1k0chu.bacup.utils.LootTableUtils;
+import com.github.p1k0chu.bacup.gametest.utils.LootTableUtils;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceKey;
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Verify item/mob/etc lists using vanilla datapack.

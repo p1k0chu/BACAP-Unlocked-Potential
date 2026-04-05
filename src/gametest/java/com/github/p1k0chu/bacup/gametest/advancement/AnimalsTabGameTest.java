@@ -1,6 +1,7 @@
 package com.github.p1k0chu.bacup.gametest.advancement;
 
-import com.github.p1k0chu.bacup.gametest.TestUtils;
+import com.github.p1k0chu.bacup.gametest.utils.TestRunnables;
+import com.github.p1k0chu.bacup.gametest.utils.TestUtils;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -23,9 +24,7 @@ public class AnimalsTabGameTest {
         var sheep = helper.spawnWithNoFreeWill(EntityType.SHEEP, pos);
         sheep.setColor(DyeColor.BLUE);
         helper.spawn(EntityType.EVOKER, pos);
-
-        var progress = TestUtils.getAdvProgress(helper, player, TestAdvancementConstants.WOLOLO);
-        helper.succeedWhen(() -> helper.assertTrue(progress.isDone(), "advancement not done"));
+        helper.succeedWhen(TestRunnables.assertAdvDone(helper, player, TestAdvancementConstants.WOLOLO));
     }
 
     @GameTest(skyAccess = true, maxTicks = 100)
@@ -38,7 +37,6 @@ public class AnimalsTabGameTest {
 
         pig.setHealth(1.0f);
         TestUtils.teleportRelative(helper, pig, 0.5, 10, 0.5);
-        var progress = TestUtils.getAdvProgress(helper, player, TestAdvancementConstants.WHEN_PIGS_FLY);
-        helper.succeedWhen(() -> helper.assertTrue(progress.isDone(), "advancement not done"));
+        helper.succeedWhen(TestRunnables.assertAdvDone(helper, player, TestAdvancementConstants.WHEN_PIGS_FLY));
     }
 }

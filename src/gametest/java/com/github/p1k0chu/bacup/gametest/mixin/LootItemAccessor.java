@@ -1,4 +1,4 @@
-package com.github.p1k0chu.bacup.mixin;
+package com.github.p1k0chu.bacup.gametest.mixin;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.Item;

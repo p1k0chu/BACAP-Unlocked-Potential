@@ -1,9 +1,7 @@
-package com.github.p1k0chu.bacup.utils;
+package com.github.p1k0chu.bacup.gametest.utils;
 
-import com.github.p1k0chu.bacup.mixin.LootItemAccessor;
+import com.github.p1k0chu.bacup.gametest.mixin.LootItemAccessor;
 import net.fabricmc.fabric.mixin.loot.LootTableAccessor;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;

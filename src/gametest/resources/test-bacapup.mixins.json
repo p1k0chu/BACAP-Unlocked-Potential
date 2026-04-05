@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "com.github.p1k0chu.bacup.gametest.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "AbstractArrowAccessor",
+    "LootItemAccessor"
+  ]
+}

@@ -1,6 +1,7 @@
 package com.github.p1k0chu.bacup.gametest.advancement;
 
-import com.github.p1k0chu.bacup.gametest.TestUtils;
+import com.github.p1k0chu.bacup.gametest.utils.TestRunnables;
+import com.github.p1k0chu.bacup.gametest.utils.TestUtils;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
@@ -20,15 +21,12 @@ public class MonstersTabGameTest {
         player.setItemInHand(InteractionHand.MAIN_HAND, stack);
         player.gameMode.useItem(player, helper.getLevel(), stack, InteractionHand.MAIN_HAND);
 
-        var progress = TestUtils.getAdvProgress(helper, player, TestAdvancementConstants.BEAM_ME_UP);
         helper.startSequence()
                 .thenWaitUntil(() -> {
                     var pearl = helper.findOneEntity(EntityType.ENDER_PEARL);
-                    // Teleporting the pearl into unloaded chunks will
-                    // not work, so teleport player.
-                    TestUtils.teleportRelative(helper, player, 105.5, 1, 0.5);
-                    pearl.setDeltaMovement(0, -1, 0);
-                }).thenWaitUntil(() -> helper.assertTrue(progress.isDone(), "advancement not done"))
+                    TestUtils.forceLoadChunk(helper, 105.5, 0.5);
+                    TestUtils.teleportRelative(helper, pearl, 105.5, 0.5, 0.5);
+                }).thenWaitUntil(TestRunnables.assertAdvDone(helper, player, TestAdvancementConstants.BEAM_ME_UP))
                 .thenSucceed();
     }
 }

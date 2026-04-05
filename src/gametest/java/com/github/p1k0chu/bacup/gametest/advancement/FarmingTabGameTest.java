@@ -1,6 +1,7 @@
 package com.github.p1k0chu.bacup.gametest.advancement;
 
-import com.github.p1k0chu.bacup.gametest.TestUtils;
+import com.github.p1k0chu.bacup.gametest.utils.TestRunnables;
+import com.github.p1k0chu.bacup.gametest.utils.TestUtils;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
@@ -18,8 +19,6 @@ public class FarmingTabGameTest {
         player.setItemInHand(InteractionHand.MAIN_HAND, Items.DIAMOND.getDefaultInstance());
         player.setXRot(90f);
         player.drop(true);
-
-        var progress = TestUtils.getAdvProgress(helper, player, TestAdvancementConstants.TRASH_BIN);
-        helper.succeedWhen(() -> helper.assertTrue(progress.isDone(), "advancement not done"));
+        helper.succeedWhen(TestRunnables.assertAdvDone(helper, player, TestAdvancementConstants.TRASH_BIN));
     }
 }
