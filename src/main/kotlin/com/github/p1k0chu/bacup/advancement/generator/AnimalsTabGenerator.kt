@@ -80,7 +80,7 @@ object AnimalsTabGenerator : AdvancementGenerator {
         advancement(consumer, TAB_NAME, POLYGLOT) {
             parent(createPlaceholder("blazeandcave:animal/birdkeeper"))
             display {
-                title = "Polyglot"
+                title = "Pollyglot"
                 description = "Hear your parrots speak like every mob"
                 icon = ItemStackTemplate(Items.WRITABLE_BOOK)
                 type = AdvancementType.CHALLENGE

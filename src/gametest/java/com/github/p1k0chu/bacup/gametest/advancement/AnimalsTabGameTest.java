@@ -36,6 +36,7 @@ public class AnimalsTabGameTest {
         var player = helper.makeMockServerPlayerInLevel();
         helper.assertTrue(player.startRiding(pig, true, true), "failed to ride pig");
 
+        pig.setHealth(1.0f);
         TestUtils.teleportRelative(helper, pig, 0.5, 10, 0.5);
         var progress = TestUtils.getAdvProgress(helper, player, TestAdvancementConstants.WHEN_PIGS_FLY);
         helper.succeedWhen(() -> helper.assertTrue(progress.isDone(), "advancement not done"));
