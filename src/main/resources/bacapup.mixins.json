@@ -17,6 +17,7 @@
     "CampfireBlockMixin",
     "CartographyTableMenuAnon5Mixin",
     "CatRelaxOnOwnerGoalMixin",
+    "ChunkAccessMixin",
     "ConduitBlockEntityMixin",
     "DragonRespawnAnimationAnon4Mixin",
     "EndDragonFightAccessor",
