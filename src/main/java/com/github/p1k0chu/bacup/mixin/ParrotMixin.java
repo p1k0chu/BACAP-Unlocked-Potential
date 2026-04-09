@@ -17,20 +17,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(Parrot.class)
 class ParrotMixin {
     @Unique
-    private static final ScopedValue<Parrot> parrotScopedValue = ScopedValue.newInstance();
+    private static final ScopedValue<Optional<Parrot>> parrotScopedValue = ScopedValue.newInstance();
 
     @WrapOperation(method = "getAmbientSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/parrot/Parrot;getAmbient(Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/sounds/SoundEvent;"))
     private SoundEvent getAmbientSound(Level keys, RandomSource level, Operation<SoundEvent> original) {
-        return ScopedValue.where(parrotScopedValue, (Parrot) (Object) this).call(() -> original.call(keys, level));
+        return ScopedValue.where(parrotScopedValue, Optional.of((Parrot) (Object) this)).call(() -> original.call(keys, level));
     }
 
     @Inject(method = "getImitatedSound", at = @At("HEAD"))
     private static void getImitatedSound(EntityType<?> id, CallbackInfoReturnable<SoundEvent> cir) {
-        Parrot parrot = parrotScopedValue.get();
-        if (parrot != null && parrot.getOwner() instanceof ServerPlayer player) {
+        Optional<Parrot> parrot = parrotScopedValue.orElse(Optional.empty());
+        if (parrot.isPresent() && parrot.get().getOwner() instanceof ServerPlayer player) {
             Criteria.PARROT_IMITATES.trigger(player, id);
         }
     }
