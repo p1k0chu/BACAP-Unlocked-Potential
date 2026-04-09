@@ -1,6 +1,6 @@
 package com.github.p1k0chu.bacup.command
 
-import com.github.p1k0chu.bacup.BacupPersistentState
+import com.github.p1k0chu.bacup.BacapupDataAttachments
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder.literal
 import com.mojang.brigadier.context.CommandContext
@@ -16,15 +16,15 @@ object BacapupCommand {
                     literal<CommandSourceStack>("stats")
                         .executes { command: CommandContext<CommandSourceStack> ->
                             val player = command.source.player ?: return@executes 0
-                            val state = BacupPersistentState.getPlayerState(player)
+                            val petsTamed = player.getAttached(BacapupDataAttachments.PETS_TAMED);
                             val text = Component.empty()
                             var nl = 0
 
-                            if (state.petsTamed.isNotEmpty()) {
+                            if (petsTamed != null) {
                                 nl = 2
-                                text.append(Component.literal("Pets tamed:"))
+                                text.append("Pets tamed:")
 
-                                state.petsTamed.forEach { (mob, count) ->
+                                petsTamed.forEach { mob, count ->
                                     text.append(Component.literal("\n"))
                                         .append(Component.translatable(mob.descriptionId))
                                         .append(": ")
@@ -35,25 +35,27 @@ object BacapupCommand {
                                 }
                             }
 
-                            if (state.emeraldsObtained != 0) {
+                            val emeraldsObtained = player.getAttached(BacapupDataAttachments.EMERALDS_OBTAINED)
+                            if (emeraldsObtained != null && emeraldsObtained > 0) {
                                 if (nl > 0) {
                                     text.append(Component.literal("\n".repeat(nl)))
                                 }
                                 nl = 1
-                                text.append(Component.literal("Bought emeralds: "))
+                                text.append("Bought emeralds: ")
                                     .append(
-                                        Component.literal("${state.emeraldsObtained}")
+                                        Component.literal("$emeraldsObtained")
                                             .withColor(ChatFormatting.GOLD.color!!)
                                     )
                             }
 
-                            if (state.glgltuCounter > 0) {
+                            val glgltuCounter = player.getAttached(BacapupDataAttachments.GLGLTU_COUNTER);
+                            if (glgltuCounter != null && glgltuCounter > 0) {
                                 if (nl > 0) {
                                     text.append(Component.literal("\n".repeat(nl)))
                                 }
-                                text.append(Component.literal("глглту sent: "))
+                                text.append("глглту sent: ")
                                     .append(
-                                        Component.literal(state.glgltuCounter.toString())
+                                        Component.literal("$glgltuCounter")
                                             .withColor(ChatFormatting.GOLD.color!!)
                                     )
                             }

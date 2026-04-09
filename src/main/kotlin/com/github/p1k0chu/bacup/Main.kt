@@ -28,6 +28,7 @@ object Main : ModInitializer {
         // touch these so java loads the classes
         MapColorPredicateTypes
         Criteria
+        BacapupDataAttachments.doNothing()
     }
 
     override fun onInitialize() {
@@ -42,9 +43,10 @@ object Main : ModInitializer {
         }
         ServerMessageEvents.CHAT_MESSAGE.register { msg: PlayerChatMessage, player: ServerPlayer, _ ->
             if(msg.decoratedContent().string.contains("глглту")) {
-                val state = BacupPersistentState.getPlayerState(player)
+                val i: Int = player.getAttachedOrCreate(BacapupDataAttachments.GLGLTU_COUNTER) + 1
+                player.setAttached(BacapupDataAttachments.GLGLTU_COUNTER, i)
 
-                Criteria.GLGLTU.trigger(player, ++state.glgltuCounter)
+                Criteria.GLGLTU.trigger(player, i)
             }
         }
     }

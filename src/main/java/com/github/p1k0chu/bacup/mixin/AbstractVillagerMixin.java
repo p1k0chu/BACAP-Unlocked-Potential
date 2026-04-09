@@ -1,7 +1,7 @@
 package com.github.p1k0chu.bacup.mixin;
 
+import com.github.p1k0chu.bacup.BacapupDataAttachments;
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
-import com.github.p1k0chu.bacup.imixin.ServerPlayerTradedEmeralds;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +26,9 @@ abstract class AbstractVillagerMixin {
             ItemStack item = offer.getResult();
 
             if (item.is(Items.EMERALD)) {
-                int total = ((ServerPlayerTradedEmeralds) player).bacup$incrementEmeraldsObtained(item.getCount());
+                int total = player.getAttachedOrCreate(BacapupDataAttachments.EMERALDS_OBTAINED);
+                total += item.count();
+                player.setAttached(BacapupDataAttachments.EMERALDS_OBTAINED, total);
                 Criteria.TRADED_FOR_EMERALDS.trigger(player, total);
             }
         }

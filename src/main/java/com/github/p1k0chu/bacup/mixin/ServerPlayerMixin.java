@@ -1,9 +1,5 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.BacupPersistentState;
-import com.github.p1k0chu.bacup.PlayerData;
-import com.github.p1k0chu.bacup.imixin.ServerPlayerPetsTamedCounter;
-import com.github.p1k0chu.bacup.imixin.ServerPlayerTradedEmeralds;
 import com.github.p1k0chu.bacup.utils.AdvancementUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -13,8 +9,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,33 +22,17 @@ import static com.github.p1k0chu.bacup.BacapupScopedValues.parrotImitationScoped
 import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.INTENTIONAL_ADVANCEMENT_DESIGN;
 
 @Mixin(ServerPlayer.class)
-abstract class ServerPlayerMixin implements ServerPlayerPetsTamedCounter, ServerPlayerTradedEmeralds {
-    @Override
-    public int bacup$increment(EntityType<?> entityType) {
-        PlayerData state = BacupPersistentState.getPlayerState((LivingEntity) (Object) this);
-
-        return state.getPetsTamed().compute(entityType, (_, value) -> value == null ? 1 : value + 1);
-    }
-
-    @Override
-    public int bacup$incrementEmeraldsObtained(int amount) {
-        PlayerData state = BacupPersistentState.getPlayerState((LivingEntity) (Object) this);
-
-        state.setEmeraldsObtained(state.getEmeraldsObtained() + amount);
-
-        return state.getEmeraldsObtained();
-    }
-
+abstract class ServerPlayerMixin {
     @Inject(method = "die", at = @At("HEAD"))
-    private void intentionalAdvancementDesignDeath(DamageSource damageSource, CallbackInfo ci) {
-        if (damageSource.is(DamageTypes.BAD_RESPAWN_POINT)) {
+    private void intentionalAdvancementDesignDeath(DamageSource source, CallbackInfo ci) {
+        if (source.is(DamageTypes.BAD_RESPAWN_POINT)) {
             AdvancementUtils.grant((ServerPlayer) (Object) this, INTENTIONAL_ADVANCEMENT_DESIGN);
         }
     }
 
     @Inject(method = "hurtServer", at = @At("RETURN"))
-    private void intentionalAdvancementDesignHardcore(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Boolean> cir) {
-        if (serverLevel.getLevelData().isHardcore() && cir.getReturnValue() && damageSource.is(DamageTypes.BAD_RESPAWN_POINT)) {
+    private void intentionalAdvancementDesignHardcore(ServerLevel level, DamageSource source, float f, CallbackInfoReturnable<Boolean> cir) {
+        if (level.getLevelData().isHardcore() && cir.getReturnValue() && source.is(DamageTypes.BAD_RESPAWN_POINT)) {
             AdvancementUtils.grant((ServerPlayer) (Object) this, INTENTIONAL_ADVANCEMENT_DESIGN);
         }
     }
