@@ -12,10 +12,14 @@ import net.minecraft.commands.CommandSourceStack
 import net.minecraft.network.chat.PlayerChatMessage
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 
 object Main : ModInitializer {
     const val MOD_ID: String = "bacapup"
+    @JvmField
+    val LOGGER: Logger = LoggerFactory.getLogger(MOD_ID)
 
     var serverInstance: MinecraftServer? = null
         private set

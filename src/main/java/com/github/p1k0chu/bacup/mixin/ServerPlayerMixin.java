@@ -5,18 +5,26 @@ import com.github.p1k0chu.bacup.PlayerData;
 import com.github.p1k0chu.bacup.imixin.ServerPlayerPetsTamedCounter;
 import com.github.p1k0chu.bacup.imixin.ServerPlayerTradedEmeralds;
 import com.github.p1k0chu.bacup.utils.AdvancementUtils;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
+import static com.github.p1k0chu.bacup.BacapupScopedValues.parrotImitationScopedValue;
 import static com.github.p1k0chu.bacup.constants.AdvancementIdentifierConstants.INTENTIONAL_ADVANCEMENT_DESIGN;
 
 @Mixin(ServerPlayer.class)
@@ -49,5 +57,10 @@ abstract class ServerPlayerMixin implements ServerPlayerPetsTamedCounter, Server
         if (serverLevel.getLevelData().isHardcore() && cir.getReturnValue() && damageSource.is(DamageTypes.BAD_RESPAWN_POINT)) {
             AdvancementUtils.grant((ServerPlayer) (Object) this, INTENTIONAL_ADVANCEMENT_DESIGN);
         }
+    }
+
+    @WrapOperation(method = "playShoulderEntityAmbientSound", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/parrot/Parrot;getAmbient(Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/sounds/SoundEvent;"))
+    private SoundEvent parrotImitatesAmbient(Level level, RandomSource random, Operation<SoundEvent> original) {
+        return ScopedValue.where(parrotImitationScopedValue, Optional.of((ServerPlayer) (Object) this)).call(() -> original.call(level, random));
     }
 }
