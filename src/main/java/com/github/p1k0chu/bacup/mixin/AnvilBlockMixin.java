@@ -1,33 +1,23 @@
 package com.github.p1k0chu.bacup.mixin;
 
-import com.github.p1k0chu.bacup.imixin.AnvilBlockWhoPlaced;
+import com.github.p1k0chu.bacup.imixin.MobFlattener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.UUID;
-
 @Mixin(AnvilBlock.class)
-abstract class AnvilBlockMixin extends BlockMixin implements AnvilBlockWhoPlaced {
-    @Unique
-    private UUID placer;
-
-    @Override
-    public @Nullable UUID bacup$getPlacer() {
-        return placer;
-    }
-
+abstract class AnvilBlockMixin extends BlockMixin {
     @Override
     protected void onPlaced(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack, CallbackInfo ci) {
-        this.placer = placer.getUUID();
-
         super.onPlaced(world, pos, state, placer, itemStack, ci);
+
+        if (!world.isClientSide()) {
+            ((MobFlattener) world.getChunkAt(pos)).bacup$setPlaced(pos, placer.getUUID());
+        }
     }
 }

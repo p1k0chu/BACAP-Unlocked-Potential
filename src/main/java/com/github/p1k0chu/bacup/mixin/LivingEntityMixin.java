@@ -1,8 +1,8 @@
 package com.github.p1k0chu.bacup.mixin;
 
 import com.github.p1k0chu.bacup.advancement.criteria.Criteria;
-import com.github.p1k0chu.bacup.imixin.AnvilBlockWhoPlaced;
-import net.minecraft.server.level.ServerLevel;
+import com.github.p1k0chu.bacup.imixin.MobFlattener;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -44,11 +43,14 @@ abstract class LivingEntityMixin extends Entity {
 
     @Inject(method = "die", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/damagesource/DamageSource;getEntity()Lnet/minecraft/world/entity/Entity;"))
     protected void onDeath(DamageSource damageSource, CallbackInfo ci) {
-        Entity source = damageSource.getDirectEntity();
+        if (level().isClientSide()) {
+            return;
+        }
 
-        if(source instanceof FallingBlockEntity fallingBlockEntity) {
-            if(fallingBlockEntity.getBlockState().getBlock() instanceof AnvilBlock anvil) {
-                UUID placer = ((AnvilBlockWhoPlaced) anvil).bacup$getPlacer();
+        if(damageSource.getDirectEntity() instanceof FallingBlockEntity fallingBlockEntity) {
+            if(fallingBlockEntity.getBlockState().is(Blocks.ANVIL)) {
+                BlockPos startPos = fallingBlockEntity.getStartPos();
+                UUID placer = ((MobFlattener) level().getChunkAt(startPos)).bacup$whoPlaced(startPos);
 
                 if(placer != null) {
                     if(level().getPlayerByUUID(placer) instanceof ServerPlayer player) {
