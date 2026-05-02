@@ -12,3 +12,5 @@ pluginManagement {
         kotlin("jvm") version providers.gradleProperty("kotlin_version")
     }
 }
+
+rootProject.name = "bac-unlocked-potential"
