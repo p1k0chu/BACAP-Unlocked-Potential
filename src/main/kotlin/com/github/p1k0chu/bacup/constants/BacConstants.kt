@@ -29,7 +29,7 @@ object BacConstants {
         "building" to "Building",
         "challenges" to "Super Challenges",
         "enchanting" to "Enchanting",
-        "end" to "End",
+        "end" to "The End",
         "farming" to "Farming",
         "mining" to "Mining",
         "monsters" to "Monsters",
