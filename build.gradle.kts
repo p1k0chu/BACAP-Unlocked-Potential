@@ -5,10 +5,6 @@ plugins {
     kotlin("jvm")
 }
 
-base {
-    archivesName = providers.gradleProperty("archives_base_name")
-}
-
 repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
@@ -22,7 +18,7 @@ loom {
     accessWidenerPath = file("src/main/resources/bacapup.classtweaker")
 
     mods {
-        register("bac-unlocked-potential") {
+        register(project.name) {
             sourceSet("main")
             sourceSet("client")
         }
@@ -43,12 +39,13 @@ dependencies {
 }
 
 tasks.processResources {
-    inputs.property("version", project.version)
+    val props = mapOf(
+        "version" to project.version
+    )
+    props.forEach { k, v -> inputs.property(k ,v) }
 
     filesMatching("fabric.mod.json") {
-        expand(
-            "version" to project.version,
-        )
+        expand(props)
     }
 }
 
@@ -73,7 +70,9 @@ kotlin {
 }
 
 tasks.jar {
+    val name = project.name
+    inputs.property("name", name)
     from("LICENSE") {
-        rename { "${it}_${providers.gradleProperty("archives_base_name").get()}" }
+        rename { "${it}_$name" }
     }
 }
