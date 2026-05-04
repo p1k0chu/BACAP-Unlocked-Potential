@@ -7,12 +7,12 @@
   "environment": "*",
   "entrypoints": {
     "fabric-gametest": [
-      "com.github.p1k0chu.bacup.gametest.advancement.AnimalsTabGameTest",
-      "com.github.p1k0chu.bacup.gametest.advancement.FarmingTabGameTest",
-      "com.github.p1k0chu.bacup.gametest.advancement.MonstersTabGameTest",
-      "com.github.p1k0chu.bacup.gametest.advancement.AdventureTabGameTest",
-      "com.github.p1k0chu.bacup.gametest.advancement.BuildingTabGameTest",
-      "com.github.p1k0chu.bacup.gametest.VerifyConstantListsGameTest"
+      "io.github.p1k0chu.bacapup.gametest.advancement.AnimalsTabGameTest",
+      "io.github.p1k0chu.bacapup.gametest.advancement.FarmingTabGameTest",
+      "io.github.p1k0chu.bacapup.gametest.advancement.MonstersTabGameTest",
+      "io.github.p1k0chu.bacapup.gametest.advancement.AdventureTabGameTest",
+      "io.github.p1k0chu.bacapup.gametest.advancement.BuildingTabGameTest",
+      "io.github.p1k0chu.bacapup.gametest.VerifyConstantListsGameTest"
     ],
     "fabric-client-gametest": [
     ]

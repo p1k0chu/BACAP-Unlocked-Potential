@@ -10,19 +10,19 @@
   "contact": {
   },
   "license": "MIT",
-  "icon": "assets/bac-unlocked-potential/icon.png",
+  "icon": "assets/bacapup/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
       {
         "adapter": "kotlin",
-        "value": "com.github.p1k0chu.bacup.Main"
+        "value": "io.github.p1k0chu.bacapup.Main"
       }
     ],
     "fabric-datagen": [
       {
         "adapter": "kotlin",
-        "value": "com.github.p1k0chu.bacup.DatagenMain"
+        "value": "io.github.p1k0chu.bacapup.DatagenMain"
       }
     ]
   },

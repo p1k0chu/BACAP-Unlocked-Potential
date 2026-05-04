@@ -1,0 +1,70 @@
+package io.github.p1k0chu.bacapup.mixin;
+
+import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.imixin.AbstractFurnaceBlockEntityLastFuel;
+import io.github.p1k0chu.bacapup.imixin.AbstractFurnaceBlockEntityWhoOpened;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractFurnaceMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(AbstractFurnaceMenu.class)
+class AbstractFurnaceMenuMixin {
+    @Shadow
+    @Final
+    private Container container;
+
+    @Inject(method = "<init>(Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/inventory/RecipeBookType;ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/Container;Lnet/minecraft/world/inventory/ContainerData;)V", at = @At("RETURN"))
+    private void init(MenuType<?> type,
+              RecipeType<?> recipeType,
+              ResourceKey<?> recipePropertySetKey,
+              RecipeBookType category,
+              int syncId,
+              Inventory playerInventory,
+              Container inventory,
+              ContainerData propertyDelegate,
+              CallbackInfo ci) {
+
+        if (inventory instanceof AbstractFurnaceBlockEntity furnace) {
+            ((AbstractFurnaceBlockEntityWhoOpened) furnace).bacapup$setPlayer(playerInventory.player.getUUID());
+        }
+    }
+
+    @Inject(method = "quickMoveStack", at = @At("RETURN"))
+    private void quickMove(Player player, int slot, CallbackInfoReturnable<ItemStack> cir) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (this.container instanceof AbstractFurnaceBlockEntity furnace) {
+                ItemStack itemStack = cir.getReturnValue();
+
+                if (slot == AbstractFurnaceMenu.RESULT_SLOT) {
+                    Item fuel = ((AbstractFurnaceBlockEntityLastFuel) furnace).bacapup$getLastFuel();
+
+                    if (fuel != null) {
+                        Criteria.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, itemStack);
+                    }
+                } else if (slot == AbstractFurnaceMenu.FUEL_SLOT) {
+                    if (itemStack.is(Items.WATER_BUCKET)) {
+                        Criteria.FURNACE_TOOK_WATER_BUCKET_FUEL.trigger(serverPlayer);
+                    }
+                }
+            }
+        }
+    }
+}

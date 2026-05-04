@@ -13,4 +13,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "bac-unlocked-potential"
+rootProject.name = "bacapup"

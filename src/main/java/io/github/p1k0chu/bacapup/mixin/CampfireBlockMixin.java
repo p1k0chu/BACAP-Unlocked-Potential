@@ -1,0 +1,24 @@
+package io.github.p1k0chu.bacapup.mixin;
+
+import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(CampfireBlock.class)
+class CampfireBlockMixin {
+    @Inject(method = "onProjectileHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", shift = At.Shift.AFTER))
+    private void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile, CallbackInfo ci) {
+        if (projectile.getOwner() instanceof ServerPlayer player) {
+            Criteria.PROJECTILE_LIT_BLOCK.trigger(player, (ServerLevel) world, hit.getBlockPos());
+        }
+    }
+}

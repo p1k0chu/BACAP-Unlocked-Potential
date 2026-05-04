@@ -1,0 +1,26 @@
+package io.github.p1k0chu.bacapup.mixin;
+
+import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BellBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(BellBlock.class)
+class BellBlockMixin {
+    @Inject(method = "onProjectileHit", at = @At(value = "RETURN"))
+    private void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile, CallbackInfo ci, @Local(name = "playerOwner") Player player) {
+        if (!(player instanceof ServerPlayer)) return;
+
+        double distance = hit.getLocation().distanceTo(player.position());
+        Criteria.BELL_SHOT_FROM_DISTANCE.trigger((ServerPlayer) player, (int) distance);
+    }
+}
