@@ -24,12 +24,13 @@ fun makeTrophyItemStack(
     components: DataComponentPatch.Builder = DataComponentPatch.builder()
 ): ItemStackTemplate = ItemStackTemplate(
     item, components.set(
-        DataComponents.CUSTOM_NAME, Component.literal(name).withStyle(Style.EMPTY.withBold(true).withItalic(true))
-    ).set(DataComponents.CUSTOM_MODEL_DATA, CustomModelData(listOf(131f), listOf(), listOf(), listOf()))
+        DataComponents.CUSTOM_NAME, Component.literal(name).withStyle(Style.EMPTY.withBold(true).withItalic(false))
+    )
         .set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay(false, ReferenceSortedSets.emptySet()))
         .set(DataComponents.CUSTOM_DATA, CustomData.of(CompoundTag().apply {
             putInt("Trophy", 1)
-        })).set(
+        }))
+        .set(
             DataComponents.LORE, ItemLore(
                 listOf(
                     Component.literal(lore)
@@ -39,6 +40,7 @@ fun makeTrophyItemStack(
                     Component.translatable(advName)
                 )
             )
-        ).build()
+        )
+        .build()
 )
 

@@ -11,7 +11,7 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import java.util.function.Predicate
 
-interface MapColorPredicate : Predicate<ByteArray> {
+sealed interface MapColorPredicate : Predicate<ByteArray> {
     companion object {
         val CODEC: Codec<MapColorPredicate> = MapColorPredicateType.REGISTRY.byNameCodec()
             .dispatch("type", MapColorPredicate::getType) { it.codec }

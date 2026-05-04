@@ -71,7 +71,7 @@ class AdvancementProvider(
         }
     }
 
-    override fun getName(): String = "BACAPUPAdvancements"
+    override fun getName(): String = "Advancements"
 
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(AdvancementProvider::class.java)

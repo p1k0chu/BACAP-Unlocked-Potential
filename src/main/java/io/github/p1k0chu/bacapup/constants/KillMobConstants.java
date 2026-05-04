@@ -27,6 +27,7 @@ public final class KillMobConstants {
                 .toList();
     }
 
+    @SuppressWarnings("unchecked")
     public static List<EntityType<Entity>> getAnvilMobsToKill(HolderLookup<EntityType<? extends Entity>> lookup) {
         return getAllMobs((HolderLookup<EntityType<Entity>>) (Object) lookup).stream()
                 .filter(Predicate.not(EXCEPTIONS_ANVIL::contains))

@@ -1,15 +1,10 @@
 package io.github.p1k0chu.bacapup.advancement.predicate
 
-import io.github.p1k0chu.bacapup.Main
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.advancements.criterion.MinMaxBounds
-import net.minecraft.advancements.criterion.SingleComponentItemPredicate
-import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.saveddata.maps.MapId
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData
 import java.util.*
 
@@ -20,7 +15,7 @@ class MapStatePredicate(
     val dimension: Optional<ResourceKey<Level>> = Optional.empty(),
     val locked: Optional<Boolean> = Optional.empty(),
     val colors: Optional<MapColorPredicate> = Optional.empty()
-) : SingleComponentItemPredicate<MapId> {
+) {
     companion object {
         val CODEC: Codec<MapStatePredicate> = RecordCodecBuilder.create { instance ->
             instance.group(
@@ -40,23 +35,12 @@ class MapStatePredicate(
         }
     }
 
-    override fun matches(component: MapId): Boolean {
-        val world = Main.serverInstance?.overworld()
-        val state = world?.getMapData(component) ?: return false
-
-        return test(state)
-    }
-
-    private fun test(mapState: MapItemSavedData): Boolean {
+    fun matches(mapState: MapItemSavedData): Boolean {
         return scale.matches(mapState.scale.toInt())
                 && centerX.matches(mapState.centerX)
                 && centerZ.matches(mapState.centerZ)
                 && (dimension.isEmpty || dimension.get() == mapState.dimension)
                 && (locked.isEmpty || locked.get() == mapState.locked)
                 && (colors.isEmpty || colors.get().test(mapState.colors))
-    }
-
-    override fun componentType(): DataComponentType<MapId> {
-        return DataComponents.MAP_ID
     }
 }
