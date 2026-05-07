@@ -7,9 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class ParrotConstants {
-    private ParrotConstants() {
-    }
-
     private static final List<EntityType<?>> IMPOSSIBLE_TYPES = List.of(EntityType.ILLUSIONER);
 
     public static final List<EntityType<?>> IMITATING_TYPES = ParrotAccessor.getMobSoundMap()
@@ -18,4 +15,7 @@ public final class ParrotConstants {
             .filter(i -> !IMPOSSIBLE_TYPES.contains(i))
             .sorted(Comparator.comparing(EntityType::toString))
             .toList();
+
+    private ParrotConstants() {
+    }
 }

@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture
 class AdvancementProvider(
     output: PackOutput,
     private val registriesFuture: CompletableFuture<HolderLookup.Provider>,
-    private val generators: Collection<AdvancementGenerator> = listOf()
+    private val generators: Collection<AdvancementSubProvider> = listOf()
 ) : DataProvider {
     private val advancementPathResolver = output.createPathProvider(PackOutput.Target.DATA_PACK, "advancement")
     private val functionPathResolver = output.createPathProvider(PackOutput.Target.DATA_PACK, "function")
@@ -61,7 +61,7 @@ class AdvancementProvider(
                 }
             }
 
-            generators.forEach { it: AdvancementGenerator ->
+            generators.forEach { it: AdvancementSubProvider ->
                 it.generate(wrapperLookup, consumer)
             }
 

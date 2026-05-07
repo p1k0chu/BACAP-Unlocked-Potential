@@ -1,7 +1,7 @@
 package io.github.p1k0chu.bacapup.mixin;
 
 import io.github.p1k0chu.bacapup.BacapupDataAttachments;
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +29,7 @@ abstract class AbstractVillagerMixin {
                 int total = player.getAttachedOrCreate(BacapupDataAttachments.EMERALDS_OBTAINED);
                 total += item.count();
                 player.setAttached(BacapupDataAttachments.EMERALDS_OBTAINED, total);
-                Criteria.TRADED_FOR_EMERALDS.trigger(player, total);
+                BacapupTriggers.TRADED_FOR_EMERALDS.trigger(player, total);
             }
         }
     }

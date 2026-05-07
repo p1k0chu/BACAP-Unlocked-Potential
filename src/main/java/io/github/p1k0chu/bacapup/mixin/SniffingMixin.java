@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.imixin.RagebaiterStatus;
+import io.github.p1k0chu.bacapup.ducks.RagebaiterStatus;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.behavior.warden.Sniffing;
 import net.minecraft.world.entity.monster.warden.Warden;

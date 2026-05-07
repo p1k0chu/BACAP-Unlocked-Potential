@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -21,6 +21,6 @@ class BellBlockMixin {
         if (!(player instanceof ServerPlayer)) return;
 
         double distance = hit.getLocation().distanceTo(player.position());
-        Criteria.BELL_SHOT_FROM_DISTANCE.trigger((ServerPlayer) player, (int) distance);
+        BacapupTriggers.BELL_SHOT_FROM_DISTANCE.trigger((ServerPlayer) player, (int) distance);
     }
 }

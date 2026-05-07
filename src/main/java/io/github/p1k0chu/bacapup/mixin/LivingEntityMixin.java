@@ -1,7 +1,7 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
-import io.github.p1k0chu.bacapup.imixin.MobFlattener;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
+import io.github.p1k0chu.bacapup.ducks.MobFlattener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -36,7 +36,7 @@ abstract class LivingEntityMixin extends Entity {
     @ModifyArg(method = "dropFromLootTable(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;ZLnet/minecraft/resources/ResourceKey;Ljava/util/function/Consumer;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;JLjava/util/function/Consumer;)V"), index = 2)
     private Consumer<ItemStack> modifyLootConsumer(Consumer<ItemStack> lootConsumer) {
         if (getLastHurtByPlayer() instanceof ServerPlayer serverPlayerEntity) {
-            return lootConsumer.andThen(stack -> Criteria.ENTITY_DROPPED_LOOT.trigger(serverPlayerEntity, (LivingEntity) (Object) this, stack));
+            return lootConsumer.andThen(stack -> BacapupTriggers.ENTITY_DROPPED_LOOT.trigger(serverPlayerEntity, (LivingEntity) (Object) this, stack));
         }
         return lootConsumer;
     }
@@ -54,7 +54,7 @@ abstract class LivingEntityMixin extends Entity {
 
                 if(placer != null) {
                     if(level().getPlayerByUUID(placer) instanceof ServerPlayer player) {
-                        Criteria.ANVIL_KILL.trigger(player, (LivingEntity) (Object) this);
+                        BacapupTriggers.ANVIL_KILL.trigger(player, (LivingEntity) (Object) this);
                     }
                 }
             }

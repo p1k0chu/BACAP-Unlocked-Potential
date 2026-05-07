@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.animal.sheep.Sheep;
@@ -31,7 +31,7 @@ class EvokerWololoSpellGoalMixin {
 
         for(var player : players) {
             if(player instanceof ServerPlayer serverPlayer) {
-                Criteria.WOLOLO.trigger(serverPlayer);
+                BacapupTriggers.WOLOLO.trigger(serverPlayer);
             }
         }
     }

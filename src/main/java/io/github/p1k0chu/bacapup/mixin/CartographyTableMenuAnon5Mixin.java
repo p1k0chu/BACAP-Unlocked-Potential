@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CartographyTableMenu;
@@ -29,7 +29,7 @@ abstract class CartographyTableMenuAnon5Mixin {
         var second = this$0.slots.get(1).getItem();
 
         if(second.is(Items.GLASS_PANE)) {
-            Criteria.MAP_LOCKED.trigger((ServerPlayer) player);
+            BacapupTriggers.MAP_LOCKED.trigger((ServerPlayer) player);
         }
     }
 }

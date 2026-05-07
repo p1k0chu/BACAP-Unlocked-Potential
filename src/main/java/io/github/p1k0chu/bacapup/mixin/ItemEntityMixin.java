@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,7 +27,7 @@ abstract class ItemEntityMixin {
         if(!source.is(DamageTypes.CACTUS)) return;
 
         if(getOwner() instanceof ServerPlayer player) {
-            Criteria.CACTUS_DESTROY_ITEM.trigger(player, getItem());
+            BacapupTriggers.CACTUS_DESTROY_ITEM.trigger(player, getItem());
         }
     }
 }

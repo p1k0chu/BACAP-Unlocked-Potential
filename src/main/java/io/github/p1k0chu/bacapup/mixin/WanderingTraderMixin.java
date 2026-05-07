@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -17,7 +17,7 @@ class WanderingTraderMixin extends MobMixin {
         super.dropEquipmentDropStack(world, source, causedByPlayer, ci, itemStack);
 
         if (source.getEntity() instanceof ServerPlayer player) {
-            Criteria.WANDERING_TRADER_DROPPED_ITEM.trigger(player, (LivingEntity) (Object) this, itemStack);
+            BacapupTriggers.WANDERING_TRADER_DROPPED_ITEM.trigger(player, (LivingEntity) (Object) this, itemStack);
         }
     }
 }

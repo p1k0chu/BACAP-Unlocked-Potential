@@ -1,7 +1,7 @@
 package io.github.p1k0chu.bacapup.mixin;
 
 import io.github.p1k0chu.bacapup.Main;
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -35,10 +35,10 @@ class ParrotMixin {
         Optional<LivingEntity> optional = parrotImitationScopedValue.orElse(Optional.empty());
         optional.ifPresent(entity -> {
             if (entity instanceof ServerPlayer player) {
-                Criteria.PARROT_IMITATES.trigger(player, id);
+                BacapupTriggers.PARROT_IMITATES.trigger(player, id);
             } else if (entity instanceof Parrot parrot) {
                 if (parrot.getOwner() instanceof ServerPlayer player) {
-                    Criteria.PARROT_IMITATES.trigger(player, id);
+                    BacapupTriggers.PARROT_IMITATES.trigger(player, id);
                 }
             } else {
                 Main.LOGGER.error("During parrot's imitation entity was neigher a Parrot or a Player (is {}). " +
@@ -51,9 +51,9 @@ class ParrotMixin {
     private static void parrotImitatesType(Level level, Entity entity, CallbackInfoReturnable<Boolean> cir, @Local(name = "mob") Mob mob) {
         // entity is either a ServerPlayer or a parrot
         if (entity instanceof ServerPlayer player) {
-            Criteria.PARROT_IMITATES.trigger(player, mob.getType());
+            BacapupTriggers.PARROT_IMITATES.trigger(player, mob.getType());
         } else if (((Parrot) entity).getOwner() instanceof ServerPlayer player) {
-            Criteria.PARROT_IMITATES.trigger(player, mob.getType());
+            BacapupTriggers.PARROT_IMITATES.trigger(player, mob.getType());
         }
     }
 }

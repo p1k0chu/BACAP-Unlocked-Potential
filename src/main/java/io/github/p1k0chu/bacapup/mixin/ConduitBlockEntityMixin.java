@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.imixin.ConduitPowerGetter;
+import io.github.p1k0chu.bacapup.ducks.ConduitPowerGetter;
 import io.github.p1k0chu.bacapup.utils.AdvancementUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.BlockPos;
