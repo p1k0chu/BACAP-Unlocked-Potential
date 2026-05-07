@@ -87,5 +87,5 @@ tasks.jar {
 }
 
 tasks.test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
