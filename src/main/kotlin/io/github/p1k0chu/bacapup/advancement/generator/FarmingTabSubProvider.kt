@@ -3,7 +3,7 @@ package io.github.p1k0chu.bacapup.advancement.generator
 import io.github.p1k0chu.bacapup.advancement.*
 import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers
 import io.github.p1k0chu.bacapup.advancement.triggers.SingleItemTrigger
-import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.advancements.predicates.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents

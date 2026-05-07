@@ -2,7 +2,7 @@ package io.github.p1k0chu.bacapup.advancement.predicate
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.predicates.MinMaxBounds
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData

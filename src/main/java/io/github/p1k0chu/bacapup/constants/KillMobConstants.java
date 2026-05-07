@@ -4,6 +4,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 
 import java.util.Comparator;
@@ -14,10 +15,10 @@ public final class KillMobConstants {
     private KillMobConstants() {
     }
 
-    private static final List<EntityType<?>> EXCEPTIONS = List.of(EntityType.GIANT, EntityType.ILLUSIONER);
-    private static final List<EntityType<?>> MISC_BUT_SHOULDNT_BE = List.of(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM, EntityType.VILLAGER);
+    private static final List<EntityType<?>> EXCEPTIONS = List.of(EntityTypes.GIANT, EntityTypes.ILLUSIONER);
+    private static final List<EntityType<?>> MISC_BUT_SHOULDNT_BE = List.of(EntityTypes.IRON_GOLEM, EntityTypes.SNOW_GOLEM, EntityTypes.VILLAGER);
     private static final List<MobCategory> IGNORE_CATEGORIES = List.of(MobCategory.MISC);
-    private static final List<EntityType<?>> EXCEPTIONS_ANVIL = List.of(EntityType.CREAKING, EntityType.ENDER_DRAGON, EntityType.WITHER);
+    private static final List<EntityType<?>> EXCEPTIONS_ANVIL = List.of(EntityTypes.CREAKING, EntityTypes.ENDER_DRAGON, EntityTypes.WITHER);
 
     private static <T extends Entity> List<EntityType<T>> getAllMobs(HolderLookup<EntityType<T>> lookup) {
         return lookup.listElements()

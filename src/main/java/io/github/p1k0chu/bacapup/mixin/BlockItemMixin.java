@@ -30,7 +30,7 @@ abstract class BlockItemMixin {
     @Deprecated
     private Block block;
 
-    @Inject(method = "place", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/criterion/ItemUsedOnLocationTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemInstance;)V"))
+    @Inject(method = "place", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/triggers/ItemUsedOnLocationTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemInstance;)V"))
     private void onBlockPlaced(BlockPlaceContext placeContext, CallbackInfoReturnable<InteractionResult> cir, @Local(name = "player") Player player, @Local BlockPos pos) {
         if (block == Blocks.WITHER_ROSE) {
             final Optional<GlobalPos> lastDeathPos = player.getLastDeathLocation();

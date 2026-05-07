@@ -7,7 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
@@ -21,16 +21,16 @@ public class AnimalsTabGameTest {
         player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, Integer.MAX_VALUE));
 
         var pos = new BlockPos(5, 1, 5);
-        var sheep = helper.spawnWithNoFreeWill(EntityType.SHEEP, pos);
+        var sheep = helper.spawnWithNoFreeWill(EntityTypes.SHEEP, pos);
         sheep.setColor(DyeColor.BLUE);
-        helper.spawn(EntityType.EVOKER, pos);
+        helper.spawn(EntityTypes.EVOKER, pos);
         helper.succeedWhen(TestRunnables.assertAdvDone(helper, player, TestAdvancementConstants.WOLOLO));
     }
 
     @GameTest(skyAccess = true, maxTicks = 100)
     public void testWhenPigsFly(GameTestHelper helper) {
         helper.setBlock(0, 0, 0, Blocks.STONE);
-        var pig = helper.spawnWithNoFreeWill(EntityType.PIG, new BlockPos(0, 1, 0));
+        var pig = helper.spawnWithNoFreeWill(EntityTypes.PIG, new BlockPos(0, 1, 0));
         pig.setItemSlot(EquipmentSlot.SADDLE, Items.SADDLE.getDefaultInstance());
         var player = helper.makeMockServerPlayerInLevel();
         helper.assertTrue(player.startRiding(pig, true, true), "failed to ride pig");

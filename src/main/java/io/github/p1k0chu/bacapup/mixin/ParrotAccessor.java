@@ -2,6 +2,7 @@ package io.github.p1k0chu.bacapup.mixin;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.parrot.Parrot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;

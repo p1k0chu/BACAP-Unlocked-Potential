@@ -5,16 +5,18 @@ import io.github.p1k0chu.bacapup.advancement.triggers.*
 import io.github.p1k0chu.bacapup.advancement.predicate.MapColorPredicate
 import io.github.p1k0chu.bacapup.advancement.predicate.MapStatePredicate
 import io.github.p1k0chu.bacapup.constants.CollectItemsConstants
-import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.advancements.criterion.*
+import net.minecraft.advancements.triggers.*
+import net.minecraft.advancements.predicates.*
+import net.minecraft.advancements.predicates.entity.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
-import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.EntityTypes
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.WeatheringCopper
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData
 import java.util.*
 
@@ -64,7 +66,7 @@ object AdventureTabSubProvider : AdvancementSubProvider {
                             EntityPredicate.Builder.entity().entityType(
                                 EntityTypePredicate.of(
                                     provider.lookupOrThrow(Registries.ENTITY_TYPE),
-                                    EntityType.CAT
+                                    EntityTypes.CAT
                                 )
                             ).build()
                         ),
@@ -221,7 +223,7 @@ object AdventureTabSubProvider : AdvancementSubProvider {
                         Optional.empty(),
                         Optional.of(
                             EntityPredicate.Builder.entity()
-                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WANDERING_TRADER)
+                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityTypes.WANDERING_TRADER)
                                 .build()
                         ),
                         Optional.of(
@@ -240,7 +242,7 @@ object AdventureTabSubProvider : AdvancementSubProvider {
                         Optional.empty(),
                         Optional.of(
                             EntityPredicate.Builder.entity()
-                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WANDERING_TRADER)
+                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityTypes.WANDERING_TRADER)
                                 .build()
                         ),
                         Optional.of(
@@ -275,7 +277,7 @@ object AdventureTabSubProvider : AdvancementSubProvider {
             display {
                 title = "Short Circuit"
                 description = "Get a breeze to activate 9 redstone components at the same time"
-                icon = ItemStackTemplate(Items.COPPER_TRAPDOOR)
+                icon = ItemStackTemplate(Items.COPPER_TRAPDOOR.weathering.unaffected)
                 type = AdvancementType.GOAL
             }
 

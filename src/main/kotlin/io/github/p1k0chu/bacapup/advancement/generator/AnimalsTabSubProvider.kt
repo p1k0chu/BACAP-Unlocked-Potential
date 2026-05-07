@@ -8,14 +8,14 @@ import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers
 import io.github.p1k0chu.bacapup.advancement.triggers.EmptyTrigger
 import io.github.p1k0chu.bacapup.advancement.triggers.PetTamedTrigger
 import io.github.p1k0chu.bacapup.constants.ParrotConstants
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.advancements.criterion.EntityTypePredicate
-import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.predicates.entity.EntityPredicate
+import net.minecraft.advancements.predicates.entity.EntityTypePredicate
+import net.minecraft.advancements.predicates.MinMaxBounds
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
-import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.EntityTypes
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import java.util.*
@@ -54,7 +54,7 @@ object AnimalsTabSubProvider : AdvancementSubProvider {
                         Optional.empty(),
                         Optional.of(
                             EntityPredicate.Builder.entity()
-                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityType.WOLF)
+                                .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityTypes.WOLF)
                                 .build()
                         ),
                         Optional.of(
@@ -78,7 +78,7 @@ object AnimalsTabSubProvider : AdvancementSubProvider {
         }
 
         advancement(consumer, TAB_NAME, POLYGLOT) {
-            parent(createPlaceholder("blazeandcave:animal/birdkeeper"))
+            parent(createPlaceholder("blazeandcave:biomes/birdkeeper"))
             display {
                 title = "Pollyglot"
                 description = "Hear your parrots speak like every mob"

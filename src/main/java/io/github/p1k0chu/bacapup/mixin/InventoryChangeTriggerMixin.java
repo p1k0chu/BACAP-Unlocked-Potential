@@ -1,7 +1,7 @@
 package io.github.p1k0chu.bacapup.mixin;
 
 import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;

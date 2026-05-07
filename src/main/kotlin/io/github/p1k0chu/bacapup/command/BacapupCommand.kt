@@ -7,6 +7,8 @@ import com.mojang.brigadier.context.CommandContext
 import net.minecraft.ChatFormatting
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.TextColor
+import net.minecraft.util.CommonColors
 
 object BacapupCommand {
     fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
@@ -30,7 +32,7 @@ object BacapupCommand {
                                         .append(": ")
                                         .append(
                                             Component.literal("$count")
-                                                .withColor(ChatFormatting.GOLD.color!!)
+                                                .withColor(TextColor.GOLD)
                                         )
                                 }
                             }
@@ -44,7 +46,7 @@ object BacapupCommand {
                                 text.append("Bought emeralds: ")
                                     .append(
                                         Component.literal("$emeraldsObtained")
-                                            .withColor(ChatFormatting.GOLD.color!!)
+                                            .withColor(TextColor.GOLD)
                                     )
                             }
 
@@ -56,7 +58,7 @@ object BacapupCommand {
                                 text.append("глглту sent: ")
                                     .append(
                                         Component.literal("$glgltuCounter")
-                                            .withColor(ChatFormatting.GOLD.color!!)
+                                            .withColor(TextColor.GOLD)
                                     )
                             }
 

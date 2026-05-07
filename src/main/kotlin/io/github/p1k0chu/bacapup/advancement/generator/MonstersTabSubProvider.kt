@@ -7,8 +7,8 @@ import io.github.p1k0chu.bacapup.advancement.advancement
 import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers
 import io.github.p1k0chu.bacapup.advancement.triggers.EmptyTrigger
 import io.github.p1k0chu.bacapup.advancement.triggers.EntityDroppedLootTrigger
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.advancements.criterion.ItemPredicate
+import net.minecraft.advancements.predicates.entity.EntityPredicate
+import net.minecraft.advancements.predicates.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder

@@ -15,7 +15,6 @@ import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,19 +30,20 @@ class AbstractFurnaceMenuMixin {
     @Final
     private Container container;
 
-    @Inject(method = "<init>(Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/inventory/RecipeBookType;ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/Container;Lnet/minecraft/world/inventory/ContainerData;)V", at = @At("RETURN"))
-    private void init(MenuType<?> type,
-              RecipeType<?> recipeType,
-              ResourceKey<?> recipePropertySetKey,
-              RecipeBookType category,
-              int syncId,
-              Inventory playerInventory,
-              Container inventory,
-              ContainerData propertyDelegate,
-              CallbackInfo ci) {
+    @Inject(method = "<init>(Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/inventory/RecipeBookType;ILnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/Container;Lnet/minecraft/world/inventory/ContainerData;)V", at = @At("RETURN"))
+    private void init(
+            MenuType<?> menuType,
+            ResourceKey<?> allowedInputs,
+            RecipeBookType recipeBookType,
+            int containerId,
+            Inventory inventory,
+            Container container,
+            ContainerData data,
+            CallbackInfo ci
+    ) {
 
-        if (inventory instanceof AbstractFurnaceBlockEntity furnace) {
-            ((AbstractFurnaceBlockEntityWhoOpened) furnace).bacapup$setPlayer(playerInventory.player.getUUID());
+        if (container instanceof AbstractFurnaceBlockEntity furnace) {
+            ((AbstractFurnaceBlockEntityWhoOpened) furnace).bacapup$setPlayer(inventory.player.getUUID());
         }
     }
 

@@ -3,6 +3,7 @@ package io.github.p1k0chu.bacapup;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 
 import java.util.Map;
 import java.util.function.*;
@@ -31,26 +32,26 @@ public record BacapupPetsTamed(int cat, int wolf) {
 
     public void forEach(BiConsumer<EntityType<?>, Integer> consumer) {
         if (cat > 0) {
-            consumer.accept(EntityType.CAT, cat);
+            consumer.accept(EntityTypes.CAT, cat);
         }
         if (wolf > 0) {
-            consumer.accept(EntityType.WOLF, wolf);
+            consumer.accept(EntityTypes.WOLF, wolf);
         }
     }
 
-    public enum TrackedEntityType {
+    public enum TrackedEntityTypes {
         CAT(BacapupPetsTamed::cat, BacapupPetsTamed::withCat),
         WOLF(BacapupPetsTamed::wolf, BacapupPetsTamed::withWolf);
 
-        public static final Map<EntityType<?>, TrackedEntityType> BY_TYPE_MAP = Map.of(
-                EntityType.CAT, CAT,
-                EntityType.WOLF, WOLF
+        public static final Map<EntityType<?>, TrackedEntityTypes> BY_TYPE_MAP = Map.of(
+                EntityTypes.CAT, CAT,
+                EntityTypes.WOLF, WOLF
         );
 
         public final Function<BacapupPetsTamed, Integer> getter;
         public final BiFunction<BacapupPetsTamed, Integer, BacapupPetsTamed> setter;
 
-        TrackedEntityType(Function<BacapupPetsTamed, Integer> getter, BiFunction<BacapupPetsTamed, Integer, BacapupPetsTamed> setter) {
+        TrackedEntityTypes(Function<BacapupPetsTamed, Integer> getter, BiFunction<BacapupPetsTamed, Integer, BacapupPetsTamed> setter) {
             this.getter = getter;
             this.setter = setter;
         }

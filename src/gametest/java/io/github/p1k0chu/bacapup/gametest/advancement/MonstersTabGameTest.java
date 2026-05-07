@@ -5,7 +5,7 @@ import io.github.p1k0chu.bacapup.gametest.utils.TestUtils;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -23,7 +23,7 @@ public class MonstersTabGameTest {
 
         helper.startSequence()
                 .thenWaitUntil(() -> {
-                    var pearl = helper.findOneEntity(EntityType.ENDER_PEARL);
+                    var pearl = helper.findOneEntity(EntityTypes.ENDER_PEARL);
                     TestUtils.forceLoadChunk(helper, 105.5, 0.5);
                     TestUtils.teleportRelative(helper, pearl, 105.5, 0.5, 0.5);
                 }).thenWaitUntil(TestRunnables.assertAdvDone(helper, player, TestAdvancementConstants.BEAM_ME_UP))

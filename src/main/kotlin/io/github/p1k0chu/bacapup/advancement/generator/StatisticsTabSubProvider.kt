@@ -6,7 +6,7 @@ import io.github.p1k0chu.bacapup.advancement.AdvancementType
 import io.github.p1k0chu.bacapup.advancement.advancement
 import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers
 import io.github.p1k0chu.bacapup.advancement.triggers.SingleIntRangeTrigger
-import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.predicates.MinMaxBounds
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents

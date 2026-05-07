@@ -5,8 +5,8 @@ import com.google.common.collect.ImmutableMultimap
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
 import com.mojang.authlib.properties.PropertyMap
-import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.advancements.criterion.ImpossibleTrigger
+import net.minecraft.advancements.triggers.CriteriaTriggers
+import net.minecraft.advancements.triggers.ImpossibleTrigger
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.util.Util

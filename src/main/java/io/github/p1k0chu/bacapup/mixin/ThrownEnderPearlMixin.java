@@ -4,6 +4,7 @@ import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl;
 import net.minecraft.world.level.Level;

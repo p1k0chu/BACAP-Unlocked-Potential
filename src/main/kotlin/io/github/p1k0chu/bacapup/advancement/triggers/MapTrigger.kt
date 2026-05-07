@@ -3,9 +3,9 @@ package io.github.p1k0chu.bacapup.advancement.triggers
 import io.github.p1k0chu.bacapup.advancement.predicate.MapStatePredicate
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancements.criterion.ContextAwarePredicate
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger
+import net.minecraft.advancements.predicates.ContextAwarePredicate
+import net.minecraft.advancements.predicates.entity.EntityPredicate
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger
 import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer

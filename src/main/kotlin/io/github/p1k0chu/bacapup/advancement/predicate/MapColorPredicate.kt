@@ -5,7 +5,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
-import net.minecraft.advancements.criterion.MinMaxBounds
+import net.minecraft.advancements.predicates.MinMaxBounds
 import net.minecraft.core.Registry
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey

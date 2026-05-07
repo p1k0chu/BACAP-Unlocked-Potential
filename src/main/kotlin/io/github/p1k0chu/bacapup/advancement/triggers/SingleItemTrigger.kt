@@ -2,10 +2,10 @@ package io.github.p1k0chu.bacapup.advancement.triggers
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.advancements.criterion.ContextAwarePredicate
-import net.minecraft.advancements.criterion.EntityPredicate
-import net.minecraft.advancements.criterion.ItemPredicate
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger
+import net.minecraft.advancements.predicates.ContextAwarePredicate
+import net.minecraft.advancements.predicates.entity.EntityPredicate
+import net.minecraft.advancements.predicates.ItemPredicate
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger
 import net.minecraft.core.HolderLookup.Provider
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerPlayer
