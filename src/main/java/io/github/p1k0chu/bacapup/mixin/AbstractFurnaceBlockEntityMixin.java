@@ -1,8 +1,8 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
-import io.github.p1k0chu.bacapup.imixin.AbstractFurnaceBlockEntityLastFuel;
-import io.github.p1k0chu.bacapup.imixin.AbstractFurnaceBlockEntityWhoOpened;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
+import io.github.p1k0chu.bacapup.ducks.AbstractFurnaceBlockEntityLastFuel;
+import io.github.p1k0chu.bacapup.ducks.AbstractFurnaceBlockEntityWhoOpened;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -75,7 +75,7 @@ abstract class AbstractFurnaceBlockEntityMixin implements AbstractFurnaceBlockEn
         ServerPlayer player = server.getPlayerList().getPlayer(whoOpened);
 
         if (player != null) {
-            Criteria.FURNACE_FUEL_CONSUMED.trigger(player, fuel);
+            BacapupTriggers.FURNACE_FUEL_CONSUMED.trigger(player, fuel);
         }
     }
 }

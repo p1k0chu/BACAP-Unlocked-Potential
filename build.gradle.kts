@@ -5,14 +5,6 @@ plugins {
     kotlin("jvm")
 }
 
-repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
-}
-
 loom {
     splitEnvironmentSourceSets()
     accessWidenerPath = file("src/main/resources/bacapup.classtweaker")
@@ -29,28 +21,26 @@ fabricApi {
     configureDataGeneration()
 
     configureTests {
-		createSourceSet = true
-		modId = "test-bacapup"
+        createSourceSet = true
+        modId = "test-bacapup"
         // Agree to Minecraft EULA
-		eula = true
-	}
+        eula = true
+    }
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
-    implementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
-    implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("kotlin_adapter_version").get()}")
+    minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
+    implementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+    implementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_adapter_version")}")
 
-    implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_api_version")}")
 
-    testImplementation("net.fabricmc:fabric-loader-junit:${providers.gradleProperty("loader_version").get()}")
+    testImplementation("net.fabricmc:fabric-loader-junit:${project.property("loader_version")}")
 }
 
 tasks.processResources {
-    val props = mapOf(
-        "version" to project.version
-    )
-    props.forEach { k, v -> inputs.property(k ,v) }
+    val props = mapOf("version" to project.version)
+    inputs.properties(props)
 
     filesMatching("fabric.mod.json") {
         expand(props)
@@ -65,7 +55,6 @@ kotlin {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_25)
     }
-
 }
 
 java {
@@ -87,5 +76,5 @@ tasks.jar {
 }
 
 tasks.test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

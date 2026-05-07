@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -18,7 +18,7 @@ class CampfireBlockMixin {
     @Inject(method = "onProjectileHit", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", shift = At.Shift.AFTER))
     private void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile, CallbackInfo ci) {
         if (projectile.getOwner() instanceof ServerPlayer player) {
-            Criteria.PROJECTILE_LIT_BLOCK.trigger(player, (ServerLevel) world, hit.getBlockPos());
+            BacapupTriggers.PROJECTILE_LIT_BLOCK.trigger(player, (ServerLevel) world, hit.getBlockPos());
         }
     }
 }

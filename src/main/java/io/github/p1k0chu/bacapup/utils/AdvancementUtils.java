@@ -8,7 +8,7 @@ public final class AdvancementUtils {
     private AdvancementUtils() {
     }
 
-    ///  grant one criterion
+    /// grant one criterion
     public static boolean grant(ServerPlayer player, Identifier advancement, String criterion) {
         var advHolder = player.level().getServer().getAdvancements().get(advancement);
         if (advHolder == null) {
@@ -19,7 +19,7 @@ public final class AdvancementUtils {
         return playerAdvancements.award(advHolder, criterion);
     }
 
-    ///  grant full advancement
+    /// grant full advancement
     public static boolean grant(ServerPlayer player, Identifier advancement) {
         var advHolder = player.level().getServer().getAdvancements().get(advancement);
         if (advHolder == null) {

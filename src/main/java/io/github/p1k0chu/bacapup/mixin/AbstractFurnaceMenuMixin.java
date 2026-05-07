@@ -1,8 +1,8 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
-import io.github.p1k0chu.bacapup.imixin.AbstractFurnaceBlockEntityLastFuel;
-import io.github.p1k0chu.bacapup.imixin.AbstractFurnaceBlockEntityWhoOpened;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
+import io.github.p1k0chu.bacapup.ducks.AbstractFurnaceBlockEntityLastFuel;
+import io.github.p1k0chu.bacapup.ducks.AbstractFurnaceBlockEntityWhoOpened;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -57,11 +57,11 @@ class AbstractFurnaceMenuMixin {
                     Item fuel = ((AbstractFurnaceBlockEntityLastFuel) furnace).bacapup$getLastFuel();
 
                     if (fuel != null) {
-                        Criteria.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, itemStack);
+                        BacapupTriggers.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, itemStack);
                     }
                 } else if (slot == AbstractFurnaceMenu.FUEL_SLOT) {
                     if (itemStack.is(Items.WATER_BUCKET)) {
-                        Criteria.FURNACE_TOOK_WATER_BUCKET_FUEL.trigger(serverPlayer);
+                        BacapupTriggers.FURNACE_TOOK_WATER_BUCKET_FUEL.trigger(serverPlayer);
                     }
                 }
             }

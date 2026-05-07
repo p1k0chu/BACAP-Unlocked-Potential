@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.FurnaceFuelSlot;
@@ -16,7 +16,7 @@ class FurnaceFuelSlotMixin extends SlotMixin {
         super.onTake(player, itemStack, ci);
 
         if (player instanceof ServerPlayer serverPlayer && itemStack.is(Items.WATER_BUCKET)) {
-            Criteria.FURNACE_TOOK_WATER_BUCKET_FUEL.trigger(serverPlayer);
+            BacapupTriggers.FURNACE_TOOK_WATER_BUCKET_FUEL.trigger(serverPlayer);
         }
     }
 }

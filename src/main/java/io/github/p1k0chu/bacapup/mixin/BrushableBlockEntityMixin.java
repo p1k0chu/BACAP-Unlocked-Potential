@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,7 +25,7 @@ abstract class BrushableBlockEntityMixin {
         if (brusher instanceof ServerPlayer player) {
             ItemStack item = getItem();
             if (!item.isEmpty())
-                Criteria.SUS_BLOCK_GOT_ITEM.trigger(player, item);
+                BacapupTriggers.SUS_BLOCK_GOT_ITEM.trigger(player, item);
         }
     }
 }

@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -22,7 +22,7 @@ abstract class PigMixin extends LivingEntityMixin {
 
         if(damageSource.is(DamageTypes.FALL)) {
             if(getFirstPassenger() instanceof ServerPlayer player) {
-                Criteria.WHEN_PIGS_FLY.trigger(player);
+                BacapupTriggers.WHEN_PIGS_FLY.trigger(player);
             }
         }
     }

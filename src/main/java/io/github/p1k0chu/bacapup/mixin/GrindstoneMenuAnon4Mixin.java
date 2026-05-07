@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.EnchantmentTags;
@@ -51,6 +51,6 @@ abstract class GrindstoneMenuAnon4Mixin {
             }
         }
 
-        Criteria.DISENCHANT_GRINDSTONE.trigger((ServerPlayer) player);
+        BacapupTriggers.DISENCHANT_GRINDSTONE.trigger((ServerPlayer) player);
     }
 }

@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.network.protocol.game.ServerboundSetBeaconPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,7 +23,7 @@ class ServerGamePacketListenerImplMixin {
         ItemStack stack = ((BeaconMenuAccessor) menu).getPaymentSlot().getItem();
 
         if (!stack.isEmpty()) {
-            Criteria.BEACON_CONSUMED_PAYMENT.trigger(player, stack.copyWithCount(1));
+            BacapupTriggers.BEACON_CONSUMED_PAYMENT.trigger(player, stack.copyWithCount(1));
         }
     }
 }

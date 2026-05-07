@@ -1,7 +1,7 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
-import io.github.p1k0chu.bacapup.imixin.AbstractFurnaceBlockEntityLastFuel;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
+import io.github.p1k0chu.bacapup.ducks.AbstractFurnaceBlockEntityLastFuel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.FurnaceResultSlot;
@@ -23,7 +23,7 @@ class FurnaceResultSlotMixin {
             if (((FurnaceResultSlot) (Object) this).container instanceof AbstractFurnaceBlockEntity furnace) {
                 Item fuel = ((AbstractFurnaceBlockEntityLastFuel) furnace).bacapup$getLastFuel();
                 if (fuel != null) {
-                    Criteria.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, stack);
+                    BacapupTriggers.COOKED_WITH_FUEL.trigger(serverPlayer, fuel, stack);
                 }
             }
         }

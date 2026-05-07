@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,7 +24,7 @@ class ServerPlayerGameModeMixin {
     private void destroyBlock(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir, @Local(name = "adjustedState") BlockState brokenBlock) {
         var handItem = player.getMainHandItem();
         if (handItem.isEmpty() && brokenBlock.is(Blocks.NETHERITE_BLOCK)) {
-            Criteria.PLAYER_BREAK_NETHERITE_BLOCK_WITH_FIST.trigger(player);
+            BacapupTriggers.PLAYER_BREAK_NETHERITE_BLOCK_WITH_FIST.trigger(player);
         }
     }
 }

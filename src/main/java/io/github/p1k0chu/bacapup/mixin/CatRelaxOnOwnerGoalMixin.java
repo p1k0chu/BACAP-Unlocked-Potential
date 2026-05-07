@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup.mixin;
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +22,7 @@ abstract class CatRelaxOnOwnerGoalMixin {
     @Inject(method = "lambda$giveMorningGift$0", at = @At("HEAD"))
     private void awardCriteria(BlockPos.MutableBlockPos mutable, ServerLevel world, ItemStack stack, CallbackInfo ci) {
         if(cat.getOwner() instanceof ServerPlayer player) {
-            Criteria.CAT_GIFT_RECEIVED.trigger(player, stack);
+            BacapupTriggers.CAT_GIFT_RECEIVED.trigger(player, stack);
         }
     }
 }

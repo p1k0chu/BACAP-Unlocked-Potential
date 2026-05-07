@@ -2,7 +2,7 @@ package io.github.p1k0chu.bacapup.mixin;
 
 import io.github.p1k0chu.bacapup.BacapupDataAttachments;
 import io.github.p1k0chu.bacapup.BacapupPetsTamed;
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria;
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
@@ -25,7 +25,7 @@ class TamableAnimalMixin {
             BacapupPetsTamed petsTamed = serverPlayer.getAttachedOrCreate(BacapupDataAttachments.PETS_TAMED);
             petsTamed = trackedEntityType.apply(petsTamed, i -> i + 1);
             serverPlayer.setAttached(BacapupDataAttachments.PETS_TAMED, petsTamed);
-            Criteria.PET_TAMED.trigger(serverPlayer, tamed, trackedEntityType.getter.apply(petsTamed));
+            BacapupTriggers.PET_TAMED.trigger(serverPlayer, tamed, trackedEntityType.getter.apply(petsTamed));
         }
     }
 }

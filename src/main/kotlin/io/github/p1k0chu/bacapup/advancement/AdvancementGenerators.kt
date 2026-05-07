@@ -10,19 +10,19 @@ fun createAdvancementProvider(
 ): AdvancementProvider {
     return AdvancementProvider(
         output, registriesFuture, listOf(
-            AdventureTabGenerator,
-            AnimalsTabGenerator,
-            BiomesTabGenerator,
-            EnchantingTabGenerator,
-            FarmingTabGenerator,
-            MonstersTabGenerator,
-            MiningTabGenerator,
-            StatisticsTabGenerator,
-            EndTabGenerator,
-            BuildingTabGenerator,
-            ChallengesTabGenerator,
-            NetherTabGenerator,
-            RedstoneTabGenerator,
+            AdventureTabSubProvider,
+            AnimalsTabSubProvider,
+            BiomesTabSubProvider,
+            EnchantingTabSubProvider,
+            FarmingTabSubProvider,
+            MonstersTabSubProvider,
+            MiningTabSubProvider,
+            StatisticsTabSubProvider,
+            EndTabSubProvider,
+            BuildingTabSubProvider,
+            ChallengesTabSubProvider,
+            NetherTabSubProvider,
+            RedstoneTabSubProvider,
         )
     )
 }

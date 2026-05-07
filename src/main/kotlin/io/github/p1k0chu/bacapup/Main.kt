@@ -1,6 +1,6 @@
 package io.github.p1k0chu.bacapup
 
-import io.github.p1k0chu.bacapup.advancement.criteria.Criteria
+import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers
 import io.github.p1k0chu.bacapup.advancement.predicate.MapColorPredicateTypes
 import io.github.p1k0chu.bacapup.command.BacapupCommand
 import com.mojang.brigadier.CommandDispatcher
@@ -27,7 +27,7 @@ object Main : ModInitializer {
     init {
         // touch these so java loads the classes
         MapColorPredicateTypes
-        Criteria
+        BacapupTriggers
         BacapupDataAttachments.doNothing()
     }
 
@@ -46,7 +46,7 @@ object Main : ModInitializer {
                 val i: Int = player.getAttachedOrCreate(BacapupDataAttachments.GLGLTU_COUNTER) + 1
                 player.setAttached(BacapupDataAttachments.GLGLTU_COUNTER, i)
 
-                Criteria.GLGLTU.trigger(player, i)
+                BacapupTriggers.GLGLTU.trigger(player, i)
             }
         }
     }
