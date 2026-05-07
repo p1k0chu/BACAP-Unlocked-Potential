@@ -36,6 +36,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("kotlin_adapter_version").get()}")
 
     modImplementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+
+    testImplementation("net.fabricmc:fabric-loader-junit:${project.property("loader_version")}")
 }
 
 tasks.processResources {
@@ -75,4 +77,8 @@ tasks.jar {
     from("LICENSE") {
         rename { "${it}_$name" }
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
