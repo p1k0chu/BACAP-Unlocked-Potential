@@ -26,7 +26,6 @@ object AnimalsTabSubProvider : AdvancementSubProvider {
     const val WHEN_PIGS_FLY = "when_pigs_fly"
     const val DOG_ARMY = "dog_army"
     const val WOLOLO = "wololo"
-    const val POLYGLOT = "polyglot"
 
     override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
         advancement(consumer, TAB_NAME, WHEN_PIGS_FLY) {
@@ -75,25 +74,6 @@ object AnimalsTabSubProvider : AdvancementSubProvider {
             }
             exp = 1
             addCriterion("wololo", BacapupTriggers.WOLOLO.createCriterion(EmptyTrigger.Instance()))
-        }
-
-        advancement(consumer, TAB_NAME, POLYGLOT) {
-            parent(createPlaceholder("blazeandcave:biomes/birdkeeper"))
-            display {
-                title = "Pollyglot"
-                description = "Hear your parrots speak like every mob"
-                icon = ItemStackTemplate(Items.WRITABLE_BOOK)
-                type = AdvancementType.CHALLENGE
-            }
-
-            for (mobType in ParrotConstants.IMITATING_TYPES) {
-                addCriterion(
-                    BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(mobType).registeredName,
-                    BacapupTriggers.PARROT_IMITATES.entityType(
-                        EntityTypePredicate.of(provider.lookupOrThrow(Registries.ENTITY_TYPE), mobType)
-                    )
-                )
-            }
         }
     }
 }
