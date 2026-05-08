@@ -7,12 +7,9 @@ import io.github.p1k0chu.bacapup.advancement.advancement
 import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers
 import io.github.p1k0chu.bacapup.advancement.triggers.EmptyTrigger
 import io.github.p1k0chu.bacapup.advancement.triggers.PetTamedTrigger
-import io.github.p1k0chu.bacapup.constants.ParrotConstants
-import net.minecraft.advancements.predicates.entity.EntityPredicate
-import net.minecraft.advancements.predicates.entity.EntityTypePredicate
 import net.minecraft.advancements.predicates.MinMaxBounds
+import net.minecraft.advancements.predicates.entity.EntityPredicate
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
 import net.minecraft.world.entity.EntityTypes

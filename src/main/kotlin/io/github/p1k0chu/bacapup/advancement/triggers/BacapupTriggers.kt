@@ -103,6 +103,10 @@ object BacapupTriggers {
     val MAP_STATE: MapTrigger = register(
         "map_state", MapTrigger()
     )
+    @JvmField
+    val SULFUR_CUBE_CONTACT_KILL = register(
+        "sulfur_cube_contact_kill", SulfurCubeContactDamageTrigger()
+    )
 
     private fun <T : CriterionTrigger<*>> register(name: String, criterion: T): T {
         return Registry.register(BuiltInRegistries.TRIGGER_TYPES, id(name), criterion)

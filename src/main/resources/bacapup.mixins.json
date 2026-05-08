@@ -42,6 +42,7 @@
     "ServerPlayerMixin",
     "SlotMixin",
     "SniffingMixin",
+    "SulfurCubeMixin",
     "TamableAnimalMixin",
     "ThrownEnderPearlMixin",
     "TrapDoorBlockAccessor",

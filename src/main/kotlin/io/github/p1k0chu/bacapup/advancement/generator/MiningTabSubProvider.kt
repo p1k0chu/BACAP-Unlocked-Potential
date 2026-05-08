@@ -4,9 +4,12 @@ import io.github.p1k0chu.bacapup.advancement.*
 import io.github.p1k0chu.bacapup.advancement.triggers.BacapupTriggers
 import io.github.p1k0chu.bacapup.advancement.triggers.FurnaceCookedWithFuelTrigger
 import net.minecraft.advancements.predicates.ItemPredicate
+import net.minecraft.advancements.predicates.entity.EntityFlagsPredicate
+import net.minecraft.advancements.predicates.entity.EntityPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.advancements.AdvancementSubProvider.createPlaceholder
+import net.minecraft.world.entity.EntityTypes
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import java.util.*
@@ -16,6 +19,7 @@ object MiningTabSubProvider : AdvancementSubProvider {
 
     const val LEAFTERALLY = "leafterally"
     const val RAGE_BAITER = "rage_baiter"
+    const val ANTI_MITOSIS = "anti_mitosis"
 
     override fun generate(provider: HolderLookup.Provider, consumer: AdvancementConsumer) {
         advancement(consumer, TAB_NAME, LEAFTERALLY) {
@@ -52,5 +56,25 @@ object MiningTabSubProvider : AdvancementSubProvider {
             }
             addCriterion("rage_bait", impossibleTrigger())
         }
+
+        advancement(consumer, TAB_NAME, ANTI_MITOSIS) {
+            parent(createPlaceholder("blazeandcave:mining/mitosis"))
+            display {
+                title = "Anti-Mitosis"
+                description = "Have a Sulfur Cube kill a young one of its own kind"
+                icon = ItemStackTemplate(Items.MAGMA_BLOCK)
+                type = AdvancementType.GOAL
+            }
+            addCriterion(
+                "the_trigger_yeah_just",
+                BacapupTriggers.SULFUR_CUBE_CONTACT_KILL.entity(
+                    EntityPredicate.Builder.entity()
+                        .of(provider.lookupOrThrow(Registries.ENTITY_TYPE), EntityTypes.SULFUR_CUBE)
+                        .flags(EntityFlagsPredicate.Builder.flags().setIsBaby(true))
+                        .build()
+                )
+            )
+        }
+
     }
 }
