@@ -1,5 +1,7 @@
 # BACAP-Unlocked-Potential
 
+**This repo is archived. Go to https://codeberg.org/p1k0chu/BACAP-Unlocked-Potential instead.**
+
 BACUP is an addon for [BACAP](https://modrinth.com/datapack/blazeandcaves-advancements-pack) with more advancements.
 
 This "datapack" is actually a mod.  
